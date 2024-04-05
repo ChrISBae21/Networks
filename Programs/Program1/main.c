@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
+
 #include <pcap/pcap.h>
 
 #include <netinet/ether.h>
@@ -49,17 +50,16 @@ int main(int argc, char* argv[]) {
     struct pcap_pkthdr **pkt_header;
     const uint8_t **pkt_data;
 
-    printf("1 out here\n");
     trace_file = pcap_open_offline(argv[1], (char*) errbuf);     // opens the trace file
 
     if(trace_file == NULL) {
         printf("error");
     }
 
-    printf("out here\n");
 
     // Grab the next packet
     while(pcap_next_ex(trace_file, pkt_header, pkt_data)) {
+        printf("out here\n");
         len = (*pkt_header)->len;                           // packet length
         printf("Packet Number: %d  Packet Len: %d\n", pkt_num, len);
         
