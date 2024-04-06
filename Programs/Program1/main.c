@@ -20,6 +20,9 @@ void ip(uint8_t *pkt_data, uint8_t *len) {
     *len = (ver_len & 0x0F) * 4;
     printf("\t\tIP Version: %d\n", (ver_len & 0xF0) / 16);
     printf("\t\tHeader Len (bytes): %d\n", *len);
+    printf("\t\tTOS subfields:\n");
+    printf("\t\t\tDiffserv bits: %d\n");
+    printf("\t\t\tECN bits: %d\n");
     printf("\n");
 }
 
