@@ -1,7 +1,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
-
+#include <arpa/inet.h>
 #include "ethernet.h"
 /*
 Prints formatted MAC address

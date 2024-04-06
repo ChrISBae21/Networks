@@ -4,13 +4,14 @@
 
 CC = gcc
 LIBS = -lpcap
-CFLAGS = -g -Wall -pedantic 
+CFLAGS = -g -Wall -pedantic
+OBJFILES = main.c checksum.c ethernet.c ethernet.h
 #CGLAGS = 
 
 all:  trace
 
-trace: main.c checksum.c
-	$(CC) $(CFLAGS) -o $@ main.c checksum.c $(LIBS)
+trace: $(OBJFILES)
+	$(CC) $(CFLAGS) -o $@ $(OBJFILES) $(LIBS)
 
 clean:
 	rm -f trace
