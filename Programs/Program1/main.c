@@ -52,7 +52,7 @@ void print_eth(uint8_t *dest, uint8_t *src, uint16_t type) {
     printf("\n\n");
 }
 
-void ethernet(uint8_t *pkt_data) {
+uint16_t ethernet(uint8_t *pkt_data) {
     // always has dest, src, and type
     uint8_t dest[6];
     uint8_t src[6];
@@ -63,10 +63,22 @@ void ethernet(uint8_t *pkt_data) {
     memcpy(&type, (pkt_data+12), 2);
 
     print_eth(dest, src, type);
+
+    return type;
     
 }
 
 
+
+void ip(uint8_t *pkt_data, uint8_t *len) {
+    uint8_t ver_len;
+    memcpy(&ver_len, pkt_data, 1);
+
+    *len = (ver_len & 0x0F) * 4;
+    printf("\t\tIP Version: %d\n", (ver_len & 0xF0) / 16);
+    printf("\t\tHeader Len (bytes): %d\n", *len);
+    printf("\n");
+}
 
 
 
@@ -75,6 +87,9 @@ int main(int argc, char* argv[]) {
     uint8_t errbuf[PCAP_ERRBUF_SIZE];
     uint32_t pkt_num = 1;
     bpf_u_int32 pkt_len = 0;
+    uint16_t type;
+
+    uint8_t ip_hdr_len;
 
     struct pcap_pkthdr *pkt_header;
     const uint8_t *pkt_data;
@@ -91,8 +106,30 @@ int main(int argc, char* argv[]) {
 
         pkt_len = pkt_header->caplen;                           // packet length
         printf("Packet Number: %d  Packet Len: %d\n", pkt_num, pkt_len);
-        ethernet((uint8_t*) pkt_data);
-        
+        type = ethernet((uint8_t*) pkt_data);
+
+        pkt_data += 14;     // skip the ethernet header
+
+        switch(ntohs(type)) {
+            case IP: 
+                printf("\tIP Header\n");
+                ip((uint8_t*) pkt_data, &ip_hdr_len);
+                
+                break;
+            case ARP:
+                printf("ARP header\n\n");
+                
+                break;
+            default:
+                break;
+                
+        }
+
+    
+
+
+
+                
 
 
 

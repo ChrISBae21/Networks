@@ -4,11 +4,19 @@ Packet Number: 1  Packet Len: 71
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 2  Packet Len: 71
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 3  Packet Len: 422
 	Ethernet Header
@@ -16,11 +24,19 @@ Packet Number: 3  Packet Len: 422
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 4  Packet Len: 74
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 5  Packet Len: 74
 	Ethernet Header
@@ -28,11 +44,19 @@ Packet Number: 5  Packet Len: 74
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 6  Packet Len: 74
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 7  Packet Len: 74
 	Ethernet Header
@@ -40,11 +64,19 @@ Packet Number: 7  Packet Len: 74
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 8  Packet Len: 71
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 9  Packet Len: 253
 	Ethernet Header
@@ -52,11 +84,19 @@ Packet Number: 9  Packet Len: 253
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 10  Packet Len: 74
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 11  Packet Len: 74
 	Ethernet Header
@@ -64,11 +104,19 @@ Packet Number: 11  Packet Len: 74
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 12  Packet Len: 74
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 13  Packet Len: 74
 	Ethernet Header
@@ -76,11 +124,19 @@ Packet Number: 13  Packet Len: 74
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 14  Packet Len: 74
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 15  Packet Len: 74
 	Ethernet Header
@@ -88,11 +144,19 @@ Packet Number: 15  Packet Len: 74
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 16  Packet Len: 74
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 17  Packet Len: 74
 	Ethernet Header
@@ -100,11 +164,19 @@ Packet Number: 17  Packet Len: 74
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 18  Packet Len: 92
 	Ethernet Header
 		Dest Mac: ff:ff:ff:ff:ff:ff
 		Source Mac: 0:b:7d:9:dc:6
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 19  Packet Len: 60
 	Ethernet Header
@@ -112,11 +184,17 @@ Packet Number: 19  Packet Len: 60
 		Source Mac: 0:20:18:dc:ae:ab
 		Type: ARP
 
+ARP header
+
 Packet Number: 20  Packet Len: 84
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 21  Packet Len: 180
 	Ethernet Header
@@ -124,11 +202,19 @@ Packet Number: 21  Packet Len: 180
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 22  Packet Len: 62
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 23  Packet Len: 60
 	Ethernet Header
@@ -136,11 +222,19 @@ Packet Number: 23  Packet Len: 60
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 24  Packet Len: 54
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 25  Packet Len: 144
 	Ethernet Header
@@ -148,11 +242,19 @@ Packet Number: 25  Packet Len: 144
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 26  Packet Len: 60
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 27  Packet Len: 992
 	Ethernet Header
@@ -160,11 +262,19 @@ Packet Number: 27  Packet Len: 992
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 28  Packet Len: 266
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 29  Packet Len: 129
 	Ethernet Header
@@ -172,11 +282,19 @@ Packet Number: 29  Packet Len: 129
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 30  Packet Len: 355
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 31  Packet Len: 560
 	Ethernet Header
@@ -184,11 +302,19 @@ Packet Number: 31  Packet Len: 560
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 32  Packet Len: 139
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 33  Packet Len: 1506
 	Ethernet Header
@@ -196,11 +322,19 @@ Packet Number: 33  Packet Len: 1506
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 34  Packet Len: 1506
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 35  Packet Len: 54
 	Ethernet Header
@@ -208,11 +342,19 @@ Packet Number: 35  Packet Len: 54
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 36  Packet Len: 284
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 37  Packet Len: 163
 	Ethernet Header
@@ -220,11 +362,19 @@ Packet Number: 37  Packet Len: 163
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 38  Packet Len: 60
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 39  Packet Len: 899
 	Ethernet Header
@@ -232,11 +382,19 @@ Packet Number: 39  Packet Len: 899
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 40  Packet Len: 60
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 41  Packet Len: 176
 	Ethernet Header
@@ -244,11 +402,19 @@ Packet Number: 41  Packet Len: 176
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 42  Packet Len: 1506
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 43  Packet Len: 54
 	Ethernet Header
@@ -256,11 +422,19 @@ Packet Number: 43  Packet Len: 54
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 44  Packet Len: 1506
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 45  Packet Len: 1506
 	Ethernet Header
@@ -268,11 +442,19 @@ Packet Number: 45  Packet Len: 1506
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 46  Packet Len: 54
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 47  Packet Len: 1506
 	Ethernet Header
@@ -280,11 +462,19 @@ Packet Number: 47  Packet Len: 1506
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 48  Packet Len: 1506
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 49  Packet Len: 54
 	Ethernet Header
@@ -292,11 +482,19 @@ Packet Number: 49  Packet Len: 54
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 50  Packet Len: 820
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 51  Packet Len: 54
 	Ethernet Header
@@ -304,11 +502,19 @@ Packet Number: 51  Packet Len: 54
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 52  Packet Len: 840
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 53  Packet Len: 54
 	Ethernet Header
@@ -316,11 +522,19 @@ Packet Number: 53  Packet Len: 54
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 54  Packet Len: 139
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 55  Packet Len: 60
 	Ethernet Header
@@ -328,11 +542,19 @@ Packet Number: 55  Packet Len: 60
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 56  Packet Len: 139
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 57  Packet Len: 60
 	Ethernet Header
@@ -340,11 +562,19 @@ Packet Number: 57  Packet Len: 60
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 58  Packet Len: 139
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 59  Packet Len: 60
 	Ethernet Header
@@ -352,11 +582,19 @@ Packet Number: 59  Packet Len: 60
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 60  Packet Len: 293
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 61  Packet Len: 60
 	Ethernet Header
@@ -364,11 +602,19 @@ Packet Number: 61  Packet Len: 60
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 62  Packet Len: 176
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 63  Packet Len: 54
 	Ethernet Header
@@ -376,11 +622,19 @@ Packet Number: 63  Packet Len: 54
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 64  Packet Len: 600
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 65  Packet Len: 54
 	Ethernet Header
@@ -388,11 +642,19 @@ Packet Number: 65  Packet Len: 54
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 66  Packet Len: 54
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 67  Packet Len: 139
 	Ethernet Header
@@ -400,11 +662,19 @@ Packet Number: 67  Packet Len: 139
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 68  Packet Len: 60
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 69  Packet Len: 139
 	Ethernet Header
@@ -412,11 +682,19 @@ Packet Number: 69  Packet Len: 139
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 70  Packet Len: 60
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 71  Packet Len: 832
 	Ethernet Header
@@ -424,11 +702,19 @@ Packet Number: 71  Packet Len: 832
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 72  Packet Len: 54
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 73  Packet Len: 131
 	Ethernet Header
@@ -436,11 +722,19 @@ Packet Number: 73  Packet Len: 131
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 74  Packet Len: 60
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 75  Packet Len: 79
 	Ethernet Header
@@ -448,11 +742,19 @@ Packet Number: 75  Packet Len: 79
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 76  Packet Len: 175
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 77  Packet Len: 62
 	Ethernet Header
@@ -460,11 +762,19 @@ Packet Number: 77  Packet Len: 62
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 78  Packet Len: 62
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 79  Packet Len: 54
 	Ethernet Header
@@ -472,11 +782,19 @@ Packet Number: 79  Packet Len: 54
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 80  Packet Len: 382
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 81  Packet Len: 60
 	Ethernet Header
@@ -484,11 +802,19 @@ Packet Number: 81  Packet Len: 60
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 82  Packet Len: 1506
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 83  Packet Len: 854
 	Ethernet Header
@@ -496,11 +822,19 @@ Packet Number: 83  Packet Len: 854
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 84  Packet Len: 54
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 85  Packet Len: 583
 	Ethernet Header
@@ -508,11 +842,19 @@ Packet Number: 85  Packet Len: 583
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 86  Packet Len: 62
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 87  Packet Len: 1506
 	Ethernet Header
@@ -520,11 +862,19 @@ Packet Number: 87  Packet Len: 1506
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 88  Packet Len: 1506
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 89  Packet Len: 54
 	Ethernet Header
@@ -532,11 +882,19 @@ Packet Number: 89  Packet Len: 54
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 90  Packet Len: 1506
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 91  Packet Len: 54
 	Ethernet Header
@@ -544,11 +902,19 @@ Packet Number: 91  Packet Len: 54
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 92  Packet Len: 62
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 93  Packet Len: 54
 	Ethernet Header
@@ -556,11 +922,19 @@ Packet Number: 93  Packet Len: 54
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 94  Packet Len: 54
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 95  Packet Len: 584
 	Ethernet Header
@@ -568,11 +942,19 @@ Packet Number: 95  Packet Len: 584
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 96  Packet Len: 62
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 97  Packet Len: 1506
 	Ethernet Header
@@ -580,11 +962,19 @@ Packet Number: 97  Packet Len: 1506
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 98  Packet Len: 54
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 99  Packet Len: 1506
 	Ethernet Header
@@ -592,11 +982,19 @@ Packet Number: 99  Packet Len: 1506
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 100  Packet Len: 54
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 101  Packet Len: 1506
 	Ethernet Header
@@ -604,11 +1002,19 @@ Packet Number: 101  Packet Len: 1506
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 102  Packet Len: 54
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 103  Packet Len: 326
 	Ethernet Header
@@ -616,11 +1022,19 @@ Packet Number: 103  Packet Len: 326
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 104  Packet Len: 54
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 105  Packet Len: 1506
 	Ethernet Header
@@ -628,11 +1042,19 @@ Packet Number: 105  Packet Len: 1506
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 106  Packet Len: 54
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 107  Packet Len: 60
 	Ethernet Header
@@ -640,11 +1062,19 @@ Packet Number: 107  Packet Len: 60
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 108  Packet Len: 1506
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 109  Packet Len: 1506
 	Ethernet Header
@@ -652,11 +1082,19 @@ Packet Number: 109  Packet Len: 1506
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 110  Packet Len: 54
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 111  Packet Len: 62
 	Ethernet Header
@@ -664,11 +1102,19 @@ Packet Number: 111  Packet Len: 62
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 112  Packet Len: 54
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 113  Packet Len: 579
 	Ethernet Header
@@ -676,11 +1122,19 @@ Packet Number: 113  Packet Len: 579
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 114  Packet Len: 1506
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 115  Packet Len: 54
 	Ethernet Header
@@ -688,11 +1142,19 @@ Packet Number: 115  Packet Len: 54
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 116  Packet Len: 54
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 117  Packet Len: 1043
 	Ethernet Header
@@ -700,11 +1162,19 @@ Packet Number: 117  Packet Len: 1043
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 118  Packet Len: 54
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 119  Packet Len: 60
 	Ethernet Header
@@ -712,11 +1182,19 @@ Packet Number: 119  Packet Len: 60
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 120  Packet Len: 239
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 121  Packet Len: 62
 	Ethernet Header
@@ -724,11 +1202,19 @@ Packet Number: 121  Packet Len: 62
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 122  Packet Len: 580
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 123  Packet Len: 62
 	Ethernet Header
@@ -736,11 +1222,19 @@ Packet Number: 123  Packet Len: 62
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 124  Packet Len: 54
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 125  Packet Len: 580
 	Ethernet Header
@@ -748,11 +1242,19 @@ Packet Number: 125  Packet Len: 580
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 126  Packet Len: 1506
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 127  Packet Len: 1506
 	Ethernet Header
@@ -760,11 +1262,19 @@ Packet Number: 127  Packet Len: 1506
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 128  Packet Len: 54
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 129  Packet Len: 60
 	Ethernet Header
@@ -772,11 +1282,19 @@ Packet Number: 129  Packet Len: 60
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 130  Packet Len: 268
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 131  Packet Len: 66
 	Ethernet Header
@@ -784,11 +1302,19 @@ Packet Number: 131  Packet Len: 66
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 132  Packet Len: 1506
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 133  Packet Len: 54
 	Ethernet Header
@@ -796,11 +1322,19 @@ Packet Number: 133  Packet Len: 54
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 134  Packet Len: 54
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 135  Packet Len: 1506
 	Ethernet Header
@@ -808,11 +1342,19 @@ Packet Number: 135  Packet Len: 1506
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 136  Packet Len: 54
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 137  Packet Len: 54
 	Ethernet Header
@@ -820,11 +1362,19 @@ Packet Number: 137  Packet Len: 54
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 138  Packet Len: 1506
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 139  Packet Len: 54
 	Ethernet Header
@@ -832,11 +1382,19 @@ Packet Number: 139  Packet Len: 54
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 140  Packet Len: 1506
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 141  Packet Len: 54
 	Ethernet Header
@@ -844,11 +1402,19 @@ Packet Number: 141  Packet Len: 54
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 142  Packet Len: 1506
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 143  Packet Len: 54
 	Ethernet Header
@@ -856,11 +1422,19 @@ Packet Number: 143  Packet Len: 54
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 144  Packet Len: 1506
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 145  Packet Len: 54
 	Ethernet Header
@@ -868,11 +1442,19 @@ Packet Number: 145  Packet Len: 54
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 146  Packet Len: 131
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 147  Packet Len: 60
 	Ethernet Header
@@ -880,11 +1462,19 @@ Packet Number: 147  Packet Len: 60
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 148  Packet Len: 147
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 149  Packet Len: 60
 	Ethernet Header
@@ -892,11 +1482,19 @@ Packet Number: 149  Packet Len: 60
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 150  Packet Len: 1506
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 151  Packet Len: 1506
 	Ethernet Header
@@ -904,11 +1502,19 @@ Packet Number: 151  Packet Len: 1506
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 152  Packet Len: 54
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 153  Packet Len: 688
 	Ethernet Header
@@ -916,11 +1522,19 @@ Packet Number: 153  Packet Len: 688
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 154  Packet Len: 54
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 155  Packet Len: 296
 	Ethernet Header
@@ -928,11 +1542,19 @@ Packet Number: 155  Packet Len: 296
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 156  Packet Len: 131
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 157  Packet Len: 60
 	Ethernet Header
@@ -940,11 +1562,19 @@ Packet Number: 157  Packet Len: 60
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 158  Packet Len: 208
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 159  Packet Len: 264
 	Ethernet Header
@@ -952,11 +1582,19 @@ Packet Number: 159  Packet Len: 264
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 160  Packet Len: 60
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 161  Packet Len: 240
 	Ethernet Header
@@ -964,11 +1602,19 @@ Packet Number: 161  Packet Len: 240
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 162  Packet Len: 1200
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 163  Packet Len: 54
 	Ethernet Header
@@ -976,11 +1622,19 @@ Packet Number: 163  Packet Len: 54
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 164  Packet Len: 147
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
 Packet Number: 165  Packet Len: 123
 	Ethernet Header
@@ -988,15 +1642,27 @@ Packet Number: 165  Packet Len: 123
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 166  Packet Len: 60
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+
 Packet Number: 167  Packet Len: 54
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
 
