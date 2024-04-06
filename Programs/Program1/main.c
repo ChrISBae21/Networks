@@ -17,6 +17,24 @@
 #define ICMP 1
 #define TCP 6
 
+
+typedef struct __attribute__((packed)) IP_HDR {
+    uint8_t *ip_hdr;
+    uint8_t ver_len;
+    uint8_t dscp_ecn;
+    uint8_t ttl;
+    uint8_t protocol;
+    uint16_t checksum;
+    uint32_t src_ip;
+    uint32_t dest_ip;
+    
+
+} IP_HDR;
+
+void print_ip() {
+
+}
+
 void ip(uint8_t *pkt_data, uint8_t *len) {
     uint8_t *ip_hdr;
     uint8_t ver_len;
@@ -26,6 +44,9 @@ void ip(uint8_t *pkt_data, uint8_t *len) {
     uint16_t checksum;
     uint32_t src_ip, dest_ip;
     uint8_t *ip;
+
+    
+    //IP_HDR *ip_hdr = malloc(sizeof(IP_HDR));
 
     ip_hdr = pkt_data;
     memcpy(&ver_len, pkt_data, 1);
@@ -116,7 +137,7 @@ int main(int argc, char* argv[]) {
 
         pkt_len = pkt_header->caplen;                           // packet length
         printf("Packet Number: %d  Packet Len: %d\n", pkt_num, pkt_len);
-        type = ethernet((uint8_t*) pkt_data);
+        type = eth_hdr((uint8_t*) pkt_data);
 
         pkt_data += 14;     // skip the ethernet header
 
@@ -125,6 +146,8 @@ int main(int argc, char* argv[]) {
                 printf("\tIP Header\n");
                 ip((uint8_t*) pkt_data, &ip_hdr_len);
                 
+
+                pkt_data += ip_hdr_len;     // skip the ip header
                 break;
             case ARP:
                 printf("ARP header\n\n");

@@ -40,7 +40,7 @@ void print_eth(uint8_t *dest, uint8_t *src, uint16_t type) {
     printf("\n\n");
 }
 
-uint16_t ethernet(uint8_t *pkt_data) {
+uint16_t eth_hdr(uint8_t *pkt_data) {
     // always has dest, src, and type
     uint8_t dest[6];
     uint8_t src[6];

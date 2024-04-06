@@ -6,4 +6,4 @@
 
 void print_mac(uint8_t* mac_addr);
 void print_eth(uint8_t *dest, uint8_t *src, uint16_t type);
-uint16_t ethernet(uint8_t *pkt_data);
+uint16_t eth_hdr(uint8_t *pkt_data);
