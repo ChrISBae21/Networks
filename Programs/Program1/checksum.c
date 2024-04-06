@@ -46,8 +46,8 @@
 unsigned short in_cksum(unsigned short *addr,int len)
 {
         register int sum = 0;
-        u_short answer = 0;
-        register u_short *w = addr;
+        unsigned short answer = 0;
+        register unsigned short *w = addr;
         register int nleft = len;
 
         /*
@@ -62,7 +62,7 @@ unsigned short in_cksum(unsigned short *addr,int len)
 
         /* mop up an odd byte, if necessary */
         if (nleft == 1) {
-                *(u_char *)(&answer) = *(u_char *)w ;
+                *(unsigned char *)(&answer) = *(unsigned char *)w ;
                 sum += answer;
         }
 
