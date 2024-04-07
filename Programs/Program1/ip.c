@@ -146,7 +146,7 @@ uint8_t* mk_pseudo_hdr(uint32_t src, uint32_t dest, uint8_t protocol, uint8_t tc
     pseudo_hdr += 1;
     memcpy(pseudo_hdr, &protocol, 1);
     pseudo_hdr += 2;
-    len = (tcp_len/4);
+    len = (tcp_len);
 
     memcpy(pseudo_hdr, &len, 1);
 
