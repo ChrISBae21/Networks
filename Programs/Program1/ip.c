@@ -134,6 +134,8 @@ void print_tcp(TCP_HDR *tcp_hdr, uint8_t *pseudo_hdr) {
 uint8_t* mk_pseudo_hdr(uint32_t src, uint32_t dest, uint8_t protocol, uint8_t tcp_len) {
     uint8_t *pseudo_hdr;
     uint8_t *temp;
+
+    uint16_t len;
     pseudo_hdr = calloc((12 + tcp_len), sizeof(uint8_t));
     temp = pseudo_hdr;
 
@@ -143,8 +145,10 @@ uint8_t* mk_pseudo_hdr(uint32_t src, uint32_t dest, uint8_t protocol, uint8_t tc
     pseudo_hdr += 4;
     pseudo_hdr += 1;
     memcpy(pseudo_hdr, &protocol, 1);
-    pseudo_hdr += 1;
-    memcpy(pseudo_hdr, &tcp_len, 1);
+    pseudo_hdr += 2;
+    len = (tcp_len/4);
+
+    memcpy(pseudo_hdr, &len, 1);
 
     return temp;
 }
@@ -179,7 +183,7 @@ void tcp(uint8_t *pkt_data, IP_HDR *ip_hdr) {
     
     pseudo_hdr = mk_pseudo_hdr(ip_hdr->src_ip, ip_hdr->dest_ip, ip_hdr->protocol, tcp_hdr->data_offset);        // create pseudo-header
 
-    memcpy(pseudo_hdr+13, tcp_hdr->tcp_mem_addr, tcp_hdr->data_offset);
+    memcpy(pseudo_hdr+12, tcp_hdr->tcp_mem_addr, tcp_hdr->data_offset);
 
     print_tcp(tcp_hdr, pseudo_hdr);
 
