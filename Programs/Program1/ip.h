@@ -34,6 +34,19 @@ typedef struct __attribute__((packed)) IP_HDR {
     uint32_t dest_ip;               // Destination IP
 } IP_HDR;
 
+typedef struct __attribute__((packed)) TCP_HDR {
+    uint8_t *tcp_mem_addr;          // memory address of the start of the TCP Header
+    uint16_t src_port;              // Source Port
+    uint16_t dest_port;             // Destination Port
+    uint32_t seq_num;               // Sequence Number
+    uint32_t ack_num;               // Acknowledge Number
+    uint8_t data_offset;            // Data Offset
+    uint16_t flag;                  // Flags
+    uint16_t win_size;              // Window Size
+    uint16_t checksum;              // Checksum
+} TCP_HDR;
+
+
 void print_ip_hdr(IP_HDR *ip_hdr);
 IP_HDR* ip(uint8_t *pkt_data);
 void icmp_tcp_udp(uint8_t protocol, uint8_t *pkt_data);

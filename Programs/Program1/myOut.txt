@@ -458,6 +458,14 @@ Packet Number: 22  Packet Len: 62
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60341533
+		ACK Number: 0
+		Data Offset (bytes): 112
+		Flag: 
+		Window Size: 136
+		Checksum: Incorrect (0xed)
 
 Packet Number: 23  Packet Len: 60
 	Ethernet Header
@@ -478,6 +486,14 @@ Packet Number: 23  Packet Len: 60
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013144067
+		ACK Number: 60341534
+		Data Offset (bytes): 96
+		Flag: 
+		Window Size: 39
+		Checksum: Incorrect (0x85)
 
 Packet Number: 24  Packet Len: 54
 	Ethernet Header
@@ -498,6 +514,14 @@ Packet Number: 24  Packet Len: 54
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60341534
+		ACK Number: 1013144068
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4123
+		Checksum: Incorrect (0x2a)
 
 Packet Number: 25  Packet Len: 144
 	Ethernet Header
@@ -518,6 +542,14 @@ Packet Number: 25  Packet Len: 144
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60341534
+		ACK Number: 1013144068
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4227
+		Checksum: Incorrect (0x18)
 
 Packet Number: 26  Packet Len: 60
 	Ethernet Header
@@ -538,6 +570,14 @@ Packet Number: 26  Packet Len: 60
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013144068
+		ACK Number: 60341624
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 53320
+		Checksum: Incorrect (0x10)
 
 Packet Number: 27  Packet Len: 992
 	Ethernet Header
@@ -558,6 +598,14 @@ Packet Number: 27  Packet Len: 992
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013144068
+		ACK Number: 60341624
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 53429
+		Checksum: Incorrect (0x87)
 
 Packet Number: 28  Packet Len: 266
 	Ethernet Header
@@ -578,6 +626,14 @@ Packet Number: 28  Packet Len: 266
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60341624
+		ACK Number: 1013145006
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 26175
+		Checksum: Incorrect (0x9d)
 
 Packet Number: 29  Packet Len: 129
 	Ethernet Header
@@ -598,6 +654,14 @@ Packet Number: 29  Packet Len: 129
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013145006
+		ACK Number: 60341836
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 8262
+		Checksum: Incorrect (0xc8)
 
 Packet Number: 30  Packet Len: 355
 	Ethernet Header
@@ -618,6 +682,14 @@ Packet Number: 30  Packet Len: 355
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60341836
+		ACK Number: 1013145081
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 7064
+		Checksum: Incorrect (0xe0)
 
 Packet Number: 31  Packet Len: 560
 	Ethernet Header
@@ -638,6 +710,14 @@ Packet Number: 31  Packet Len: 560
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013145081
+		ACK Number: 60342137
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20616
+		Checksum: Incorrect (0x0)
 
 Packet Number: 32  Packet Len: 139
 	Ethernet Header
@@ -658,6 +738,14 @@ Packet Number: 32  Packet Len: 139
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60342137
+		ACK Number: 1013145587
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4099
+		Checksum: Incorrect (0x91)
 
 Packet Number: 33  Packet Len: 1506
 	Ethernet Header
@@ -678,6 +766,14 @@ Packet Number: 33  Packet Len: 1506
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013145587
+		ACK Number: 60342137
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20672
+		Checksum: Incorrect (0x7c)
 
 Packet Number: 34  Packet Len: 1506
 	Ethernet Header
@@ -698,6 +794,14 @@ Packet Number: 34  Packet Len: 1506
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013147039
+		ACK Number: 60342222
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20679
+		Checksum: Incorrect (0xec)
 
 Packet Number: 35  Packet Len: 54
 	Ethernet Header
@@ -718,6 +822,14 @@ Packet Number: 35  Packet Len: 54
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60342222
+		ACK Number: 1013148491
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4103
+		Checksum: Incorrect (0x33)
 
 Packet Number: 36  Packet Len: 284
 	Ethernet Header
@@ -738,6 +850,14 @@ Packet Number: 36  Packet Len: 284
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013148491
+		ACK Number: 60342222
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20638
+		Checksum: Incorrect (0x17)
 
 Packet Number: 37  Packet Len: 163
 	Ethernet Header
@@ -758,6 +878,14 @@ Packet Number: 37  Packet Len: 163
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60342222
+		ACK Number: 1013148721
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 10962
+		Checksum: Incorrect (0x7b)
 
 Packet Number: 38  Packet Len: 60
 	Ethernet Header
@@ -778,6 +906,14 @@ Packet Number: 38  Packet Len: 60
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013148721
+		ACK Number: 60342331
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20524
+		Checksum: Incorrect (0xa0)
 
 Packet Number: 39  Packet Len: 899
 	Ethernet Header
@@ -798,6 +934,14 @@ Packet Number: 39  Packet Len: 899
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60342331
+		ACK Number: 1013148721
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 10846
+		Checksum: Incorrect (0x96)
 
 Packet Number: 40  Packet Len: 60
 	Ethernet Header
@@ -818,6 +962,14 @@ Packet Number: 40  Packet Len: 60
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013148721
+		ACK Number: 60343176
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20258
+		Checksum: Incorrect (0x54)
 
 Packet Number: 41  Packet Len: 176
 	Ethernet Header
@@ -838,6 +990,14 @@ Packet Number: 41  Packet Len: 176
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013148721
+		ACK Number: 60343176
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20286
+		Checksum: Incorrect (0x8c)
 
 Packet Number: 42  Packet Len: 1506
 	Ethernet Header
@@ -858,6 +1018,14 @@ Packet Number: 42  Packet Len: 1506
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013148843
+		ACK Number: 60343176
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20439
+		Checksum: Incorrect (0x60)
 
 Packet Number: 43  Packet Len: 54
 	Ethernet Header
@@ -878,6 +1046,14 @@ Packet Number: 43  Packet Len: 54
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60343176
+		ACK Number: 1013150295
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4348
+		Checksum: Incorrect (0x6c)
 
 Packet Number: 44  Packet Len: 1506
 	Ethernet Header
@@ -898,6 +1074,14 @@ Packet Number: 44  Packet Len: 1506
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013150295
+		ACK Number: 60343176
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20375
+		Checksum: Incorrect (0x17)
 
 Packet Number: 45  Packet Len: 1506
 	Ethernet Header
@@ -918,6 +1102,14 @@ Packet Number: 45  Packet Len: 1506
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013151747
+		ACK Number: 60343176
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20354
+		Checksum: Incorrect (0x14)
 
 Packet Number: 46  Packet Len: 54
 	Ethernet Header
@@ -938,6 +1130,14 @@ Packet Number: 46  Packet Len: 54
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60343176
+		ACK Number: 1013153199
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4337
+		Checksum: Incorrect (0x14)
 
 Packet Number: 47  Packet Len: 1506
 	Ethernet Header
@@ -958,6 +1158,14 @@ Packet Number: 47  Packet Len: 1506
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013153199
+		ACK Number: 60343176
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20249
+		Checksum: Incorrect (0x95)
 
 Packet Number: 48  Packet Len: 1506
 	Ethernet Header
@@ -978,6 +1186,14 @@ Packet Number: 48  Packet Len: 1506
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013154651
+		ACK Number: 60343176
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20359
+		Checksum: Incorrect (0xf9)
 
 Packet Number: 49  Packet Len: 54
 	Ethernet Header
@@ -998,6 +1214,14 @@ Packet Number: 49  Packet Len: 54
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60343176
+		ACK Number: 1013156103
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4325
+		Checksum: Incorrect (0xbc)
 
 Packet Number: 50  Packet Len: 820
 	Ethernet Header
@@ -1018,6 +1242,14 @@ Packet Number: 50  Packet Len: 820
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013156103
+		ACK Number: 60343176
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20248
+		Checksum: Incorrect (0x68)
 
 Packet Number: 51  Packet Len: 54
 	Ethernet Header
@@ -1038,6 +1270,14 @@ Packet Number: 51  Packet Len: 54
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60343176
+		ACK Number: 1013156869
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4837
+		Checksum: Incorrect (0xbc)
 
 Packet Number: 52  Packet Len: 840
 	Ethernet Header
@@ -1058,6 +1298,14 @@ Packet Number: 52  Packet Len: 840
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013156869
+		ACK Number: 60343176
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20355
+		Checksum: Incorrect (0x68)
 
 Packet Number: 53  Packet Len: 54
 	Ethernet Header
@@ -1078,6 +1326,14 @@ Packet Number: 53  Packet Len: 54
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60343176
+		ACK Number: 1013157655
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 229
+		Checksum: Incorrect (0xbc)
 
 Packet Number: 54  Packet Len: 139
 	Ethernet Header
@@ -1098,6 +1354,14 @@ Packet Number: 54  Packet Len: 139
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60343176
+		ACK Number: 1013157655
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 56
+		Checksum: Incorrect (0xb3)
 
 Packet Number: 55  Packet Len: 60
 	Ethernet Header
@@ -1118,6 +1382,14 @@ Packet Number: 55  Packet Len: 60
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013157655
+		ACK Number: 60343261
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20479
+		Checksum: Incorrect (0x18)
 
 Packet Number: 56  Packet Len: 139
 	Ethernet Header
@@ -1138,6 +1410,14 @@ Packet Number: 56  Packet Len: 139
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60343261
+		ACK Number: 1013157655
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 116
+		Checksum: Incorrect (0x1b)
 
 Packet Number: 57  Packet Len: 60
 	Ethernet Header
@@ -1158,6 +1438,14 @@ Packet Number: 57  Packet Len: 60
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013157655
+		ACK Number: 60343346
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20478
+		Checksum: Incorrect (0xc3)
 
 Packet Number: 58  Packet Len: 139
 	Ethernet Header
@@ -1178,6 +1466,14 @@ Packet Number: 58  Packet Len: 139
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60343346
+		ACK Number: 1013157655
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 15
+		Checksum: Incorrect (0x9e)
 
 Packet Number: 59  Packet Len: 60
 	Ethernet Header
@@ -1198,6 +1494,14 @@ Packet Number: 59  Packet Len: 60
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013157655
+		ACK Number: 60343431
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20478
+		Checksum: Incorrect (0x6e)
 
 Packet Number: 60  Packet Len: 293
 	Ethernet Header
@@ -1218,6 +1522,14 @@ Packet Number: 60  Packet Len: 293
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60343431
+		ACK Number: 1013157655
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 242
+		Checksum: Incorrect (0x64)
 
 Packet Number: 61  Packet Len: 60
 	Ethernet Header
@@ -1238,6 +1550,14 @@ Packet Number: 61  Packet Len: 60
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013157655
+		ACK Number: 60343670
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20477
+		Checksum: Incorrect (0x7f)
 
 Packet Number: 62  Packet Len: 176
 	Ethernet Header
@@ -1258,6 +1578,14 @@ Packet Number: 62  Packet Len: 176
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013157655
+		ACK Number: 60343670
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20256
+		Checksum: Incorrect (0x9c)
 
 Packet Number: 63  Packet Len: 54
 	Ethernet Header
@@ -1278,6 +1606,14 @@ Packet Number: 63  Packet Len: 54
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60343670
+		ACK Number: 1013157777
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 34531
+		Checksum: Incorrect (0xce)
 
 Packet Number: 64  Packet Len: 600
 	Ethernet Header
@@ -1298,6 +1634,14 @@ Packet Number: 64  Packet Len: 600
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013157777
+		ACK Number: 60343670
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20404
+		Checksum: Incorrect (0xc6)
 
 Packet Number: 65  Packet Len: 54
 	Ethernet Header
@@ -1318,6 +1662,14 @@ Packet Number: 65  Packet Len: 54
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60343670
+		ACK Number: 1013158323
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 25827
+		Checksum: Incorrect (0xce)
 
 Packet Number: 66  Packet Len: 54
 	Ethernet Header
@@ -1338,6 +1690,14 @@ Packet Number: 66  Packet Len: 54
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60343670
+		ACK Number: 1013158323
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4315
+		Checksum: Incorrect (0x22)
 
 Packet Number: 67  Packet Len: 139
 	Ethernet Header
@@ -1358,6 +1718,14 @@ Packet Number: 67  Packet Len: 139
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60343670
+		ACK Number: 1013158323
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4164
+		Checksum: Incorrect (0xa4)
 
 Packet Number: 68  Packet Len: 60
 	Ethernet Header
@@ -1378,6 +1746,14 @@ Packet Number: 68  Packet Len: 60
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013158323
+		ACK Number: 60343755
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20474
+		Checksum: Incorrect (0x8e)
 
 Packet Number: 69  Packet Len: 139
 	Ethernet Header
@@ -1398,6 +1774,14 @@ Packet Number: 69  Packet Len: 139
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60343755
+		ACK Number: 1013158323
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4211
+		Checksum: Incorrect (0x65)
 
 Packet Number: 70  Packet Len: 60
 	Ethernet Header
@@ -1418,6 +1802,14 @@ Packet Number: 70  Packet Len: 60
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013158323
+		ACK Number: 60343840
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20474
+		Checksum: Incorrect (0x39)
 
 Packet Number: 71  Packet Len: 832
 	Ethernet Header
@@ -1438,6 +1830,14 @@ Packet Number: 71  Packet Len: 832
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013158323
+		ACK Number: 60343840
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20472
+		Checksum: Incorrect (0x73)
 
 Packet Number: 72  Packet Len: 54
 	Ethernet Header
@@ -1458,6 +1858,14 @@ Packet Number: 72  Packet Len: 54
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60343840
+		ACK Number: 1013159101
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 1754
+		Checksum: Incorrect (0x78)
 
 Packet Number: 73  Packet Len: 131
 	Ethernet Header
@@ -1478,6 +1886,14 @@ Packet Number: 73  Packet Len: 131
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60343840
+		ACK Number: 1013159101
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 1689
+		Checksum: Incorrect (0xbc)
 
 Packet Number: 74  Packet Len: 60
 	Ethernet Header
@@ -1498,6 +1914,14 @@ Packet Number: 74  Packet Len: 60
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013159101
+		ACK Number: 60343917
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20470
+		Checksum: Incorrect (0xe2)
 
 Packet Number: 75  Packet Len: 79
 	Ethernet Header
@@ -1562,6 +1986,14 @@ Packet Number: 77  Packet Len: 62
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1665
+		Dest Port: HTTP
+		Sequence Number: 61702072
+		ACK Number: 0
+		Data Offset (bytes): 112
+		Flag: 
+		Window Size: 5
+		Checksum: Incorrect (0xa8)
 
 Packet Number: 78  Packet Len: 62
 	Ethernet Header
@@ -1582,6 +2014,14 @@ Packet Number: 78  Packet Len: 62
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1665
+		Sequence Number: -430799868
+		ACK Number: 61702073
+		Data Offset (bytes): 112
+		Flag: 
+		Window Size: 53444
+		Checksum: Incorrect (0x77)
 
 Packet Number: 79  Packet Len: 54
 	Ethernet Header
@@ -1602,6 +2042,14 @@ Packet Number: 79  Packet Len: 54
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1665
+		Dest Port: HTTP
+		Sequence Number: 61702073
+		ACK Number: -430799867
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4291
+		Checksum: Incorrect (0xf3)
 
 Packet Number: 80  Packet Len: 382
 	Ethernet Header
@@ -1622,6 +2070,14 @@ Packet Number: 80  Packet Len: 382
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1665
+		Dest Port: HTTP
+		Sequence Number: 61702073
+		ACK Number: -430799867
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4256
+		Checksum: Incorrect (0x38)
 
 Packet Number: 81  Packet Len: 60
 	Ethernet Header
@@ -1642,6 +2098,14 @@ Packet Number: 81  Packet Len: 60
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1665
+		Sequence Number: -430799867
+		ACK Number: 61702401
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 8429
+		Checksum: Incorrect (0x9b)
 
 Packet Number: 82  Packet Len: 1506
 	Ethernet Header
@@ -1662,6 +2126,14 @@ Packet Number: 82  Packet Len: 1506
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1665
+		Sequence Number: -430799867
+		ACK Number: 61702401
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 8215
+		Checksum: Incorrect (0x28)
 
 Packet Number: 83  Packet Len: 854
 	Ethernet Header
@@ -1682,6 +2154,14 @@ Packet Number: 83  Packet Len: 854
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1665
+		Sequence Number: -430798415
+		ACK Number: 61702401
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 8213
+		Checksum: Incorrect (0xbf)
 
 Packet Number: 84  Packet Len: 54
 	Ethernet Header
@@ -1702,6 +2182,14 @@ Packet Number: 84  Packet Len: 54
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1665
+		Dest Port: HTTP
+		Sequence Number: 61702401
+		ACK Number: -430797615
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4281
+		Checksum: Incorrect (0xdf)
 
 Packet Number: 85  Packet Len: 583
 	Ethernet Header
@@ -1722,6 +2210,14 @@ Packet Number: 85  Packet Len: 583
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1665
+		Dest Port: HTTP
+		Sequence Number: 61702401
+		ACK Number: -430797615
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4337
+		Checksum: Incorrect (0x80)
 
 Packet Number: 86  Packet Len: 62
 	Ethernet Header
@@ -1742,6 +2238,14 @@ Packet Number: 86  Packet Len: 62
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1666
+		Dest Port: HTTP
+		Sequence Number: 61870744
+		ACK Number: 0
+		Data Offset (bytes): 112
+		Flag: 
+		Window Size: 114
+		Checksum: Incorrect (0xc4)
 
 Packet Number: 87  Packet Len: 1506
 	Ethernet Header
@@ -1762,6 +2266,14 @@ Packet Number: 87  Packet Len: 1506
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1665
+		Sequence Number: -430797615
+		ACK Number: 61702930
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20615
+		Checksum: Incorrect (0x19)
 
 Packet Number: 88  Packet Len: 1506
 	Ethernet Header
@@ -1782,6 +2294,14 @@ Packet Number: 88  Packet Len: 1506
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1665
+		Sequence Number: -430796163
+		ACK Number: 61702930
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20497
+		Checksum: Incorrect (0xba)
 
 Packet Number: 89  Packet Len: 54
 	Ethernet Header
@@ -1802,6 +2322,14 @@ Packet Number: 89  Packet Len: 54
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1665
+		Dest Port: HTTP
+		Sequence Number: 61702930
+		ACK Number: -430794711
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4268
+		Checksum: Incorrect (0x76)
 
 Packet Number: 90  Packet Len: 1506
 	Ethernet Header
@@ -1822,6 +2350,14 @@ Packet Number: 90  Packet Len: 1506
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1665
+		Sequence Number: -430794711
+		ACK Number: 61702930
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20710
+		Checksum: Incorrect (0x2f)
 
 Packet Number: 91  Packet Len: 54
 	Ethernet Header
@@ -1842,6 +2378,14 @@ Packet Number: 91  Packet Len: 54
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1665
+		Dest Port: HTTP
+		Sequence Number: 61702930
+		ACK Number: -430793259
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4262
+		Checksum: Incorrect (0xca)
 
 Packet Number: 92  Packet Len: 62
 	Ethernet Header
@@ -1862,6 +2406,14 @@ Packet Number: 92  Packet Len: 62
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1666
+		Sequence Number: -737098043
+		ACK Number: 61870745
+		Data Offset (bytes): 112
+		Flag: 
+		Window Size: 53249
+		Checksum: Incorrect (0x15)
 
 Packet Number: 93  Packet Len: 54
 	Ethernet Header
@@ -1882,6 +2434,14 @@ Packet Number: 93  Packet Len: 54
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1666
+		Dest Port: HTTP
+		Sequence Number: 61870745
+		ACK Number: -737098042
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4096
+		Checksum: Incorrect (0x91)
 
 Packet Number: 94  Packet Len: 54
 	Ethernet Header
@@ -1902,6 +2462,14 @@ Packet Number: 94  Packet Len: 54
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1665
+		Dest Port: HTTP
+		Sequence Number: 61702930
+		ACK Number: -737098042
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 212
+		Checksum: Incorrect (0x37)
 
 Packet Number: 95  Packet Len: 584
 	Ethernet Header
@@ -1922,6 +2490,14 @@ Packet Number: 95  Packet Len: 584
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1666
+		Dest Port: HTTP
+		Sequence Number: 61870745
+		ACK Number: -737098042
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4166
+		Checksum: Incorrect (0x1d)
 
 Packet Number: 96  Packet Len: 62
 	Ethernet Header
@@ -1942,6 +2518,14 @@ Packet Number: 96  Packet Len: 62
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1667
+		Dest Port: HTTP
+		Sequence Number: 61961010
+		ACK Number: 0
+		Data Offset (bytes): 112
+		Flag: 
+		Window Size: 18
+		Checksum: Incorrect (0x28)
 
 Packet Number: 97  Packet Len: 1506
 	Ethernet Header
@@ -1962,6 +2546,14 @@ Packet Number: 97  Packet Len: 1506
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1665
+		Sequence Number: -430793259
+		ACK Number: 61702930
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20551
+		Checksum: Incorrect (0x6)
 
 Packet Number: 98  Packet Len: 54
 	Ethernet Header
@@ -1982,6 +2574,14 @@ Packet Number: 98  Packet Len: 54
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1665
+		Dest Port: HTTP
+		Sequence Number: 61702930
+		ACK Number: 61702930
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 232
+		Checksum: Incorrect (0x4f)
 
 Packet Number: 99  Packet Len: 1506
 	Ethernet Header
@@ -2002,6 +2602,14 @@ Packet Number: 99  Packet Len: 1506
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1665
+		Sequence Number: -430791807
+		ACK Number: 61702930
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20714
+		Checksum: Incorrect (0x20)
 
 Packet Number: 100  Packet Len: 54
 	Ethernet Header
@@ -2022,6 +2630,14 @@ Packet Number: 100  Packet Len: 54
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1665
+		Dest Port: HTTP
+		Sequence Number: 61702930
+		ACK Number: 61702930
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 232
+		Checksum: Incorrect (0x4f)
 
 Packet Number: 101  Packet Len: 1506
 	Ethernet Header
@@ -2042,6 +2658,14 @@ Packet Number: 101  Packet Len: 1506
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1665
+		Sequence Number: -430790355
+		ACK Number: 61702930
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20695
+		Checksum: Incorrect (0xc8)
 
 Packet Number: 102  Packet Len: 54
 	Ethernet Header
@@ -2062,6 +2686,14 @@ Packet Number: 102  Packet Len: 54
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1665
+		Dest Port: HTTP
+		Sequence Number: 61702930
+		ACK Number: 61702930
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 232
+		Checksum: Incorrect (0x4f)
 
 Packet Number: 103  Packet Len: 326
 	Ethernet Header
@@ -2082,6 +2714,14 @@ Packet Number: 103  Packet Len: 326
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1665
+		Sequence Number: -430787451
+		ACK Number: 61702930
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20513
+		Checksum: Incorrect (0xa3)
 
 Packet Number: 104  Packet Len: 54
 	Ethernet Header
@@ -2102,6 +2742,14 @@ Packet Number: 104  Packet Len: 54
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1665
+		Dest Port: HTTP
+		Sequence Number: 61702930
+		ACK Number: 61702930
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 232
+		Checksum: Incorrect (0x4f)
 
 Packet Number: 105  Packet Len: 1506
 	Ethernet Header
@@ -2122,6 +2770,14 @@ Packet Number: 105  Packet Len: 1506
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1665
+		Sequence Number: -430788903
+		ACK Number: 61702930
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20702
+		Checksum: Incorrect (0x9d)
 
 Packet Number: 106  Packet Len: 54
 	Ethernet Header
@@ -2142,6 +2798,14 @@ Packet Number: 106  Packet Len: 54
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1665
+		Dest Port: HTTP
+		Sequence Number: 61702930
+		ACK Number: 61702930
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 232
+		Checksum: Incorrect (0x4f)
 
 Packet Number: 107  Packet Len: 60
 	Ethernet Header
@@ -2162,6 +2826,14 @@ Packet Number: 107  Packet Len: 60
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1666
+		Sequence Number: -737098042
+		ACK Number: 61871275
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 8233
+		Checksum: Incorrect (0x6f)
 
 Packet Number: 108  Packet Len: 1506
 	Ethernet Header
@@ -2182,6 +2854,14 @@ Packet Number: 108  Packet Len: 1506
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1666
+		Sequence Number: -737098042
+		ACK Number: 61871275
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 8406
+		Checksum: Incorrect (0xd5)
 
 Packet Number: 109  Packet Len: 1506
 	Ethernet Header
@@ -2202,6 +2882,14 @@ Packet Number: 109  Packet Len: 1506
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1666
+		Sequence Number: -737096590
+		ACK Number: 61871275
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 8213
+		Checksum: Incorrect (0xc8)
 
 Packet Number: 110  Packet Len: 54
 	Ethernet Header
@@ -2222,6 +2910,14 @@ Packet Number: 110  Packet Len: 54
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1666
+		Dest Port: HTTP
+		Sequence Number: 61871275
+		ACK Number: -737095138
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4339
+		Checksum: Incorrect (0x26)
 
 Packet Number: 111  Packet Len: 62
 	Ethernet Header
@@ -2242,6 +2938,14 @@ Packet Number: 111  Packet Len: 62
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1667
+		Sequence Number: -724471891
+		ACK Number: 61961011
+		Data Offset (bytes): 112
+		Flag: 
+		Window Size: 53494
+		Checksum: Incorrect (0xcf)
 
 Packet Number: 112  Packet Len: 54
 	Ethernet Header
@@ -2262,6 +2966,14 @@ Packet Number: 112  Packet Len: 54
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1667
+		Dest Port: HTTP
+		Sequence Number: 61961011
+		ACK Number: -724471890
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4342
+		Checksum: Incorrect (0x4b)
 
 Packet Number: 113  Packet Len: 579
 	Ethernet Header
@@ -2282,6 +2994,14 @@ Packet Number: 113  Packet Len: 579
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1667
+		Dest Port: HTTP
+		Sequence Number: 61961011
+		ACK Number: -724471890
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4150
+		Checksum: Incorrect (0x5c)
 
 Packet Number: 114  Packet Len: 1506
 	Ethernet Header
@@ -2302,6 +3022,14 @@ Packet Number: 114  Packet Len: 1506
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1666
+		Sequence Number: -737095138
+		ACK Number: 61871275
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 8302
+		Checksum: Incorrect (0xd0)
 
 Packet Number: 115  Packet Len: 54
 	Ethernet Header
@@ -2322,6 +3050,14 @@ Packet Number: 115  Packet Len: 54
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1666
+		Dest Port: HTTP
+		Sequence Number: 61871275
+		ACK Number: -737093686
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4333
+		Checksum: Incorrect (0x7a)
 
 Packet Number: 116  Packet Len: 54
 	Ethernet Header
@@ -2342,6 +3078,14 @@ Packet Number: 116  Packet Len: 54
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1666
+		Dest Port: HTTP
+		Sequence Number: 61871275
+		ACK Number: -737093686
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 49
+		Checksum: Incorrect (0x97)
 
 Packet Number: 117  Packet Len: 1043
 	Ethernet Header
@@ -2362,6 +3106,14 @@ Packet Number: 117  Packet Len: 1043
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1666
+		Sequence Number: -737093686
+		ACK Number: 61871275
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 8307
+		Checksum: Incorrect (0xc7)
 
 Packet Number: 118  Packet Len: 54
 	Ethernet Header
@@ -2382,6 +3134,14 @@ Packet Number: 118  Packet Len: 54
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1666
+		Dest Port: HTTP
+		Sequence Number: 61871275
+		ACK Number: 61871275
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 197
+		Checksum: Incorrect (0x17)
 
 Packet Number: 119  Packet Len: 60
 	Ethernet Header
@@ -2402,6 +3162,14 @@ Packet Number: 119  Packet Len: 60
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1667
+		Sequence Number: -724471890
+		ACK Number: 61961536
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 8223
+		Checksum: Incorrect (0x2f)
 
 Packet Number: 120  Packet Len: 239
 	Ethernet Header
@@ -2422,6 +3190,14 @@ Packet Number: 120  Packet Len: 239
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1667
+		Sequence Number: -724471890
+		ACK Number: 61961536
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 8298
+		Checksum: Incorrect (0x7e)
 
 Packet Number: 121  Packet Len: 62
 	Ethernet Header
@@ -2442,6 +3218,14 @@ Packet Number: 121  Packet Len: 62
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1668
+		Dest Port: HTTP
+		Sequence Number: 62140588
+		ACK Number: 0
+		Data Offset (bytes): 112
+		Flag: 
+		Window Size: 84
+		Checksum: Incorrect (0xaa)
 
 Packet Number: 122  Packet Len: 580
 	Ethernet Header
@@ -2462,6 +3246,14 @@ Packet Number: 122  Packet Len: 580
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1667
+		Dest Port: HTTP
+		Sequence Number: 61961536
+		ACK Number: -724471705
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 22385
+		Checksum: Incorrect (0xa3)
 
 Packet Number: 123  Packet Len: 62
 	Ethernet Header
@@ -2482,6 +3274,14 @@ Packet Number: 123  Packet Len: 62
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1668
+		Sequence Number: -586705092
+		ACK Number: 62140589
+		Data Offset (bytes): 112
+		Flag: 
+		Window Size: 53257
+		Checksum: Incorrect (0x8d)
 
 Packet Number: 124  Packet Len: 54
 	Ethernet Header
@@ -2502,6 +3302,14 @@ Packet Number: 124  Packet Len: 54
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1668
+		Dest Port: HTTP
+		Sequence Number: 62140589
+		ACK Number: -586705091
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4105
+		Checksum: Incorrect (0x9)
 
 Packet Number: 125  Packet Len: 580
 	Ethernet Header
@@ -2522,6 +3330,14 @@ Packet Number: 125  Packet Len: 580
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1668
+		Dest Port: HTTP
+		Sequence Number: 62140589
+		ACK Number: -586705091
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4104
+		Checksum: Incorrect (0xe1)
 
 Packet Number: 126  Packet Len: 1506
 	Ethernet Header
@@ -2542,6 +3358,14 @@ Packet Number: 126  Packet Len: 1506
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1667
+		Sequence Number: -724471705
+		ACK Number: 61962062
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20631
+		Checksum: Incorrect (0xd1)
 
 Packet Number: 127  Packet Len: 1506
 	Ethernet Header
@@ -2562,6 +3386,14 @@ Packet Number: 127  Packet Len: 1506
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1667
+		Sequence Number: -724470253
+		ACK Number: 61962062
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20668
+		Checksum: Incorrect (0xea)
 
 Packet Number: 128  Packet Len: 54
 	Ethernet Header
@@ -2582,6 +3414,14 @@ Packet Number: 128  Packet Len: 54
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1667
+		Dest Port: HTTP
+		Sequence Number: 61962062
+		ACK Number: -724468801
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4326
+		Checksum: Incorrect (0x1f)
 
 Packet Number: 129  Packet Len: 60
 	Ethernet Header
@@ -2602,6 +3442,14 @@ Packet Number: 129  Packet Len: 60
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1668
+		Sequence Number: -586705091
+		ACK Number: 62141115
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 8241
+		Checksum: Incorrect (0xeb)
 
 Packet Number: 130  Packet Len: 268
 	Ethernet Header
@@ -2622,6 +3470,14 @@ Packet Number: 130  Packet Len: 268
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1668
+		Sequence Number: -586703639
+		ACK Number: 62141115
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 8332
+		Checksum: Incorrect (0x34)
 
 Packet Number: 131  Packet Len: 66
 	Ethernet Header
@@ -2642,6 +3498,14 @@ Packet Number: 131  Packet Len: 66
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1668
+		Dest Port: HTTP
+		Sequence Number: 62141115
+		ACK Number: -586705091
+		Data Offset (bytes): 128
+		Flag: 
+		Window Size: 4316
+		Checksum: Incorrect (0x2a)
 
 Packet Number: 132  Packet Len: 1506
 	Ethernet Header
@@ -2662,6 +3526,14 @@ Packet Number: 132  Packet Len: 1506
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1668
+		Sequence Number: -586705091
+		ACK Number: 62141115
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 8432
+		Checksum: Incorrect (0x8)
 
 Packet Number: 133  Packet Len: 54
 	Ethernet Header
@@ -2682,6 +3554,14 @@ Packet Number: 133  Packet Len: 54
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1668
+		Dest Port: HTTP
+		Sequence Number: 62141115
+		ACK Number: -586703425
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4096
+		Checksum: Incorrect (0x79)
 
 Packet Number: 134  Packet Len: 54
 	Ethernet Header
@@ -2702,6 +3582,14 @@ Packet Number: 134  Packet Len: 54
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1668
+		Dest Port: HTTP
+		Sequence Number: 62141115
+		ACK Number: -586703425
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 68
+		Checksum: Incorrect (0x95)
 
 Packet Number: 135  Packet Len: 1506
 	Ethernet Header
@@ -2722,6 +3610,14 @@ Packet Number: 135  Packet Len: 1506
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1667
+		Sequence Number: -724468801
+		ACK Number: 61962062
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20659
+		Checksum: Incorrect (0x1d)
 
 Packet Number: 136  Packet Len: 54
 	Ethernet Header
@@ -2742,6 +3638,14 @@ Packet Number: 136  Packet Len: 54
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1667
+		Dest Port: HTTP
+		Sequence Number: 61962062
+		ACK Number: -724467349
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4320
+		Checksum: Incorrect (0x73)
 
 Packet Number: 137  Packet Len: 54
 	Ethernet Header
@@ -2762,6 +3666,14 @@ Packet Number: 137  Packet Len: 54
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1667
+		Dest Port: HTTP
+		Sequence Number: 61962062
+		ACK Number: -724467349
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 36
+		Checksum: Incorrect (0x90)
 
 Packet Number: 138  Packet Len: 1506
 	Ethernet Header
@@ -2782,6 +3694,14 @@ Packet Number: 138  Packet Len: 1506
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1667
+		Sequence Number: -724467349
+		ACK Number: 61962062
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20512
+		Checksum: Incorrect (0x38)
 
 Packet Number: 139  Packet Len: 54
 	Ethernet Header
@@ -2802,6 +3722,14 @@ Packet Number: 139  Packet Len: 54
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1667
+		Dest Port: HTTP
+		Sequence Number: 61962062
+		ACK Number: 61962062
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 255
+		Checksum: Incorrect (0xcd)
 
 Packet Number: 140  Packet Len: 1506
 	Ethernet Header
@@ -2822,6 +3750,14 @@ Packet Number: 140  Packet Len: 1506
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1667
+		Sequence Number: -724465897
+		ACK Number: 61962062
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20735
+		Checksum: Incorrect (0x5e)
 
 Packet Number: 141  Packet Len: 54
 	Ethernet Header
@@ -2842,6 +3778,14 @@ Packet Number: 141  Packet Len: 54
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1667
+		Dest Port: HTTP
+		Sequence Number: 61962062
+		ACK Number: 61962062
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 255
+		Checksum: Incorrect (0xcd)
 
 Packet Number: 142  Packet Len: 1506
 	Ethernet Header
@@ -2862,6 +3806,14 @@ Packet Number: 142  Packet Len: 1506
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1667
+		Sequence Number: -724464445
+		ACK Number: 61962062
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20635
+		Checksum: Incorrect (0x60)
 
 Packet Number: 143  Packet Len: 54
 	Ethernet Header
@@ -2882,6 +3834,14 @@ Packet Number: 143  Packet Len: 54
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1667
+		Dest Port: HTTP
+		Sequence Number: 61962062
+		ACK Number: 61962062
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 255
+		Checksum: Incorrect (0xcd)
 
 Packet Number: 144  Packet Len: 1506
 	Ethernet Header
@@ -2902,6 +3862,14 @@ Packet Number: 144  Packet Len: 1506
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: HTTP
+		Dest Port: 1667
+		Sequence Number: -724462993
+		ACK Number: 61962062
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20691
+		Checksum: Incorrect (0x97)
 
 Packet Number: 145  Packet Len: 54
 	Ethernet Header
@@ -2922,6 +3890,14 @@ Packet Number: 145  Packet Len: 54
 		Dest IP: 195.10.46.40
 
 	TCP Header
+		Source Port: 1667
+		Dest Port: HTTP
+		Sequence Number: 61962062
+		ACK Number: 61962062
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 255
+		Checksum: Incorrect (0xcd)
 
 Packet Number: 146  Packet Len: 131
 	Ethernet Header
@@ -2942,6 +3918,14 @@ Packet Number: 146  Packet Len: 131
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60343917
+		ACK Number: 1013159101
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 1576
+		Checksum: Incorrect (0xe7)
 
 Packet Number: 147  Packet Len: 60
 	Ethernet Header
@@ -2962,6 +3946,14 @@ Packet Number: 147  Packet Len: 60
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013159101
+		ACK Number: 60343994
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20470
+		Checksum: Incorrect (0x95)
 
 Packet Number: 148  Packet Len: 147
 	Ethernet Header
@@ -2982,6 +3974,14 @@ Packet Number: 148  Packet Len: 147
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60343994
+		ACK Number: 1013159101
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 1738
+		Checksum: Incorrect (0x8b)
 
 Packet Number: 149  Packet Len: 60
 	Ethernet Header
@@ -3002,6 +4002,14 @@ Packet Number: 149  Packet Len: 60
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013159101
+		ACK Number: 60344087
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20470
+		Checksum: Incorrect (0x38)
 
 Packet Number: 150  Packet Len: 1506
 	Ethernet Header
@@ -3022,6 +4030,14 @@ Packet Number: 150  Packet Len: 1506
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013159101
+		ACK Number: 60344087
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20294
+		Checksum: Incorrect (0x7)
 
 Packet Number: 151  Packet Len: 1506
 	Ethernet Header
@@ -3042,6 +4058,14 @@ Packet Number: 151  Packet Len: 1506
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013160553
+		ACK Number: 60344087
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20409
+		Checksum: Incorrect (0x15)
 
 Packet Number: 152  Packet Len: 54
 	Ethernet Header
@@ -3062,6 +4086,14 @@ Packet Number: 152  Packet Len: 54
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60344087
+		ACK Number: 1013162005
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4299
+		Checksum: Incorrect (0x1f)
 
 Packet Number: 153  Packet Len: 688
 	Ethernet Header
@@ -3082,6 +4114,14 @@ Packet Number: 153  Packet Len: 688
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013162005
+		ACK Number: 60344087
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20456
+		Checksum: Incorrect (0x44)
 
 Packet Number: 154  Packet Len: 54
 	Ethernet Header
@@ -3102,6 +4142,14 @@ Packet Number: 154  Packet Len: 54
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60344087
+		ACK Number: 1013162639
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 38603
+		Checksum: Incorrect (0x1f)
 
 Packet Number: 155  Packet Len: 296
 	Ethernet Header
@@ -3122,6 +4170,14 @@ Packet Number: 155  Packet Len: 296
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013162639
+		ACK Number: 60344087
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20369
+		Checksum: Incorrect (0xd9)
 
 Packet Number: 156  Packet Len: 131
 	Ethernet Header
@@ -3142,6 +4198,14 @@ Packet Number: 156  Packet Len: 131
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60344087
+		ACK Number: 1013162881
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 42131
+		Checksum: Incorrect (0x8)
 
 Packet Number: 157  Packet Len: 60
 	Ethernet Header
@@ -3162,6 +4226,14 @@ Packet Number: 157  Packet Len: 60
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013162881
+		ACK Number: 60344164
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20455
+		Checksum: Incorrect (0x27)
 
 Packet Number: 158  Packet Len: 208
 	Ethernet Header
@@ -3182,6 +4254,14 @@ Packet Number: 158  Packet Len: 208
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60344164
+		ACK Number: 1013162881
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 42084
+		Checksum: Incorrect (0x74)
 
 Packet Number: 159  Packet Len: 264
 	Ethernet Header
@@ -3202,6 +4282,14 @@ Packet Number: 159  Packet Len: 264
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013162881
+		ACK Number: 60344164
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 20362
+		Checksum: Incorrect (0xa5)
 
 Packet Number: 160  Packet Len: 60
 	Ethernet Header
@@ -3222,6 +4310,14 @@ Packet Number: 160  Packet Len: 60
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013163091
+		ACK Number: 60344318
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 59871
+		Checksum: Incorrect (0x21)
 
 Packet Number: 161  Packet Len: 240
 	Ethernet Header
@@ -3242,6 +4338,14 @@ Packet Number: 161  Packet Len: 240
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60344318
+		ACK Number: 1013163091
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 53946
+		Checksum: Incorrect (0x9d)
 
 Packet Number: 162  Packet Len: 1200
 	Ethernet Header
@@ -3262,6 +4366,14 @@ Packet Number: 162  Packet Len: 1200
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013163091
+		ACK Number: 60344504
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 33605
+		Checksum: Incorrect (0x38)
 
 Packet Number: 163  Packet Len: 54
 	Ethernet Header
@@ -3282,6 +4394,14 @@ Packet Number: 163  Packet Len: 54
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60344504
+		ACK Number: 1013164237
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4288
+		Checksum: Incorrect (0xc6)
 
 Packet Number: 164  Packet Len: 147
 	Ethernet Header
@@ -3302,6 +4422,14 @@ Packet Number: 164  Packet Len: 147
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60344504
+		ACK Number: 1013164237
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4295
+		Checksum: Incorrect (0xa8)
 
 Packet Number: 165  Packet Len: 123
 	Ethernet Header
@@ -3322,6 +4450,14 @@ Packet Number: 165  Packet Len: 123
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60344597
+		ACK Number: 1013164237
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4150
+		Checksum: Incorrect (0xfc)
 
 Packet Number: 166  Packet Len: 60
 	Ethernet Header
@@ -3342,6 +4478,14 @@ Packet Number: 166  Packet Len: 60
 		Dest IP: 192.168.1.102
 
 	TCP Header
+		Source Port: 2147
+		Dest Port: 1663
+		Sequence Number: 1013164237
+		ACK Number: 60344667
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 33746
+		Checksum: Incorrect (0xaf)
 
 Packet Number: 167  Packet Len: 54
 	Ethernet Header
@@ -3362,4 +4506,12 @@ Packet Number: 167  Packet Len: 54
 		Dest IP: 66.212.229.183
 
 	TCP Header
+		Source Port: 1663
+		Dest Port: 2147
+		Sequence Number: 60344667
+		ACK Number: 1013164238
+		Data Offset (bytes): 80
+		Flag: 
+		Window Size: 4288
+		Checksum: Incorrect (0x22)
 

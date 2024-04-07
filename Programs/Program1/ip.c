@@ -85,6 +85,7 @@ void icmp_tcp_udp(uint8_t protocol, uint8_t *pkt_data) {
             break;
         case TCP:
             printf("\tTCP Header\n");
+            tcp(pkt_data);
             break;
         default: printf("\tUnknown\n");
             break;
@@ -104,8 +105,55 @@ void udp(uint8_t *pkt_data) {
     print_port(ntohs(dest_port), UDP);
 }
 
+
+void print_tcp_flag(uint16_t flag) {
+    printf("\t\tFlag: \n");
+}
+
+void print_tcp(TCP_HDR *tcp_hdr) {
+    printf("\t\tSource Port: ");
+    print_port(ntohs(tcp_hdr->src_port), TCP);
+    printf("\t\tDest Port: ");
+    print_port(ntohs(tcp_hdr->dest_port), TCP);
+    printf("\t\tSequence Number: %d\n", ntohl(tcp_hdr->seq_num));
+    printf("\t\tACK Number: %d\n", ntohl(tcp_hdr->ack_num));
+    printf("\t\tData Offset (bytes): %d\n", tcp_hdr->data_offset);
+
+    print_tcp_flag(ntohs(tcp_hdr->flag));
+
+    printf("\t\tWindow Size: %d\n", ntohs(tcp_hdr->win_size));
+    if(in_cksum((unsigned short*) tcp_hdr->tcp_mem_addr, tcp_hdr->data_offset) == 0) 
+        printf("\t\tChecksum: Correct (0x%x)\n", tcp_hdr->checksum);
+    else 
+        printf("\t\tChecksum: Incorrect (0x%x)\n", tcp_hdr->checksum);
+
+
+}
+
 void tcp(uint8_t *pkt_data) {
+    TCP_HDR *tcp_hdr = malloc(sizeof(TCP_HDR));
+    tcp_hdr->tcp_mem_addr = pkt_data;
+
+    memcpy(&(tcp_hdr->src_port), pkt_data, 2);
+    pkt_data+=2;
+    memcpy(&(tcp_hdr->dest_port), pkt_data, 2);
+    pkt_data+=2;
+    memcpy(&(tcp_hdr->seq_num), pkt_data, 4);
+    pkt_data+=4;
+    memcpy(&(tcp_hdr->ack_num), pkt_data, 4);
+    pkt_data+=4;
+    memcpy(&(tcp_hdr->data_offset), pkt_data, 1);
+    pkt_data+=1;
+    memcpy(&(tcp_hdr->flag), pkt_data, 2);
+    pkt_data+=2;
+    memcpy(&(tcp_hdr->win_size), pkt_data, 2);
+    pkt_data+=2;
+    memcpy(&(tcp_hdr->checksum), pkt_data, 2);
     
+
+    print_tcp(tcp_hdr);
+
+    free(tcp_hdr);
 }
 
 void icmp(uint8_t *pkt_data) {
