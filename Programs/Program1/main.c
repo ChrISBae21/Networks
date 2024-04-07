@@ -7,7 +7,53 @@
 #include "ethernet.h"
 #include "ip.h"
 
+// common TCP ports
+#define HTTP 80
+#define TELNET 23
+#define FTP 21
+#define POP3 110
+#define SMTP 25
 
+
+void ICMP_TCP_UDP(uint8_t protocol, uint8_t *pkt_data) {
+
+
+    switch(protocol) {
+        case UDP: 
+            printf("\tUDP Header\n");
+            break;
+        case ICMP: 
+            printf("\tICMP Header\n");
+            break;
+        case TCP:
+            printf("\tTCP Header\n");
+            break;
+        default: printf("\tUnknown\n");
+            break;
+    }
+
+}
+
+void IP_ARP(uint16_t type, uint8_t *pkt_data) {
+
+    
+    switch(ntohs(type)) {
+            case IP: 
+                printf("\tIP Header\n");
+                IP_HDR *ip_hdr = ip((uint8_t*) pkt_data);
+                pkt_data += ip_hdr->len;     // skip the ip header
+
+                free(ip_hdr);
+                break;
+            case ARP:
+                printf("ARP header\n\n");
+                
+                break;
+            default:
+                break;
+                
+        }
+}
 
 int main(int argc, char* argv[]) {
     pcap_t* trace_file;
@@ -34,35 +80,8 @@ int main(int argc, char* argv[]) {
         type = eth_hdr((uint8_t*) pkt_data);
 
         pkt_data += 14;     // skip the ethernet header
-
-        switch(ntohs(type)) {
-            case IP: 
-                printf("\tIP Header\n");
-                IP_HDR *ip_hdr = ip((uint8_t*) pkt_data);
-                
-                pkt_data += ip_hdr->len;     // skip the ip header
-
-
-                free(ip_hdr);
-                break;
-            case ARP:
-                printf("ARP header\n\n");
-                
-                break;
-            default:
-                break;
-                
-        }
-
-    
-
-
-
-                
-
-
-
-
+        IP_ARP(type, (uint8_t) pkt_data);
+        
         pkt_num++;
     }
     
