@@ -6,6 +6,7 @@
 
 #include "ethernet.h"
 #include "ip.h"
+#include "arp.h"
 
 // common TCP ports
 #define HTTP 80
@@ -40,14 +41,16 @@ void IP_ARP(uint16_t type, uint8_t *pkt_data) {
     switch(ntohs(type)) {
             case IP: 
                 printf("\tIP Header\n");
-                IP_HDR *ip_hdr = ip((uint8_t*) pkt_data);
+                IP_HDR *ip_hdr = ip(pkt_data);
                 pkt_data += ip_hdr->len;     // skip the ip header
+
+                ICMP_TCP_UDP(ip_hdr->protocol, pkt_data);
 
                 free(ip_hdr);
                 break;
             case ARP:
-                printf("ARP header\n\n");
-                
+                printf("\tARP header\n");
+                arp_hdr(pkt_data);
                 break;
             default:
                 break;
@@ -80,7 +83,7 @@ int main(int argc, char* argv[]) {
         type = eth_hdr((uint8_t*) pkt_data);
 
         pkt_data += 14;     // skip the ethernet header
-        IP_ARP(type, (uint8_t) pkt_data);
+        IP_ARP(type, (uint8_t*) pkt_data);
         
         pkt_num++;
     }

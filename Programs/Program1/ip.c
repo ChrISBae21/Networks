@@ -1,16 +1,15 @@
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
 #include "checksum.h"
 #include "ip.h"
+#include "misc.h"
 
 
-void print_ip(IP_HDR *ip_hdr) {
-    uint8_t *str_ip;
+void print_ip_hdr(IP_HDR *ip_hdr) {
+    
 
     printf("\t\tIP Version: %d\n", ip_hdr->ver);
     printf("\t\tHeader Len (bytes): %d\n", ip_hdr->len);
@@ -35,13 +34,10 @@ void print_ip(IP_HDR *ip_hdr) {
     else 
         printf("\t\tChecksum: Incorrect (0x%x)\n", ip_hdr->checksum);
 
-    struct in_addr addr = {ip_hdr->src_ip};
-    str_ip = (uint8_t*) inet_ntoa(addr);
-    printf("\t\tSender IP: %s\n", str_ip);
-
-    addr.s_addr = ip_hdr->dest_ip;
-    str_ip = (uint8_t*) inet_ntoa(addr);
-    printf("\t\tDest IP: %s\n", str_ip);
+    printf("\t\tSender IP: ");
+    print_ip(ip_hdr->src_ip);
+    printf("\t\tDest IP: ");
+    print_ip(ip_hdr->dest_ip);
     printf("\n");
 }
 
@@ -72,6 +68,6 @@ IP_HDR* ip(uint8_t *pkt_data) {
 
     memcpy(&(ip_hdr->src_ip), pkt_data, 4);     // grab source IP
     memcpy(&(ip_hdr->dest_ip), pkt_data+4, 4);  // grab destination IP
-    print_ip(ip_hdr);                           // print the IP header
+    print_ip_hdr(ip_hdr);                           // print the IP header
     return ip_hdr;
 }

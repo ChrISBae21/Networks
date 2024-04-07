@@ -1,17 +1,7 @@
-#include <stdint.h>
-#include <stdio.h>
-#include <string.h>
+
 #include <arpa/inet.h>
 #include "ethernet.h"
-/*
-Prints formatted MAC address
-*/
-void print_mac(uint8_t* mac_addr) {
-    uint8_t* ptr;
-    ptr = (uint8_t*) ether_ntoa((struct ether_addr*) mac_addr);
-    printf("%s\n", ptr);
-
-}
+#include "misc.h"
 
 
 /*

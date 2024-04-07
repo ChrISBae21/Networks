@@ -16,6 +16,7 @@ Packet Number: 1  Packet Len: 74
 		Sender IP: 192.168.1.102
 		Dest IP: 66.94.230.35
 
+	ICMP Header
 Packet Number: 2  Packet Len: 74
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
@@ -34,6 +35,7 @@ Packet Number: 2  Packet Len: 74
 		Sender IP: 66.94.230.35
 		Dest IP: 192.168.1.102
 
+	ICMP Header
 Packet Number: 3  Packet Len: 74
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
@@ -52,6 +54,7 @@ Packet Number: 3  Packet Len: 74
 		Sender IP: 192.168.1.102
 		Dest IP: 66.94.230.35
 
+	ICMP Header
 Packet Number: 4  Packet Len: 74
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
@@ -70,6 +73,7 @@ Packet Number: 4  Packet Len: 74
 		Sender IP: 66.94.230.35
 		Dest IP: 192.168.1.102
 
+	ICMP Header
 Packet Number: 5  Packet Len: 74
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
@@ -88,6 +92,7 @@ Packet Number: 5  Packet Len: 74
 		Sender IP: 192.168.1.102
 		Dest IP: 64.233.187.99
 
+	ICMP Header
 Packet Number: 6  Packet Len: 74
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
@@ -106,6 +111,7 @@ Packet Number: 6  Packet Len: 74
 		Sender IP: 64.233.187.99
 		Dest IP: 192.168.1.102
 
+	ICMP Header
 Packet Number: 7  Packet Len: 74
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
@@ -124,6 +130,7 @@ Packet Number: 7  Packet Len: 74
 		Sender IP: 192.168.1.102
 		Dest IP: 64.233.187.99
 
+	ICMP Header
 Packet Number: 8  Packet Len: 74
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
@@ -142,6 +149,7 @@ Packet Number: 8  Packet Len: 74
 		Sender IP: 64.233.187.99
 		Dest IP: 192.168.1.102
 
+	ICMP Header
 Packet Number: 9  Packet Len: 74
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
@@ -160,6 +168,7 @@ Packet Number: 9  Packet Len: 74
 		Sender IP: 192.168.1.102
 		Dest IP: 64.233.187.99
 
+	ICMP Header
 Packet Number: 10  Packet Len: 74
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
@@ -178,6 +187,7 @@ Packet Number: 10  Packet Len: 74
 		Sender IP: 64.233.187.99
 		Dest IP: 192.168.1.102
 
+	Unknown
 Packet Number: 11  Packet Len: 74
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
@@ -196,6 +206,7 @@ Packet Number: 11  Packet Len: 74
 		Sender IP: 192.168.1.102
 		Dest IP: 64.233.187.99
 
+	ICMP Header
 Packet Number: 12  Packet Len: 74
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
@@ -214,6 +225,7 @@ Packet Number: 12  Packet Len: 74
 		Sender IP: 64.233.187.99
 		Dest IP: 192.168.1.102
 
+	ICMP Header
 Packet Number: 13  Packet Len: 74
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
@@ -232,6 +244,7 @@ Packet Number: 13  Packet Len: 74
 		Sender IP: 63.168.1.102
 		Dest IP: 129.65.2.119
 
+	ICMP Header
 Packet Number: 14  Packet Len: 74
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
@@ -250,13 +263,19 @@ Packet Number: 14  Packet Len: 74
 		Sender IP: 192.87.1.102
 		Dest IP: 129.65.2.119
 
+	ICMP Header
 Packet Number: 15  Packet Len: 60
 	Ethernet Header
 		Dest Mac: ff:ff:ff:ff:ff:ff
 		Source Mac: 0:20:18:dc:ae:ab
 		Type: ARP
 
-ARP header
+	ARP header
+		Opcode: Request
+		Sender MAC: 0:20:18:dc:ae:ab
+		Sender IP: 192.168.1.105
+		Target MAC: 0:0:0:0:0:0
+		Target IP: 192.168.1.102
 
 Packet Number: 16  Packet Len: 42
 	Ethernet Header
@@ -264,5 +283,10 @@ Packet Number: 16  Packet Len: 42
 		Source Mac: 0:2:2d:90:75:89
 		Type: ARP
 
-ARP header
+	ARP header
+		Opcode: Reply
+		Sender MAC: 0:2:2d:90:75:89
+		Sender IP: 192.168.1.102
+		Target MAC: 0:20:18:dc:ae:ab
+		Target IP: 192.168.1.105
 

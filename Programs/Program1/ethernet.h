@@ -1,5 +1,12 @@
-#include <netinet/ether.h>
-#include <net/ethernet.h>
+#ifndef STD_LBRS
+#define STD_LBRS
+#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#endif
+
+//#include <net/ethernet.h>
 
 #define IP 0x0800
 #define ARP 0x0806

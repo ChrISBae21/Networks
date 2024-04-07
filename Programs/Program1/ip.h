@@ -1,6 +1,9 @@
 #ifndef STD_LBRS
 #define STD_LBRS
 #include <stdint.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #endif
 
 #define UDP 17
@@ -19,5 +22,5 @@ typedef struct __attribute__((packed)) IP_HDR {
     uint32_t dest_ip;               // Destination IP
 } IP_HDR;
 
-void print_ip(IP_HDR *ip_hdr);
+void print_ip_hdr(IP_HDR *ip_hdr);
 IP_HDR* ip(uint8_t *pkt_data);

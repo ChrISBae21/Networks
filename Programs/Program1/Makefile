@@ -5,7 +5,7 @@
 CC = gcc
 LIBS = -lpcap
 CFLAGS = -g -Wall -pedantic
-OBJFILES = main.c checksum.c ethernet.c ethernet.h ip.c ip.h
+OBJFILES = main.c checksum.c ethernet.c ethernet.h ip.c ip.h arp.c arp.h misc.c misc.h
 #CGLAGS = 
 
 all:  trace
