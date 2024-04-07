@@ -71,3 +71,71 @@ IP_HDR* ip(uint8_t *pkt_data) {
     print_ip_hdr(ip_hdr);                           // print the IP header
     return ip_hdr;
 }
+
+
+void icmp_tcp_udp(uint8_t protocol, uint8_t *pkt_data) {
+    switch(protocol) {
+        case UDP: 
+            printf("\tUDP Header\n");
+            udp(pkt_data);
+            break;
+        case ICMP: 
+            printf("\tICMP Header\n");
+            icmp(pkt_data);
+            break;
+        case TCP:
+            printf("\tTCP Header\n");
+            break;
+        default: printf("\tUnknown\n");
+            break;
+    }
+    printf("\n");
+}
+
+
+void udp(uint8_t *pkt_data) {
+    uint16_t src_port, dest_port;
+
+    printf("\t\tSource Port: ");
+    memcpy(&src_port, pkt_data, 2);
+    print_port(ntohs(src_port), UDP);
+    printf("\t\tDest Port: ");
+    memcpy(&dest_port, pkt_data+2, 2);
+    print_port(ntohs(dest_port), UDP);
+}
+
+void tcp(uint8_t *pkt_data) {
+    
+}
+
+void icmp(uint8_t *pkt_data) {
+    printf("\t\tType: ");
+
+    switch(pkt_data[0]) {
+        case REQUEST: printf("Request\n");
+            break;
+        case REPLY: printf("Reply\n");
+            break;
+        default:
+            break;
+    }
+}
+
+void print_port(uint16_t port, uint8_t protocol) {
+    switch(port) {
+        case DNS: printf("DNS\n");
+            break;
+        case HTTP: printf("HTTP\n");
+            break;
+        case TELNET: printf("TELNET\n");
+            break;
+        case FTP: (protocol != TCP) ? printf("%d\n", port) : printf("FTP\n");
+            break;
+        case POP3: printf("POP3\n");
+            break;
+        case SMTP: printf("SMTP\n");
+            break;
+        default:
+            printf("%d\n", port);   
+    }
+}

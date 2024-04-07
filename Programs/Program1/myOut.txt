@@ -1,23 +1,48 @@
-Packet Number: 1  Packet Len: 74
+Packet Number: 1  Packet Len: 71
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
 	IP Header
-		IP Version: 11
-		Header Len (bytes): 40
+		IP Version: 4
+		Header Len (bytes): 20
 		TOS subfields:
 			Diffserv bits: 0
 			ECN bits: 0
 		TTL: 128
-		Protocol: ICMP
-		Checksum: Incorrect (0x1743)
+		Protocol: UDP
+		Checksum: Correct (0x512b)
 		Sender IP: 192.168.1.102
-		Dest IP: 66.94.230.35
+		Dest IP: 64.166.172.8
 
-	ICMP Header
-Packet Number: 2  Packet Len: 74
+	UDP Header
+		Source Port: 1300
+		Dest Port: DNS
+
+Packet Number: 2  Packet Len: 71
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: UDP
+		Checksum: Correct (0x52bf)
+		Sender IP: 192.168.1.102
+		Dest IP: 206.13.29.12
+
+	UDP Header
+		Source Port: 1300
+		Dest Port: DNS
+
+Packet Number: 3  Packet Len: 422
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
@@ -27,38 +52,22 @@ Packet Number: 2  Packet Len: 74
 		IP Version: 4
 		Header Len (bytes): 20
 		TOS subfields:
-			Diffserv bits: 15
-			ECN bits: 15
-		TTL: 52
-		Protocol: ICMP
-		Checksum: Incorrect (0x5565)
-		Sender IP: 66.94.230.35
-		Dest IP: 192.168.1.102
-
-	ICMP Header
-Packet Number: 3  Packet Len: 74
-	Ethernet Header
-		Dest Mac: 0:6:25:78:c4:7d
-		Source Mac: 0:2:2d:90:75:89
-		Type: IP
-
-	IP Header
-		IP Version: 4
-		Header Len (bytes): 20
-		TOS subfields:
 			Diffserv bits: 0
 			ECN bits: 0
-		TTL: 128
-		Protocol: ICMP
-		Checksum: Incorrect (0x1742)
-		Sender IP: 192.168.1.102
-		Dest IP: 66.94.230.35
+		TTL: 247
+		Protocol: UDP
+		Checksum: Correct (0xbd56)
+		Sender IP: 206.13.29.12
+		Dest IP: 192.168.1.102
 
-	ICMP Header
+	UDP Header
+		Source Port: DNS
+		Dest Port: 1300
+
 Packet Number: 4  Packet Len: 74
 	Ethernet Header
-		Dest Mac: 0:2:2d:90:75:89
-		Source Mac: 0:6:25:78:c4:7d
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
 	IP Header
@@ -67,17 +76,19 @@ Packet Number: 4  Packet Len: 74
 		TOS subfields:
 			Diffserv bits: 0
 			ECN bits: 0
-		TTL: 52
+		TTL: 128
 		Protocol: ICMP
-		Checksum: Incorrect (0x4f0a)
-		Sender IP: 66.94.230.35
-		Dest IP: 192.168.1.102
+		Checksum: Correct (0x9bd3)
+		Sender IP: 192.168.1.102
+		Dest IP: 69.226.92.47
 
 	ICMP Header
+		Type: Request
+
 Packet Number: 5  Packet Len: 74
 	Ethernet Header
-		Dest Mac: 0:6:25:78:c4:7d
-		Source Mac: 0:2:2d:90:75:89
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
 		Type: IP
 
 	IP Header
@@ -86,17 +97,19 @@ Packet Number: 5  Packet Len: 74
 		TOS subfields:
 			Diffserv bits: 0
 			ECN bits: 0
-		TTL: 128
+		TTL: 56
 		Protocol: ICMP
-		Checksum: Incorrect (0x4371)
-		Sender IP: 192.168.1.102
-		Dest IP: 64.233.187.99
+		Checksum: Correct (0xd96)
+		Sender IP: 69.226.92.47
+		Dest IP: 192.168.1.102
 
 	ICMP Header
+		Type: Reply
+
 Packet Number: 6  Packet Len: 74
 	Ethernet Header
-		Dest Mac: 0:2:2d:90:75:89
-		Source Mac: 0:6:25:78:c4:7d
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
 	IP Header
@@ -105,15 +118,38 @@ Packet Number: 6  Packet Len: 74
 		TOS subfields:
 			Diffserv bits: 0
 			ECN bits: 0
-		TTL: 242
+		TTL: 128
 		Protocol: ICMP
-		Checksum: Incorrect (0xd170)
-		Sender IP: 64.233.187.99
-		Dest IP: 192.168.1.102
+		Checksum: Correct (0x9bd2)
+		Sender IP: 192.168.1.102
+		Dest IP: 69.226.92.47
 
 	ICMP Header
+		Type: Request
+
 Packet Number: 7  Packet Len: 74
 	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 56
+		Protocol: ICMP
+		Checksum: Correct (0xd95)
+		Sender IP: 69.226.92.47
+		Dest IP: 192.168.1.102
+
+	ICMP Header
+		Type: Reply
+
+Packet Number: 8  Packet Len: 71
+	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
@@ -125,13 +161,16 @@ Packet Number: 7  Packet Len: 74
 			Diffserv bits: 0
 			ECN bits: 0
 		TTL: 128
-		Protocol: ICMP
-		Checksum: Incorrect (0x4370)
+		Protocol: UDP
+		Checksum: Correct (0x52bc)
 		Sender IP: 192.168.1.102
-		Dest IP: 64.233.187.99
+		Dest IP: 206.13.29.12
 
-	ICMP Header
-Packet Number: 8  Packet Len: 74
+	UDP Header
+		Source Port: 1300
+		Dest Port: DNS
+
+Packet Number: 9  Packet Len: 253
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
@@ -143,36 +182,20 @@ Packet Number: 8  Packet Len: 74
 		TOS subfields:
 			Diffserv bits: 0
 			ECN bits: 0
-		TTL: 242
-		Protocol: ICMP
-		Checksum: Incorrect (0xd16f)
-		Sender IP: 64.233.187.99
+		TTL: 247
+		Protocol: UDP
+		Checksum: Correct (0xb3b3)
+		Sender IP: 206.13.29.12
 		Dest IP: 192.168.1.102
 
-	ICMP Header
-Packet Number: 9  Packet Len: 74
-	Ethernet Header
-		Dest Mac: 0:6:25:78:c4:7d
-		Source Mac: 0:2:2d:90:75:89
-		Type: IP
+	UDP Header
+		Source Port: DNS
+		Dest Port: 1300
 
-	IP Header
-		IP Version: 4
-		Header Len (bytes): 20
-		TOS subfields:
-			Diffserv bits: 0
-			ECN bits: 0
-		TTL: 127
-		Protocol: ICMP
-		Checksum: Incorrect (0x436f)
-		Sender IP: 192.168.1.102
-		Dest IP: 64.233.187.99
-
-	ICMP Header
 Packet Number: 10  Packet Len: 74
 	Ethernet Header
-		Dest Mac: 0:2:2d:90:75:89
-		Source Mac: 0:6:25:78:c4:7d
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
 		Type: IP
 
 	IP Header
@@ -181,15 +204,38 @@ Packet Number: 10  Packet Len: 74
 		TOS subfields:
 			Diffserv bits: 0
 			ECN bits: 0
-		TTL: 242
-		Protocol: Unknown
-		Checksum: Incorrect (0xd16e)
-		Sender IP: 64.233.187.99
-		Dest IP: 192.168.1.102
+		TTL: 128
+		Protocol: ICMP
+		Checksum: Correct (0xf131)
+		Sender IP: 192.168.1.102
+		Dest IP: 199.181.132.250
 
-	Unknown
+	ICMP Header
+		Type: Request
+
 Packet Number: 11  Packet Len: 74
 	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 111
+		Protocol: ICMP
+		Checksum: Correct (0x2145)
+		Sender IP: 199.181.132.250
+		Dest IP: 192.168.1.102
+
+	ICMP Header
+		Type: Reply
+
+Packet Number: 12  Packet Len: 74
+	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
 		Type: IP
@@ -202,12 +248,14 @@ Packet Number: 11  Packet Len: 74
 			ECN bits: 0
 		TTL: 128
 		Protocol: ICMP
-		Checksum: Incorrect (0xbc6e)
+		Checksum: Correct (0xf130)
 		Sender IP: 192.168.1.102
-		Dest IP: 64.233.187.99
+		Dest IP: 199.181.132.250
 
 	ICMP Header
-Packet Number: 12  Packet Len: 74
+		Type: Request
+
+Packet Number: 13  Packet Len: 74
 	Ethernet Header
 		Dest Mac: 0:2:2d:90:75:89
 		Source Mac: 0:6:25:78:c4:7d
@@ -219,32 +267,15 @@ Packet Number: 12  Packet Len: 74
 		TOS subfields:
 			Diffserv bits: 0
 			ECN bits: 0
-		TTL: 242
+		TTL: 111
 		Protocol: ICMP
-		Checksum: Incorrect (0xd192)
-		Sender IP: 64.233.187.99
+		Checksum: Correct (0x20fd)
+		Sender IP: 199.181.132.250
 		Dest IP: 192.168.1.102
 
 	ICMP Header
-Packet Number: 13  Packet Len: 74
-	Ethernet Header
-		Dest Mac: 0:6:25:78:c4:7d
-		Source Mac: 0:2:2d:90:75:89
-		Type: IP
+		Type: Reply
 
-	IP Header
-		IP Version: 4
-		Header Len (bytes): 20
-		TOS subfields:
-			Diffserv bits: 0
-			ECN bits: 0
-		TTL: 128
-		Protocol: ICMP
-		Checksum: Incorrect (0xbc00)
-		Sender IP: 63.168.1.102
-		Dest IP: 129.65.2.119
-
-	ICMP Header
 Packet Number: 14  Packet Len: 74
 	Ethernet Header
 		Dest Mac: 0:6:25:78:c4:7d
@@ -259,12 +290,99 @@ Packet Number: 14  Packet Len: 74
 			ECN bits: 0
 		TTL: 128
 		Protocol: ICMP
-		Checksum: Incorrect (0xbbff)
-		Sender IP: 192.87.1.102
-		Dest IP: 129.65.2.119
+		Checksum: Correct (0xf12f)
+		Sender IP: 192.168.1.102
+		Dest IP: 199.181.132.250
 
 	ICMP Header
-Packet Number: 15  Packet Len: 60
+		Type: Request
+
+Packet Number: 15  Packet Len: 74
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 111
+		Protocol: ICMP
+		Checksum: Correct (0x20bd)
+		Sender IP: 199.181.132.250
+		Dest IP: 192.168.1.102
+
+	ICMP Header
+		Type: Reply
+
+Packet Number: 16  Packet Len: 74
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: ICMP
+		Checksum: Correct (0xf12e)
+		Sender IP: 192.168.1.102
+		Dest IP: 199.181.132.250
+
+	ICMP Header
+		Type: Request
+
+Packet Number: 17  Packet Len: 74
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 111
+		Protocol: ICMP
+		Checksum: Correct (0x2086)
+		Sender IP: 199.181.132.250
+		Dest IP: 192.168.1.102
+
+	ICMP Header
+		Type: Reply
+
+Packet Number: 18  Packet Len: 92
+	Ethernet Header
+		Dest Mac: ff:ff:ff:ff:ff:ff
+		Source Mac: 0:b:7d:9:dc:6
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: UDP
+		Checksum: Correct (0xb9db)
+		Sender IP: 192.168.1.103
+		Dest IP: 192.168.1.255
+
+	UDP Header
+		Source Port: 137
+		Dest Port: 137
+
+Packet Number: 19  Packet Len: 60
 	Ethernet Header
 		Dest Mac: ff:ff:ff:ff:ff:ff
 		Source Mac: 0:20:18:dc:ae:ab
@@ -275,18 +393,2973 @@ Packet Number: 15  Packet Len: 60
 		Sender MAC: 0:20:18:dc:ae:ab
 		Sender IP: 192.168.1.105
 		Target MAC: 0:0:0:0:0:0
-		Target IP: 192.168.1.102
+		Target IP: 192.168.1.103
 
-Packet Number: 16  Packet Len: 42
+Packet Number: 20  Packet Len: 84
 	Ethernet Header
-		Dest Mac: 0:20:18:dc:ae:ab
+		Dest Mac: 0:6:25:78:c4:7d
 		Source Mac: 0:2:2d:90:75:89
-		Type: ARP
+		Type: IP
 
-	ARP header
-		Opcode: Reply
-		Sender MAC: 0:2:2d:90:75:89
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: UDP
+		Checksum: Correct (0x52aa)
 		Sender IP: 192.168.1.102
-		Target MAC: 0:20:18:dc:ae:ab
-		Target IP: 192.168.1.105
+		Dest IP: 206.13.29.12
+
+	UDP Header
+		Source Port: 1300
+		Dest Port: DNS
+
+Packet Number: 21  Packet Len: 180
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 247
+		Protocol: UDP
+		Checksum: Correct (0xb107)
+		Sender IP: 206.13.29.12
+		Dest IP: 192.168.1.102
+
+	UDP Header
+		Source Port: DNS
+		Dest Port: 1300
+
+Packet Number: 22  Packet Len: 62
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd557)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 23  Packet Len: 60
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 237
+		Protocol: TCP
+		Checksum: Correct (0x3938)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 24  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd55e)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 25  Packet Len: 144
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd503)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 26  Packet Len: 60
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3dca)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 27  Packet Len: 992
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3a1f)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 28  Packet Len: 266
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd488)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 29  Packet Len: 129
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3d7d)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 30  Packet Len: 355
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd42e)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 31  Packet Len: 560
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3bcd)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 32  Packet Len: 139
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd505)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 33  Packet Len: 1506
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x381a)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 34  Packet Len: 1506
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3819)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 35  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd559)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 36  Packet Len: 284
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3cde)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 37  Packet Len: 163
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd4eb)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 38  Packet Len: 60
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3dc3)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 39  Packet Len: 899
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd20a)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 40  Packet Len: 60
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3dc2)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 41  Packet Len: 176
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3d47)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 42  Packet Len: 1506
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3814)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 43  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd556)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 44  Packet Len: 1506
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3813)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 45  Packet Len: 1506
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3812)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 46  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd555)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 47  Packet Len: 1506
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3811)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 48  Packet Len: 1506
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3810)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 49  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd554)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 50  Packet Len: 820
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3abd)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 51  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd553)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 52  Packet Len: 840
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3aa8)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 53  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd552)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 54  Packet Len: 139
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd4fc)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 55  Packet Len: 60
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3db9)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 56  Packet Len: 139
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd4fb)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 57  Packet Len: 60
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3db8)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 58  Packet Len: 139
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd4fa)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 59  Packet Len: 60
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3db7)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 60  Packet Len: 293
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd45f)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 61  Packet Len: 60
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3db6)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 62  Packet Len: 176
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3d3b)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 63  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd54d)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 64  Packet Len: 600
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3b92)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 65  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd54c)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 66  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd54b)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 67  Packet Len: 139
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd4f5)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 68  Packet Len: 60
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3db3)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 69  Packet Len: 139
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd4f4)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 70  Packet Len: 60
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3db2)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 71  Packet Len: 832
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3aa7)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 72  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd548)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 73  Packet Len: 131
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd4fa)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 74  Packet Len: 60
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3db0)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 75  Packet Len: 79
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: UDP
+		Checksum: Correct (0x5295)
+		Sender IP: 192.168.1.102
+		Dest IP: 206.13.29.12
+
+	UDP Header
+		Source Port: 1300
+		Dest Port: DNS
+
+Packet Number: 76  Packet Len: 175
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 247
+		Protocol: UDP
+		Checksum: Correct (0xa2e0)
+		Sender IP: 206.13.29.12
+		Dest IP: 192.168.1.102
+
+	UDP Header
+		Source Port: DNS
+		Dest Port: 1300
+
+Packet Number: 77  Packet Len: 62
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xc97)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 78  Packet Len: 62
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0x9c87)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 79  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xc9d)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 80  Packet Len: 382
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xb54)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 81  Packet Len: 60
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0x66c0)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 82  Packet Len: 1506
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0x6113)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 83  Packet Len: 854
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0x639e)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 84  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xc9a)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 85  Packet Len: 583
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xa88)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 86  Packet Len: 62
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xc8f)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 87  Packet Len: 1506
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0x6111)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 88  Packet Len: 1506
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0x6110)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 89  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xc95)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 90  Packet Len: 1506
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0x610f)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 91  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xc94)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 92  Packet Len: 62
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0x9c87)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 93  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xc93)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 94  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xc92)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 95  Packet Len: 584
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xa7f)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 96  Packet Len: 62
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xc87)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 97  Packet Len: 1506
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0x610e)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 98  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0x4c8d)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 99  Packet Len: 1506
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0x610d)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 100  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0x4c8c)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 101  Packet Len: 1506
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0x610c)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 102  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0x4c8b)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 103  Packet Len: 326
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0x65a6)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 104  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0x4c8a)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 105  Packet Len: 1506
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0x610b)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 106  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0x4c89)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 107  Packet Len: 60
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0x446b)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 108  Packet Len: 1506
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0x3ebe)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 109  Packet Len: 1506
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0x3ebd)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 110  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xc88)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 111  Packet Len: 62
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0x9c87)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 112  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xc87)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 113  Packet Len: 579
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xa79)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 114  Packet Len: 1506
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0x3ebc)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 115  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xc84)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 116  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xc83)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 117  Packet Len: 1043
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0x408a)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 118  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0x4c82)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 119  Packet Len: 60
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0xab39)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 120  Packet Len: 239
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0xaa7f)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 121  Packet Len: 62
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xc79)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 122  Packet Len: 580
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xa71)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 123  Packet Len: 62
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0x9c87)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 124  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xc7d)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 125  Packet Len: 580
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xa6e)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 126  Packet Len: 1506
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0xa58b)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 127  Packet Len: 1506
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0xa58a)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 128  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xc7a)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 129  Packet Len: 60
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0xca5c)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 130  Packet Len: 268
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0xc984)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 131  Packet Len: 66
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xc6d)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 132  Packet Len: 1506
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0xc4af)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 133  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xc78)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 134  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xc77)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 135  Packet Len: 1506
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0xa589)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 136  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xc76)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 137  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xc75)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 138  Packet Len: 1506
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0xa588)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 139  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0x4c74)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 140  Packet Len: 1506
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0xa587)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 141  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0x4c73)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 142  Packet Len: 1506
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0xa586)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 143  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0x4c72)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 144  Packet Len: 1506
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 43
+		Protocol: TCP
+		Checksum: Correct (0xa585)
+		Sender IP: 195.10.46.40
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 145  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0x4c71)
+		Sender IP: 192.168.1.102
+		Dest IP: 195.10.46.40
+
+	TCP Header
+
+Packet Number: 146  Packet Len: 131
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd4c9)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 147  Packet Len: 60
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3daf)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 148  Packet Len: 147
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd4b8)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 149  Packet Len: 60
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3dae)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 150  Packet Len: 1506
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3801)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 151  Packet Len: 1506
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3800)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 152  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd514)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 153  Packet Len: 688
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3b31)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 154  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd513)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 155  Packet Len: 296
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3cb8)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 156  Packet Len: 131
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd4c5)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 157  Packet Len: 60
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3da9)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 158  Packet Len: 208
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd477)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 159  Packet Len: 264
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3cd6)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 160  Packet Len: 60
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3da7)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 161  Packet Len: 240
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd456)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 162  Packet Len: 1200
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x392c)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 163  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd50f)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 164  Packet Len: 147
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd4b1)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 165  Packet Len: 123
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd4c8)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
+
+Packet Number: 166  Packet Len: 60
+	Ethernet Header
+		Dest Mac: 0:2:2d:90:75:89
+		Source Mac: 0:6:25:78:c4:7d
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 44
+		Protocol: TCP
+		Checksum: Correct (0x3da5)
+		Sender IP: 66.212.229.183
+		Dest IP: 192.168.1.102
+
+	TCP Header
+
+Packet Number: 167  Packet Len: 54
+	Ethernet Header
+		Dest Mac: 0:6:25:78:c4:7d
+		Source Mac: 0:2:2d:90:75:89
+		Type: IP
+
+	IP Header
+		IP Version: 4
+		Header Len (bytes): 20
+		TOS subfields:
+			Diffserv bits: 0
+			ECN bits: 0
+		TTL: 128
+		Protocol: TCP
+		Checksum: Correct (0xd50c)
+		Sender IP: 192.168.1.102
+		Dest IP: 66.212.229.183
+
+	TCP Header
 

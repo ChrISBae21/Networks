@@ -37,5 +37,6 @@ void arp_hdr(uint8_t *pkt_data) {
     pkt_data+=6;
     memcpy(&(arp_hdr->target_ip), pkt_data, 4);
     print_arp_hdr(arp_hdr);
+    free(arp_hdr);
 
 }
