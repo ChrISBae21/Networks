@@ -16,7 +16,7 @@ void IP_ARP(uint16_t type, uint8_t *pkt_data) {
             printf("\tIP Header\n");
             IP_HDR *ip_hdr = ip(pkt_data);
             pkt_data += ip_hdr->len;     // skip the ip header
-            icmp_tcp_udp(ip_hdr->protocol, pkt_data);
+            icmp_tcp_udp(ip_hdr->protocol, pkt_data, ip_hdr);
             free(ip_hdr);
             break;
         case ARP:

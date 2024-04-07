@@ -41,7 +41,7 @@ typedef struct __attribute__((packed)) TCP_HDR {
     uint32_t seq_num;               // Sequence Number
     uint32_t ack_num;               // Acknowledge Number
     uint8_t data_offset;            // Data Offset
-    uint16_t flag;                  // Flags
+    uint8_t flag;                   // Flags
     uint16_t win_size;              // Window Size
     uint16_t checksum;              // Checksum
 } TCP_HDR;
@@ -49,8 +49,8 @@ typedef struct __attribute__((packed)) TCP_HDR {
 
 void print_ip_hdr(IP_HDR *ip_hdr);
 IP_HDR* ip(uint8_t *pkt_data);
-void icmp_tcp_udp(uint8_t protocol, uint8_t *pkt_data);
+void icmp_tcp_udp(uint8_t protocol, uint8_t *pkt_data, IP_HDR *ip_hdr);
 void udp(uint8_t *pkt_data);
-void tcp(uint8_t *pkt_data);
+void tcp(uint8_t *pkt_data, IP_HDR *ip_hdr);
 void icmp(uint8_t *pkt_data);
 void print_port(uint16_t port, uint8_t protocol);

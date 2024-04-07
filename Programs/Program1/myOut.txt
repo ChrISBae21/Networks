@@ -462,10 +462,10 @@ Packet Number: 22  Packet Len: 62
 		Dest Port: 2147
 		Sequence Number: 60341533
 		ACK Number: 0
-		Data Offset (bytes): 112
+		Data Offset (bytes): 28
 		Flag: 
-		Window Size: 136
-		Checksum: Incorrect (0xed)
+		Window Size: 16384
+		Checksum: Incorrect (0x88ed)
 
 Packet Number: 23  Packet Len: 60
 	Ethernet Header
@@ -490,10 +490,10 @@ Packet Number: 23  Packet Len: 60
 		Dest Port: 1663
 		Sequence Number: 1013144067
 		ACK Number: 60341534
-		Data Offset (bytes): 96
+		Data Offset (bytes): 24
 		Flag: 
-		Window Size: 39
-		Checksum: Incorrect (0x85)
+		Window Size: 8192
+		Checksum: Incorrect (0x2785)
 
 Packet Number: 24  Packet Len: 54
 	Ethernet Header
@@ -518,10 +518,10 @@ Packet Number: 24  Packet Len: 54
 		Dest Port: 2147
 		Sequence Number: 60341534
 		ACK Number: 1013144068
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4123
-		Checksum: Incorrect (0x2a)
+		Window Size: 17424
+		Checksum: Incorrect (0x1b2a)
 
 Packet Number: 25  Packet Len: 144
 	Ethernet Header
@@ -546,10 +546,10 @@ Packet Number: 25  Packet Len: 144
 		Dest Port: 2147
 		Sequence Number: 60341534
 		ACK Number: 1013144068
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4227
-		Checksum: Incorrect (0x18)
+		Window Size: 17424
+		Checksum: Incorrect (0x8318)
 
 Packet Number: 26  Packet Len: 60
 	Ethernet Header
@@ -574,10 +574,10 @@ Packet Number: 26  Packet Len: 60
 		Dest Port: 1663
 		Sequence Number: 1013144068
 		ACK Number: 60341624
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 53320
-		Checksum: Incorrect (0x10)
+		Window Size: 5840
+		Checksum: Incorrect (0x4810)
 
 Packet Number: 27  Packet Len: 992
 	Ethernet Header
@@ -602,10 +602,10 @@ Packet Number: 27  Packet Len: 992
 		Dest Port: 1663
 		Sequence Number: 1013144068
 		ACK Number: 60341624
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 53429
-		Checksum: Incorrect (0x87)
+		Window Size: 5840
+		Checksum: Incorrect (0xb587)
 
 Packet Number: 28  Packet Len: 266
 	Ethernet Header
@@ -630,10 +630,10 @@ Packet Number: 28  Packet Len: 266
 		Dest Port: 2147
 		Sequence Number: 60341624
 		ACK Number: 1013145006
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 26175
-		Checksum: Incorrect (0x9d)
+		Window Size: 16486
+		Checksum: Incorrect (0x3f9d)
 
 Packet Number: 29  Packet Len: 129
 	Ethernet Header
@@ -658,10 +658,10 @@ Packet Number: 29  Packet Len: 129
 		Dest Port: 1663
 		Sequence Number: 1013145006
 		ACK Number: 60341836
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 8262
-		Checksum: Incorrect (0xc8)
+		Window Size: 6432
+		Checksum: Incorrect (0x46c8)
 
 Packet Number: 30  Packet Len: 355
 	Ethernet Header
@@ -686,10 +686,10 @@ Packet Number: 30  Packet Len: 355
 		Dest Port: 2147
 		Sequence Number: 60341836
 		ACK Number: 1013145081
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 7064
-		Checksum: Incorrect (0xe0)
+		Window Size: 16411
+		Checksum: Incorrect (0x98e0)
 
 Packet Number: 31  Packet Len: 560
 	Ethernet Header
@@ -714,10 +714,10 @@ Packet Number: 31  Packet Len: 560
 		Dest Port: 1663
 		Sequence Number: 1013145081
 		ACK Number: 60342137
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20616
-		Checksum: Incorrect (0x0)
+		Window Size: 7504
+		Checksum: Incorrect (0x8800)
 
 Packet Number: 32  Packet Len: 139
 	Ethernet Header
@@ -742,10 +742,10 @@ Packet Number: 32  Packet Len: 139
 		Dest Port: 2147
 		Sequence Number: 60342137
 		ACK Number: 1013145587
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4099
-		Checksum: Incorrect (0x91)
+		Window Size: 17424
+		Checksum: Incorrect (0x391)
 
 Packet Number: 33  Packet Len: 1506
 	Ethernet Header
@@ -770,10 +770,10 @@ Packet Number: 33  Packet Len: 1506
 		Dest Port: 1663
 		Sequence Number: 1013145587
 		ACK Number: 60342137
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20672
-		Checksum: Incorrect (0x7c)
+		Window Size: 7504
+		Checksum: Incorrect (0xc07c)
 
 Packet Number: 34  Packet Len: 1506
 	Ethernet Header
@@ -798,10 +798,10 @@ Packet Number: 34  Packet Len: 1506
 		Dest Port: 1663
 		Sequence Number: 1013147039
 		ACK Number: 60342222
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20679
-		Checksum: Incorrect (0xec)
+		Window Size: 7504
+		Checksum: Incorrect (0xc7ec)
 
 Packet Number: 35  Packet Len: 54
 	Ethernet Header
@@ -826,10 +826,10 @@ Packet Number: 35  Packet Len: 54
 		Dest Port: 2147
 		Sequence Number: 60342222
 		ACK Number: 1013148491
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4103
-		Checksum: Incorrect (0x33)
+		Window Size: 17424
+		Checksum: Incorrect (0x733)
 
 Packet Number: 36  Packet Len: 284
 	Ethernet Header
@@ -854,10 +854,10 @@ Packet Number: 36  Packet Len: 284
 		Dest Port: 1663
 		Sequence Number: 1013148491
 		ACK Number: 60342222
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20638
-		Checksum: Incorrect (0x17)
+		Window Size: 7504
+		Checksum: Incorrect (0x9e17)
 
 Packet Number: 37  Packet Len: 163
 	Ethernet Header
@@ -882,10 +882,10 @@ Packet Number: 37  Packet Len: 163
 		Dest Port: 2147
 		Sequence Number: 60342222
 		ACK Number: 1013148721
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 10962
-		Checksum: Incorrect (0x7b)
+		Window Size: 17194
+		Checksum: Incorrect (0xd27b)
 
 Packet Number: 38  Packet Len: 60
 	Ethernet Header
@@ -910,10 +910,10 @@ Packet Number: 38  Packet Len: 60
 		Dest Port: 1663
 		Sequence Number: 1013148721
 		ACK Number: 60342331
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20524
-		Checksum: Incorrect (0xa0)
+		Window Size: 7504
+		Checksum: Incorrect (0x2ca0)
 
 Packet Number: 39  Packet Len: 899
 	Ethernet Header
@@ -938,10 +938,10 @@ Packet Number: 39  Packet Len: 899
 		Dest Port: 2147
 		Sequence Number: 60342331
 		ACK Number: 1013148721
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 10846
-		Checksum: Incorrect (0x96)
+		Window Size: 17194
+		Checksum: Incorrect (0x5e96)
 
 Packet Number: 40  Packet Len: 60
 	Ethernet Header
@@ -966,10 +966,10 @@ Packet Number: 40  Packet Len: 60
 		Dest Port: 1663
 		Sequence Number: 1013148721
 		ACK Number: 60343176
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20258
-		Checksum: Incorrect (0x54)
+		Window Size: 9295
+		Checksum: Incorrect (0x2254)
 
 Packet Number: 41  Packet Len: 176
 	Ethernet Header
@@ -994,10 +994,10 @@ Packet Number: 41  Packet Len: 176
 		Dest Port: 1663
 		Sequence Number: 1013148721
 		ACK Number: 60343176
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20286
-		Checksum: Incorrect (0x8c)
+		Window Size: 9295
+		Checksum: Incorrect (0x3e8c)
 
 Packet Number: 42  Packet Len: 1506
 	Ethernet Header
@@ -1022,10 +1022,10 @@ Packet Number: 42  Packet Len: 1506
 		Dest Port: 1663
 		Sequence Number: 1013148843
 		ACK Number: 60343176
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20439
-		Checksum: Incorrect (0x60)
+		Window Size: 9295
+		Checksum: Incorrect (0xd760)
 
 Packet Number: 43  Packet Len: 54
 	Ethernet Header
@@ -1050,10 +1050,10 @@ Packet Number: 43  Packet Len: 54
 		Dest Port: 2147
 		Sequence Number: 60343176
 		ACK Number: 1013150295
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4348
-		Checksum: Incorrect (0x6c)
+		Window Size: 17424
+		Checksum: Incorrect (0xfc6c)
 
 Packet Number: 44  Packet Len: 1506
 	Ethernet Header
@@ -1078,10 +1078,10 @@ Packet Number: 44  Packet Len: 1506
 		Dest Port: 1663
 		Sequence Number: 1013150295
 		ACK Number: 60343176
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20375
-		Checksum: Incorrect (0x17)
+		Window Size: 9295
+		Checksum: Incorrect (0x9717)
 
 Packet Number: 45  Packet Len: 1506
 	Ethernet Header
@@ -1106,10 +1106,10 @@ Packet Number: 45  Packet Len: 1506
 		Dest Port: 1663
 		Sequence Number: 1013151747
 		ACK Number: 60343176
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20354
-		Checksum: Incorrect (0x14)
+		Window Size: 9295
+		Checksum: Incorrect (0x8214)
 
 Packet Number: 46  Packet Len: 54
 	Ethernet Header
@@ -1134,10 +1134,10 @@ Packet Number: 46  Packet Len: 54
 		Dest Port: 2147
 		Sequence Number: 60343176
 		ACK Number: 1013153199
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4337
-		Checksum: Incorrect (0x14)
+		Window Size: 17424
+		Checksum: Incorrect (0xf114)
 
 Packet Number: 47  Packet Len: 1506
 	Ethernet Header
@@ -1162,10 +1162,10 @@ Packet Number: 47  Packet Len: 1506
 		Dest Port: 1663
 		Sequence Number: 1013153199
 		ACK Number: 60343176
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20249
-		Checksum: Incorrect (0x95)
+		Window Size: 9295
+		Checksum: Incorrect (0x1995)
 
 Packet Number: 48  Packet Len: 1506
 	Ethernet Header
@@ -1190,10 +1190,10 @@ Packet Number: 48  Packet Len: 1506
 		Dest Port: 1663
 		Sequence Number: 1013154651
 		ACK Number: 60343176
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20359
-		Checksum: Incorrect (0xf9)
+		Window Size: 9295
+		Checksum: Incorrect (0x87f9)
 
 Packet Number: 49  Packet Len: 54
 	Ethernet Header
@@ -1218,10 +1218,10 @@ Packet Number: 49  Packet Len: 54
 		Dest Port: 2147
 		Sequence Number: 60343176
 		ACK Number: 1013156103
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4325
-		Checksum: Incorrect (0xbc)
+		Window Size: 17424
+		Checksum: Incorrect (0xe5bc)
 
 Packet Number: 50  Packet Len: 820
 	Ethernet Header
@@ -1246,10 +1246,10 @@ Packet Number: 50  Packet Len: 820
 		Dest Port: 1663
 		Sequence Number: 1013156103
 		ACK Number: 60343176
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20248
-		Checksum: Incorrect (0x68)
+		Window Size: 9295
+		Checksum: Incorrect (0x1868)
 
 Packet Number: 51  Packet Len: 54
 	Ethernet Header
@@ -1274,10 +1274,10 @@ Packet Number: 51  Packet Len: 54
 		Dest Port: 2147
 		Sequence Number: 60343176
 		ACK Number: 1013156869
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4837
-		Checksum: Incorrect (0xbc)
+		Window Size: 16658
+		Checksum: Incorrect (0xe5bc)
 
 Packet Number: 52  Packet Len: 840
 	Ethernet Header
@@ -1302,10 +1302,10 @@ Packet Number: 52  Packet Len: 840
 		Dest Port: 1663
 		Sequence Number: 1013156869
 		ACK Number: 60343176
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20355
-		Checksum: Incorrect (0x68)
+		Window Size: 9295
+		Checksum: Incorrect (0x8368)
 
 Packet Number: 53  Packet Len: 54
 	Ethernet Header
@@ -1330,10 +1330,10 @@ Packet Number: 53  Packet Len: 54
 		Dest Port: 2147
 		Sequence Number: 60343176
 		ACK Number: 1013157655
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 229
-		Checksum: Incorrect (0xbc)
+		Window Size: 15872
+		Checksum: Incorrect (0xe5bc)
 
 Packet Number: 54  Packet Len: 139
 	Ethernet Header
@@ -1358,10 +1358,10 @@ Packet Number: 54  Packet Len: 139
 		Dest Port: 2147
 		Sequence Number: 60343176
 		ACK Number: 1013157655
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 56
-		Checksum: Incorrect (0xb3)
+		Window Size: 15872
+		Checksum: Incorrect (0x38b3)
 
 Packet Number: 55  Packet Len: 60
 	Ethernet Header
@@ -1386,10 +1386,10 @@ Packet Number: 55  Packet Len: 60
 		Dest Port: 1663
 		Sequence Number: 1013157655
 		ACK Number: 60343261
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20479
-		Checksum: Incorrect (0x18)
+		Window Size: 9295
+		Checksum: Incorrect (0xff18)
 
 Packet Number: 56  Packet Len: 139
 	Ethernet Header
@@ -1414,10 +1414,10 @@ Packet Number: 56  Packet Len: 139
 		Dest Port: 2147
 		Sequence Number: 60343261
 		ACK Number: 1013157655
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 116
-		Checksum: Incorrect (0x1b)
+		Window Size: 15872
+		Checksum: Incorrect (0x741b)
 
 Packet Number: 57  Packet Len: 60
 	Ethernet Header
@@ -1442,10 +1442,10 @@ Packet Number: 57  Packet Len: 60
 		Dest Port: 1663
 		Sequence Number: 1013157655
 		ACK Number: 60343346
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20478
-		Checksum: Incorrect (0xc3)
+		Window Size: 9295
+		Checksum: Incorrect (0xfec3)
 
 Packet Number: 58  Packet Len: 139
 	Ethernet Header
@@ -1470,10 +1470,10 @@ Packet Number: 58  Packet Len: 139
 		Dest Port: 2147
 		Sequence Number: 60343346
 		ACK Number: 1013157655
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 15
-		Checksum: Incorrect (0x9e)
+		Window Size: 15872
+		Checksum: Incorrect (0xf9e)
 
 Packet Number: 59  Packet Len: 60
 	Ethernet Header
@@ -1498,10 +1498,10 @@ Packet Number: 59  Packet Len: 60
 		Dest Port: 1663
 		Sequence Number: 1013157655
 		ACK Number: 60343431
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20478
-		Checksum: Incorrect (0x6e)
+		Window Size: 9295
+		Checksum: Incorrect (0xfe6e)
 
 Packet Number: 60  Packet Len: 293
 	Ethernet Header
@@ -1526,10 +1526,10 @@ Packet Number: 60  Packet Len: 293
 		Dest Port: 2147
 		Sequence Number: 60343431
 		ACK Number: 1013157655
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 242
-		Checksum: Incorrect (0x64)
+		Window Size: 15872
+		Checksum: Incorrect (0xf264)
 
 Packet Number: 61  Packet Len: 60
 	Ethernet Header
@@ -1554,10 +1554,10 @@ Packet Number: 61  Packet Len: 60
 		Dest Port: 1663
 		Sequence Number: 1013157655
 		ACK Number: 60343670
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20477
-		Checksum: Incorrect (0x7f)
+		Window Size: 9295
+		Checksum: Incorrect (0xfd7f)
 
 Packet Number: 62  Packet Len: 176
 	Ethernet Header
@@ -1582,10 +1582,10 @@ Packet Number: 62  Packet Len: 176
 		Dest Port: 1663
 		Sequence Number: 1013157655
 		ACK Number: 60343670
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20256
-		Checksum: Incorrect (0x9c)
+		Window Size: 9295
+		Checksum: Incorrect (0x209c)
 
 Packet Number: 63  Packet Len: 54
 	Ethernet Header
@@ -1610,10 +1610,10 @@ Packet Number: 63  Packet Len: 54
 		Dest Port: 2147
 		Sequence Number: 60343670
 		ACK Number: 1013157777
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 34531
-		Checksum: Incorrect (0xce)
+		Window Size: 15750
+		Checksum: Incorrect (0xe3ce)
 
 Packet Number: 64  Packet Len: 600
 	Ethernet Header
@@ -1638,10 +1638,10 @@ Packet Number: 64  Packet Len: 600
 		Dest Port: 1663
 		Sequence Number: 1013157777
 		ACK Number: 60343670
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20404
-		Checksum: Incorrect (0xc6)
+		Window Size: 9295
+		Checksum: Incorrect (0xb4c6)
 
 Packet Number: 65  Packet Len: 54
 	Ethernet Header
@@ -1666,10 +1666,10 @@ Packet Number: 65  Packet Len: 54
 		Dest Port: 2147
 		Sequence Number: 60343670
 		ACK Number: 1013158323
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 25827
-		Checksum: Incorrect (0xce)
+		Window Size: 15204
+		Checksum: Incorrect (0xe3ce)
 
 Packet Number: 66  Packet Len: 54
 	Ethernet Header
@@ -1694,10 +1694,10 @@ Packet Number: 66  Packet Len: 54
 		Dest Port: 2147
 		Sequence Number: 60343670
 		ACK Number: 1013158323
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4315
-		Checksum: Incorrect (0x22)
+		Window Size: 17424
+		Checksum: Incorrect (0xdb22)
 
 Packet Number: 67  Packet Len: 139
 	Ethernet Header
@@ -1722,10 +1722,10 @@ Packet Number: 67  Packet Len: 139
 		Dest Port: 2147
 		Sequence Number: 60343670
 		ACK Number: 1013158323
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4164
-		Checksum: Incorrect (0xa4)
+		Window Size: 17424
+		Checksum: Incorrect (0x44a4)
 
 Packet Number: 68  Packet Len: 60
 	Ethernet Header
@@ -1750,10 +1750,10 @@ Packet Number: 68  Packet Len: 60
 		Dest Port: 1663
 		Sequence Number: 1013158323
 		ACK Number: 60343755
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20474
-		Checksum: Incorrect (0x8e)
+		Window Size: 9295
+		Checksum: Incorrect (0xfa8e)
 
 Packet Number: 69  Packet Len: 139
 	Ethernet Header
@@ -1778,10 +1778,10 @@ Packet Number: 69  Packet Len: 139
 		Dest Port: 2147
 		Sequence Number: 60343755
 		ACK Number: 1013158323
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4211
-		Checksum: Incorrect (0x65)
+		Window Size: 17424
+		Checksum: Incorrect (0x7365)
 
 Packet Number: 70  Packet Len: 60
 	Ethernet Header
@@ -1806,10 +1806,10 @@ Packet Number: 70  Packet Len: 60
 		Dest Port: 1663
 		Sequence Number: 1013158323
 		ACK Number: 60343840
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20474
-		Checksum: Incorrect (0x39)
+		Window Size: 9295
+		Checksum: Incorrect (0xfa39)
 
 Packet Number: 71  Packet Len: 832
 	Ethernet Header
@@ -1834,10 +1834,10 @@ Packet Number: 71  Packet Len: 832
 		Dest Port: 1663
 		Sequence Number: 1013158323
 		ACK Number: 60343840
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20472
-		Checksum: Incorrect (0x73)
+		Window Size: 9295
+		Checksum: Incorrect (0xf873)
 
 Packet Number: 72  Packet Len: 54
 	Ethernet Header
@@ -1862,10 +1862,10 @@ Packet Number: 72  Packet Len: 54
 		Dest Port: 2147
 		Sequence Number: 60343840
 		ACK Number: 1013159101
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 1754
-		Checksum: Incorrect (0x78)
+		Window Size: 16646
+		Checksum: Incorrect (0xda78)
 
 Packet Number: 73  Packet Len: 131
 	Ethernet Header
@@ -1890,10 +1890,10 @@ Packet Number: 73  Packet Len: 131
 		Dest Port: 2147
 		Sequence Number: 60343840
 		ACK Number: 1013159101
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 1689
-		Checksum: Incorrect (0xbc)
+		Window Size: 16646
+		Checksum: Incorrect (0x99bc)
 
 Packet Number: 74  Packet Len: 60
 	Ethernet Header
@@ -1918,10 +1918,10 @@ Packet Number: 74  Packet Len: 60
 		Dest Port: 1663
 		Sequence Number: 1013159101
 		ACK Number: 60343917
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20470
-		Checksum: Incorrect (0xe2)
+		Window Size: 9295
+		Checksum: Incorrect (0xf6e2)
 
 Packet Number: 75  Packet Len: 79
 	Ethernet Header
@@ -1990,10 +1990,10 @@ Packet Number: 77  Packet Len: 62
 		Dest Port: HTTP
 		Sequence Number: 61702072
 		ACK Number: 0
-		Data Offset (bytes): 112
+		Data Offset (bytes): 28
 		Flag: 
-		Window Size: 5
-		Checksum: Incorrect (0xa8)
+		Window Size: 16384
+		Checksum: Incorrect (0x5a8)
 
 Packet Number: 78  Packet Len: 62
 	Ethernet Header
@@ -2018,10 +2018,10 @@ Packet Number: 78  Packet Len: 62
 		Dest Port: 1665
 		Sequence Number: -430799868
 		ACK Number: 61702073
-		Data Offset (bytes): 112
+		Data Offset (bytes): 28
 		Flag: 
-		Window Size: 53444
-		Checksum: Incorrect (0x77)
+		Window Size: 5840
+		Checksum: Incorrect (0xc477)
 
 Packet Number: 79  Packet Len: 54
 	Ethernet Header
@@ -2046,10 +2046,10 @@ Packet Number: 79  Packet Len: 54
 		Dest Port: HTTP
 		Sequence Number: 61702073
 		ACK Number: -430799867
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4291
-		Checksum: Incorrect (0xf3)
+		Window Size: 17424
+		Checksum: Incorrect (0xc3f3)
 
 Packet Number: 80  Packet Len: 382
 	Ethernet Header
@@ -2074,10 +2074,10 @@ Packet Number: 80  Packet Len: 382
 		Dest Port: HTTP
 		Sequence Number: 61702073
 		ACK Number: -430799867
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4256
-		Checksum: Incorrect (0x38)
+		Window Size: 17424
+		Checksum: Incorrect (0xa038)
 
 Packet Number: 81  Packet Len: 60
 	Ethernet Header
@@ -2102,10 +2102,10 @@ Packet Number: 81  Packet Len: 60
 		Dest Port: 1665
 		Sequence Number: -430799867
 		ACK Number: 61702401
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 8429
-		Checksum: Incorrect (0x9b)
+		Window Size: 6432
+		Checksum: Incorrect (0xed9b)
 
 Packet Number: 82  Packet Len: 1506
 	Ethernet Header
@@ -2130,10 +2130,10 @@ Packet Number: 82  Packet Len: 1506
 		Dest Port: 1665
 		Sequence Number: -430799867
 		ACK Number: 61702401
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 8215
-		Checksum: Incorrect (0x28)
+		Window Size: 6432
+		Checksum: Incorrect (0x1728)
 
 Packet Number: 83  Packet Len: 854
 	Ethernet Header
@@ -2158,10 +2158,10 @@ Packet Number: 83  Packet Len: 854
 		Dest Port: 1665
 		Sequence Number: -430798415
 		ACK Number: 61702401
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 8213
-		Checksum: Incorrect (0xbf)
+		Window Size: 6432
+		Checksum: Incorrect (0x15bf)
 
 Packet Number: 84  Packet Len: 54
 	Ethernet Header
@@ -2186,10 +2186,10 @@ Packet Number: 84  Packet Len: 54
 		Dest Port: HTTP
 		Sequence Number: 61702401
 		ACK Number: -430797615
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4281
-		Checksum: Incorrect (0xdf)
+		Window Size: 17424
+		Checksum: Incorrect (0xb9df)
 
 Packet Number: 85  Packet Len: 583
 	Ethernet Header
@@ -2214,10 +2214,10 @@ Packet Number: 85  Packet Len: 583
 		Dest Port: HTTP
 		Sequence Number: 61702401
 		ACK Number: -430797615
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4337
-		Checksum: Incorrect (0x80)
+		Window Size: 17424
+		Checksum: Incorrect (0xf180)
 
 Packet Number: 86  Packet Len: 62
 	Ethernet Header
@@ -2242,10 +2242,10 @@ Packet Number: 86  Packet Len: 62
 		Dest Port: HTTP
 		Sequence Number: 61870744
 		ACK Number: 0
-		Data Offset (bytes): 112
+		Data Offset (bytes): 28
 		Flag: 
-		Window Size: 114
-		Checksum: Incorrect (0xc4)
+		Window Size: 16384
+		Checksum: Incorrect (0x72c4)
 
 Packet Number: 87  Packet Len: 1506
 	Ethernet Header
@@ -2270,10 +2270,10 @@ Packet Number: 87  Packet Len: 1506
 		Dest Port: 1665
 		Sequence Number: -430797615
 		ACK Number: 61702930
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20615
-		Checksum: Incorrect (0x19)
+		Window Size: 7504
+		Checksum: Incorrect (0x8719)
 
 Packet Number: 88  Packet Len: 1506
 	Ethernet Header
@@ -2298,10 +2298,10 @@ Packet Number: 88  Packet Len: 1506
 		Dest Port: 1665
 		Sequence Number: -430796163
 		ACK Number: 61702930
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20497
-		Checksum: Incorrect (0xba)
+		Window Size: 7504
+		Checksum: Incorrect (0x11ba)
 
 Packet Number: 89  Packet Len: 54
 	Ethernet Header
@@ -2326,10 +2326,10 @@ Packet Number: 89  Packet Len: 54
 		Dest Port: HTTP
 		Sequence Number: 61702930
 		ACK Number: -430794711
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4268
-		Checksum: Incorrect (0x76)
+		Window Size: 17424
+		Checksum: Incorrect (0xac76)
 
 Packet Number: 90  Packet Len: 1506
 	Ethernet Header
@@ -2354,10 +2354,10 @@ Packet Number: 90  Packet Len: 1506
 		Dest Port: 1665
 		Sequence Number: -430794711
 		ACK Number: 61702930
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20710
-		Checksum: Incorrect (0x2f)
+		Window Size: 7504
+		Checksum: Incorrect (0xe62f)
 
 Packet Number: 91  Packet Len: 54
 	Ethernet Header
@@ -2382,10 +2382,10 @@ Packet Number: 91  Packet Len: 54
 		Dest Port: HTTP
 		Sequence Number: 61702930
 		ACK Number: -430793259
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4262
-		Checksum: Incorrect (0xca)
+		Window Size: 17424
+		Checksum: Incorrect (0xa6ca)
 
 Packet Number: 92  Packet Len: 62
 	Ethernet Header
@@ -2410,10 +2410,10 @@ Packet Number: 92  Packet Len: 62
 		Dest Port: 1666
 		Sequence Number: -737098043
 		ACK Number: 61870745
-		Data Offset (bytes): 112
+		Data Offset (bytes): 28
 		Flag: 
-		Window Size: 53249
-		Checksum: Incorrect (0x15)
+		Window Size: 5840
+		Checksum: Incorrect (0x115)
 
 Packet Number: 93  Packet Len: 54
 	Ethernet Header
@@ -2438,9 +2438,9 @@ Packet Number: 93  Packet Len: 54
 		Dest Port: HTTP
 		Sequence Number: 61870745
 		ACK Number: -737098042
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4096
+		Window Size: 17424
 		Checksum: Incorrect (0x91)
 
 Packet Number: 94  Packet Len: 54
@@ -2466,10 +2466,10 @@ Packet Number: 94  Packet Len: 54
 		Dest Port: HTTP
 		Sequence Number: 61702930
 		ACK Number: -737098042
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 212
-		Checksum: Incorrect (0x37)
+		Window Size: 0
+		Checksum: Incorrect (0xd437)
 
 Packet Number: 95  Packet Len: 584
 	Ethernet Header
@@ -2494,10 +2494,10 @@ Packet Number: 95  Packet Len: 584
 		Dest Port: HTTP
 		Sequence Number: 61870745
 		ACK Number: -737098042
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4166
-		Checksum: Incorrect (0x1d)
+		Window Size: 17424
+		Checksum: Incorrect (0x461d)
 
 Packet Number: 96  Packet Len: 62
 	Ethernet Header
@@ -2522,10 +2522,10 @@ Packet Number: 96  Packet Len: 62
 		Dest Port: HTTP
 		Sequence Number: 61961010
 		ACK Number: 0
-		Data Offset (bytes): 112
+		Data Offset (bytes): 28
 		Flag: 
-		Window Size: 18
-		Checksum: Incorrect (0x28)
+		Window Size: 16384
+		Checksum: Incorrect (0x1228)
 
 Packet Number: 97  Packet Len: 1506
 	Ethernet Header
@@ -2550,10 +2550,10 @@ Packet Number: 97  Packet Len: 1506
 		Dest Port: 1665
 		Sequence Number: -430793259
 		ACK Number: 61702930
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20551
-		Checksum: Incorrect (0x6)
+		Window Size: 7504
+		Checksum: Incorrect (0x4706)
 
 Packet Number: 98  Packet Len: 54
 	Ethernet Header
@@ -2578,10 +2578,10 @@ Packet Number: 98  Packet Len: 54
 		Dest Port: HTTP
 		Sequence Number: 61702930
 		ACK Number: 61702930
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 232
-		Checksum: Incorrect (0x4f)
+		Window Size: 0
+		Checksum: Incorrect (0xe84f)
 
 Packet Number: 99  Packet Len: 1506
 	Ethernet Header
@@ -2606,10 +2606,10 @@ Packet Number: 99  Packet Len: 1506
 		Dest Port: 1665
 		Sequence Number: -430791807
 		ACK Number: 61702930
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20714
-		Checksum: Incorrect (0x20)
+		Window Size: 7504
+		Checksum: Incorrect (0xea20)
 
 Packet Number: 100  Packet Len: 54
 	Ethernet Header
@@ -2634,10 +2634,10 @@ Packet Number: 100  Packet Len: 54
 		Dest Port: HTTP
 		Sequence Number: 61702930
 		ACK Number: 61702930
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 232
-		Checksum: Incorrect (0x4f)
+		Window Size: 0
+		Checksum: Incorrect (0xe84f)
 
 Packet Number: 101  Packet Len: 1506
 	Ethernet Header
@@ -2662,10 +2662,10 @@ Packet Number: 101  Packet Len: 1506
 		Dest Port: 1665
 		Sequence Number: -430790355
 		ACK Number: 61702930
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20695
-		Checksum: Incorrect (0xc8)
+		Window Size: 7504
+		Checksum: Incorrect (0xd7c8)
 
 Packet Number: 102  Packet Len: 54
 	Ethernet Header
@@ -2690,10 +2690,10 @@ Packet Number: 102  Packet Len: 54
 		Dest Port: HTTP
 		Sequence Number: 61702930
 		ACK Number: 61702930
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 232
-		Checksum: Incorrect (0x4f)
+		Window Size: 0
+		Checksum: Incorrect (0xe84f)
 
 Packet Number: 103  Packet Len: 326
 	Ethernet Header
@@ -2718,10 +2718,10 @@ Packet Number: 103  Packet Len: 326
 		Dest Port: 1665
 		Sequence Number: -430787451
 		ACK Number: 61702930
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20513
-		Checksum: Incorrect (0xa3)
+		Window Size: 7504
+		Checksum: Incorrect (0x21a3)
 
 Packet Number: 104  Packet Len: 54
 	Ethernet Header
@@ -2746,10 +2746,10 @@ Packet Number: 104  Packet Len: 54
 		Dest Port: HTTP
 		Sequence Number: 61702930
 		ACK Number: 61702930
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 232
-		Checksum: Incorrect (0x4f)
+		Window Size: 0
+		Checksum: Incorrect (0xe84f)
 
 Packet Number: 105  Packet Len: 1506
 	Ethernet Header
@@ -2774,10 +2774,10 @@ Packet Number: 105  Packet Len: 1506
 		Dest Port: 1665
 		Sequence Number: -430788903
 		ACK Number: 61702930
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20702
-		Checksum: Incorrect (0x9d)
+		Window Size: 7504
+		Checksum: Incorrect (0xde9d)
 
 Packet Number: 106  Packet Len: 54
 	Ethernet Header
@@ -2802,10 +2802,10 @@ Packet Number: 106  Packet Len: 54
 		Dest Port: HTTP
 		Sequence Number: 61702930
 		ACK Number: 61702930
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 232
-		Checksum: Incorrect (0x4f)
+		Window Size: 0
+		Checksum: Incorrect (0xe84f)
 
 Packet Number: 107  Packet Len: 60
 	Ethernet Header
@@ -2830,10 +2830,10 @@ Packet Number: 107  Packet Len: 60
 		Dest Port: 1666
 		Sequence Number: -737098042
 		ACK Number: 61871275
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 8233
-		Checksum: Incorrect (0x6f)
+		Window Size: 6432
+		Checksum: Incorrect (0x296f)
 
 Packet Number: 108  Packet Len: 1506
 	Ethernet Header
@@ -2858,10 +2858,10 @@ Packet Number: 108  Packet Len: 1506
 		Dest Port: 1666
 		Sequence Number: -737098042
 		ACK Number: 61871275
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 8406
-		Checksum: Incorrect (0xd5)
+		Window Size: 6432
+		Checksum: Incorrect (0xd6d5)
 
 Packet Number: 109  Packet Len: 1506
 	Ethernet Header
@@ -2886,10 +2886,10 @@ Packet Number: 109  Packet Len: 1506
 		Dest Port: 1666
 		Sequence Number: -737096590
 		ACK Number: 61871275
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 8213
-		Checksum: Incorrect (0xc8)
+		Window Size: 6432
+		Checksum: Incorrect (0x15c8)
 
 Packet Number: 110  Packet Len: 54
 	Ethernet Header
@@ -2914,10 +2914,10 @@ Packet Number: 110  Packet Len: 54
 		Dest Port: HTTP
 		Sequence Number: 61871275
 		ACK Number: -737095138
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4339
-		Checksum: Incorrect (0x26)
+		Window Size: 17424
+		Checksum: Incorrect (0xf326)
 
 Packet Number: 111  Packet Len: 62
 	Ethernet Header
@@ -2942,10 +2942,10 @@ Packet Number: 111  Packet Len: 62
 		Dest Port: 1667
 		Sequence Number: -724471891
 		ACK Number: 61961011
-		Data Offset (bytes): 112
+		Data Offset (bytes): 28
 		Flag: 
-		Window Size: 53494
-		Checksum: Incorrect (0xcf)
+		Window Size: 5840
+		Checksum: Incorrect (0xf6cf)
 
 Packet Number: 112  Packet Len: 54
 	Ethernet Header
@@ -2970,10 +2970,10 @@ Packet Number: 112  Packet Len: 54
 		Dest Port: HTTP
 		Sequence Number: 61961011
 		ACK Number: -724471890
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4342
-		Checksum: Incorrect (0x4b)
+		Window Size: 17424
+		Checksum: Incorrect (0xf64b)
 
 Packet Number: 113  Packet Len: 579
 	Ethernet Header
@@ -2998,10 +2998,10 @@ Packet Number: 113  Packet Len: 579
 		Dest Port: HTTP
 		Sequence Number: 61961011
 		ACK Number: -724471890
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4150
-		Checksum: Incorrect (0x5c)
+		Window Size: 17424
+		Checksum: Incorrect (0x365c)
 
 Packet Number: 114  Packet Len: 1506
 	Ethernet Header
@@ -3026,10 +3026,10 @@ Packet Number: 114  Packet Len: 1506
 		Dest Port: 1666
 		Sequence Number: -737095138
 		ACK Number: 61871275
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 8302
-		Checksum: Incorrect (0xd0)
+		Window Size: 6432
+		Checksum: Incorrect (0x6ed0)
 
 Packet Number: 115  Packet Len: 54
 	Ethernet Header
@@ -3054,10 +3054,10 @@ Packet Number: 115  Packet Len: 54
 		Dest Port: HTTP
 		Sequence Number: 61871275
 		ACK Number: -737093686
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4333
-		Checksum: Incorrect (0x7a)
+		Window Size: 17424
+		Checksum: Incorrect (0xed7a)
 
 Packet Number: 116  Packet Len: 54
 	Ethernet Header
@@ -3082,10 +3082,10 @@ Packet Number: 116  Packet Len: 54
 		Dest Port: HTTP
 		Sequence Number: 61871275
 		ACK Number: -737093686
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 49
-		Checksum: Incorrect (0x97)
+		Window Size: 0
+		Checksum: Incorrect (0x3197)
 
 Packet Number: 117  Packet Len: 1043
 	Ethernet Header
@@ -3110,10 +3110,10 @@ Packet Number: 117  Packet Len: 1043
 		Dest Port: 1666
 		Sequence Number: -737093686
 		ACK Number: 61871275
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 8307
-		Checksum: Incorrect (0xc7)
+		Window Size: 6432
+		Checksum: Incorrect (0x73c7)
 
 Packet Number: 118  Packet Len: 54
 	Ethernet Header
@@ -3138,10 +3138,10 @@ Packet Number: 118  Packet Len: 54
 		Dest Port: HTTP
 		Sequence Number: 61871275
 		ACK Number: 61871275
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 197
-		Checksum: Incorrect (0x17)
+		Window Size: 0
+		Checksum: Incorrect (0xc517)
 
 Packet Number: 119  Packet Len: 60
 	Ethernet Header
@@ -3166,10 +3166,10 @@ Packet Number: 119  Packet Len: 60
 		Dest Port: 1667
 		Sequence Number: -724471890
 		ACK Number: 61961536
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 8223
-		Checksum: Incorrect (0x2f)
+		Window Size: 6432
+		Checksum: Incorrect (0x1f2f)
 
 Packet Number: 120  Packet Len: 239
 	Ethernet Header
@@ -3194,10 +3194,10 @@ Packet Number: 120  Packet Len: 239
 		Dest Port: 1667
 		Sequence Number: -724471890
 		ACK Number: 61961536
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 8298
-		Checksum: Incorrect (0x7e)
+		Window Size: 6432
+		Checksum: Incorrect (0x6a7e)
 
 Packet Number: 121  Packet Len: 62
 	Ethernet Header
@@ -3222,10 +3222,10 @@ Packet Number: 121  Packet Len: 62
 		Dest Port: HTTP
 		Sequence Number: 62140588
 		ACK Number: 0
-		Data Offset (bytes): 112
+		Data Offset (bytes): 28
 		Flag: 
-		Window Size: 84
-		Checksum: Incorrect (0xaa)
+		Window Size: 16384
+		Checksum: Incorrect (0x54aa)
 
 Packet Number: 122  Packet Len: 580
 	Ethernet Header
@@ -3250,10 +3250,10 @@ Packet Number: 122  Packet Len: 580
 		Dest Port: HTTP
 		Sequence Number: 61961536
 		ACK Number: -724471705
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 22385
-		Checksum: Incorrect (0xa3)
+		Window Size: 17239
+		Checksum: Incorrect (0x71a3)
 
 Packet Number: 123  Packet Len: 62
 	Ethernet Header
@@ -3278,10 +3278,10 @@ Packet Number: 123  Packet Len: 62
 		Dest Port: 1668
 		Sequence Number: -586705092
 		ACK Number: 62140589
-		Data Offset (bytes): 112
+		Data Offset (bytes): 28
 		Flag: 
-		Window Size: 53257
-		Checksum: Incorrect (0x8d)
+		Window Size: 5840
+		Checksum: Incorrect (0x98d)
 
 Packet Number: 124  Packet Len: 54
 	Ethernet Header
@@ -3306,10 +3306,10 @@ Packet Number: 124  Packet Len: 54
 		Dest Port: HTTP
 		Sequence Number: 62140589
 		ACK Number: -586705091
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4105
-		Checksum: Incorrect (0x9)
+		Window Size: 17424
+		Checksum: Incorrect (0x909)
 
 Packet Number: 125  Packet Len: 580
 	Ethernet Header
@@ -3334,10 +3334,10 @@ Packet Number: 125  Packet Len: 580
 		Dest Port: HTTP
 		Sequence Number: 62140589
 		ACK Number: -586705091
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4104
-		Checksum: Incorrect (0xe1)
+		Window Size: 17424
+		Checksum: Incorrect (0x8e1)
 
 Packet Number: 126  Packet Len: 1506
 	Ethernet Header
@@ -3362,10 +3362,10 @@ Packet Number: 126  Packet Len: 1506
 		Dest Port: 1667
 		Sequence Number: -724471705
 		ACK Number: 61962062
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20631
-		Checksum: Incorrect (0xd1)
+		Window Size: 7504
+		Checksum: Incorrect (0x97d1)
 
 Packet Number: 127  Packet Len: 1506
 	Ethernet Header
@@ -3390,10 +3390,10 @@ Packet Number: 127  Packet Len: 1506
 		Dest Port: 1667
 		Sequence Number: -724470253
 		ACK Number: 61962062
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20668
-		Checksum: Incorrect (0xea)
+		Window Size: 7504
+		Checksum: Incorrect (0xbcea)
 
 Packet Number: 128  Packet Len: 54
 	Ethernet Header
@@ -3418,10 +3418,10 @@ Packet Number: 128  Packet Len: 54
 		Dest Port: HTTP
 		Sequence Number: 61962062
 		ACK Number: -724468801
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4326
-		Checksum: Incorrect (0x1f)
+		Window Size: 17424
+		Checksum: Incorrect (0xe61f)
 
 Packet Number: 129  Packet Len: 60
 	Ethernet Header
@@ -3446,10 +3446,10 @@ Packet Number: 129  Packet Len: 60
 		Dest Port: 1668
 		Sequence Number: -586705091
 		ACK Number: 62141115
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 8241
-		Checksum: Incorrect (0xeb)
+		Window Size: 6432
+		Checksum: Incorrect (0x31eb)
 
 Packet Number: 130  Packet Len: 268
 	Ethernet Header
@@ -3474,10 +3474,10 @@ Packet Number: 130  Packet Len: 268
 		Dest Port: 1668
 		Sequence Number: -586703639
 		ACK Number: 62141115
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 8332
-		Checksum: Incorrect (0x34)
+		Window Size: 6432
+		Checksum: Incorrect (0x8c34)
 
 Packet Number: 131  Packet Len: 66
 	Ethernet Header
@@ -3502,10 +3502,10 @@ Packet Number: 131  Packet Len: 66
 		Dest Port: HTTP
 		Sequence Number: 62141115
 		ACK Number: -586705091
-		Data Offset (bytes): 128
+		Data Offset (bytes): 32
 		Flag: 
-		Window Size: 4316
-		Checksum: Incorrect (0x2a)
+		Window Size: 17424
+		Checksum: Incorrect (0xdc2a)
 
 Packet Number: 132  Packet Len: 1506
 	Ethernet Header
@@ -3530,10 +3530,10 @@ Packet Number: 132  Packet Len: 1506
 		Dest Port: 1668
 		Sequence Number: -586705091
 		ACK Number: 62141115
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 8432
-		Checksum: Incorrect (0x8)
+		Window Size: 6432
+		Checksum: Incorrect (0xf008)
 
 Packet Number: 133  Packet Len: 54
 	Ethernet Header
@@ -3558,9 +3558,9 @@ Packet Number: 133  Packet Len: 54
 		Dest Port: HTTP
 		Sequence Number: 62141115
 		ACK Number: -586703425
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4096
+		Window Size: 17424
 		Checksum: Incorrect (0x79)
 
 Packet Number: 134  Packet Len: 54
@@ -3586,10 +3586,10 @@ Packet Number: 134  Packet Len: 54
 		Dest Port: HTTP
 		Sequence Number: 62141115
 		ACK Number: -586703425
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 68
-		Checksum: Incorrect (0x95)
+		Window Size: 0
+		Checksum: Incorrect (0x4495)
 
 Packet Number: 135  Packet Len: 1506
 	Ethernet Header
@@ -3614,10 +3614,10 @@ Packet Number: 135  Packet Len: 1506
 		Dest Port: 1667
 		Sequence Number: -724468801
 		ACK Number: 61962062
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20659
-		Checksum: Incorrect (0x1d)
+		Window Size: 7504
+		Checksum: Incorrect (0xb31d)
 
 Packet Number: 136  Packet Len: 54
 	Ethernet Header
@@ -3642,10 +3642,10 @@ Packet Number: 136  Packet Len: 54
 		Dest Port: HTTP
 		Sequence Number: 61962062
 		ACK Number: -724467349
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4320
-		Checksum: Incorrect (0x73)
+		Window Size: 17424
+		Checksum: Incorrect (0xe073)
 
 Packet Number: 137  Packet Len: 54
 	Ethernet Header
@@ -3670,10 +3670,10 @@ Packet Number: 137  Packet Len: 54
 		Dest Port: HTTP
 		Sequence Number: 61962062
 		ACK Number: -724467349
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 36
-		Checksum: Incorrect (0x90)
+		Window Size: 0
+		Checksum: Incorrect (0x2490)
 
 Packet Number: 138  Packet Len: 1506
 	Ethernet Header
@@ -3698,10 +3698,10 @@ Packet Number: 138  Packet Len: 1506
 		Dest Port: 1667
 		Sequence Number: -724467349
 		ACK Number: 61962062
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20512
-		Checksum: Incorrect (0x38)
+		Window Size: 7504
+		Checksum: Incorrect (0x2038)
 
 Packet Number: 139  Packet Len: 54
 	Ethernet Header
@@ -3726,10 +3726,10 @@ Packet Number: 139  Packet Len: 54
 		Dest Port: HTTP
 		Sequence Number: 61962062
 		ACK Number: 61962062
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 255
-		Checksum: Incorrect (0xcd)
+		Window Size: 0
+		Checksum: Incorrect (0xffcd)
 
 Packet Number: 140  Packet Len: 1506
 	Ethernet Header
@@ -3754,10 +3754,10 @@ Packet Number: 140  Packet Len: 1506
 		Dest Port: 1667
 		Sequence Number: -724465897
 		ACK Number: 61962062
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20735
-		Checksum: Incorrect (0x5e)
+		Window Size: 7504
+		Checksum: Incorrect (0xff5e)
 
 Packet Number: 141  Packet Len: 54
 	Ethernet Header
@@ -3782,10 +3782,10 @@ Packet Number: 141  Packet Len: 54
 		Dest Port: HTTP
 		Sequence Number: 61962062
 		ACK Number: 61962062
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 255
-		Checksum: Incorrect (0xcd)
+		Window Size: 0
+		Checksum: Incorrect (0xffcd)
 
 Packet Number: 142  Packet Len: 1506
 	Ethernet Header
@@ -3810,10 +3810,10 @@ Packet Number: 142  Packet Len: 1506
 		Dest Port: 1667
 		Sequence Number: -724464445
 		ACK Number: 61962062
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20635
-		Checksum: Incorrect (0x60)
+		Window Size: 7504
+		Checksum: Incorrect (0x9b60)
 
 Packet Number: 143  Packet Len: 54
 	Ethernet Header
@@ -3838,10 +3838,10 @@ Packet Number: 143  Packet Len: 54
 		Dest Port: HTTP
 		Sequence Number: 61962062
 		ACK Number: 61962062
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 255
-		Checksum: Incorrect (0xcd)
+		Window Size: 0
+		Checksum: Incorrect (0xffcd)
 
 Packet Number: 144  Packet Len: 1506
 	Ethernet Header
@@ -3866,10 +3866,10 @@ Packet Number: 144  Packet Len: 1506
 		Dest Port: 1667
 		Sequence Number: -724462993
 		ACK Number: 61962062
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20691
-		Checksum: Incorrect (0x97)
+		Window Size: 7504
+		Checksum: Incorrect (0xd397)
 
 Packet Number: 145  Packet Len: 54
 	Ethernet Header
@@ -3894,10 +3894,10 @@ Packet Number: 145  Packet Len: 54
 		Dest Port: HTTP
 		Sequence Number: 61962062
 		ACK Number: 61962062
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 255
-		Checksum: Incorrect (0xcd)
+		Window Size: 0
+		Checksum: Incorrect (0xffcd)
 
 Packet Number: 146  Packet Len: 131
 	Ethernet Header
@@ -3922,10 +3922,10 @@ Packet Number: 146  Packet Len: 131
 		Dest Port: 2147
 		Sequence Number: 60343917
 		ACK Number: 1013159101
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 1576
-		Checksum: Incorrect (0xe7)
+		Window Size: 16646
+		Checksum: Incorrect (0x28e7)
 
 Packet Number: 147  Packet Len: 60
 	Ethernet Header
@@ -3950,10 +3950,10 @@ Packet Number: 147  Packet Len: 60
 		Dest Port: 1663
 		Sequence Number: 1013159101
 		ACK Number: 60343994
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20470
-		Checksum: Incorrect (0x95)
+		Window Size: 9295
+		Checksum: Incorrect (0xf695)
 
 Packet Number: 148  Packet Len: 147
 	Ethernet Header
@@ -3978,10 +3978,10 @@ Packet Number: 148  Packet Len: 147
 		Dest Port: 2147
 		Sequence Number: 60343994
 		ACK Number: 1013159101
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 1738
-		Checksum: Incorrect (0x8b)
+		Window Size: 16646
+		Checksum: Incorrect (0xca8b)
 
 Packet Number: 149  Packet Len: 60
 	Ethernet Header
@@ -4006,10 +4006,10 @@ Packet Number: 149  Packet Len: 60
 		Dest Port: 1663
 		Sequence Number: 1013159101
 		ACK Number: 60344087
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20470
-		Checksum: Incorrect (0x38)
+		Window Size: 9295
+		Checksum: Incorrect (0xf638)
 
 Packet Number: 150  Packet Len: 1506
 	Ethernet Header
@@ -4034,10 +4034,10 @@ Packet Number: 150  Packet Len: 1506
 		Dest Port: 1663
 		Sequence Number: 1013159101
 		ACK Number: 60344087
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20294
-		Checksum: Incorrect (0x7)
+		Window Size: 9295
+		Checksum: Incorrect (0x4607)
 
 Packet Number: 151  Packet Len: 1506
 	Ethernet Header
@@ -4062,10 +4062,10 @@ Packet Number: 151  Packet Len: 1506
 		Dest Port: 1663
 		Sequence Number: 1013160553
 		ACK Number: 60344087
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20409
-		Checksum: Incorrect (0x15)
+		Window Size: 9295
+		Checksum: Incorrect (0xb915)
 
 Packet Number: 152  Packet Len: 54
 	Ethernet Header
@@ -4090,10 +4090,10 @@ Packet Number: 152  Packet Len: 54
 		Dest Port: 2147
 		Sequence Number: 60344087
 		ACK Number: 1013162005
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4299
-		Checksum: Incorrect (0x1f)
+		Window Size: 17424
+		Checksum: Incorrect (0xcb1f)
 
 Packet Number: 153  Packet Len: 688
 	Ethernet Header
@@ -4118,10 +4118,10 @@ Packet Number: 153  Packet Len: 688
 		Dest Port: 1663
 		Sequence Number: 1013162005
 		ACK Number: 60344087
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20456
-		Checksum: Incorrect (0x44)
+		Window Size: 9295
+		Checksum: Incorrect (0xe844)
 
 Packet Number: 154  Packet Len: 54
 	Ethernet Header
@@ -4146,10 +4146,10 @@ Packet Number: 154  Packet Len: 54
 		Dest Port: 2147
 		Sequence Number: 60344087
 		ACK Number: 1013162639
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 38603
-		Checksum: Incorrect (0x1f)
+		Window Size: 16790
+		Checksum: Incorrect (0xcb1f)
 
 Packet Number: 155  Packet Len: 296
 	Ethernet Header
@@ -4174,10 +4174,10 @@ Packet Number: 155  Packet Len: 296
 		Dest Port: 1663
 		Sequence Number: 1013162639
 		ACK Number: 60344087
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20369
-		Checksum: Incorrect (0xd9)
+		Window Size: 9295
+		Checksum: Incorrect (0x91d9)
 
 Packet Number: 156  Packet Len: 131
 	Ethernet Header
@@ -4202,10 +4202,10 @@ Packet Number: 156  Packet Len: 131
 		Dest Port: 2147
 		Sequence Number: 60344087
 		ACK Number: 1013162881
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 42131
-		Checksum: Incorrect (0x8)
+		Window Size: 16548
+		Checksum: Incorrect (0x9308)
 
 Packet Number: 157  Packet Len: 60
 	Ethernet Header
@@ -4230,10 +4230,10 @@ Packet Number: 157  Packet Len: 60
 		Dest Port: 1663
 		Sequence Number: 1013162881
 		ACK Number: 60344164
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20455
-		Checksum: Incorrect (0x27)
+		Window Size: 9295
+		Checksum: Incorrect (0xe727)
 
 Packet Number: 158  Packet Len: 208
 	Ethernet Header
@@ -4258,10 +4258,10 @@ Packet Number: 158  Packet Len: 208
 		Dest Port: 2147
 		Sequence Number: 60344164
 		ACK Number: 1013162881
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 42084
-		Checksum: Incorrect (0x74)
+		Window Size: 16548
+		Checksum: Incorrect (0x6474)
 
 Packet Number: 159  Packet Len: 264
 	Ethernet Header
@@ -4286,10 +4286,10 @@ Packet Number: 159  Packet Len: 264
 		Dest Port: 1663
 		Sequence Number: 1013162881
 		ACK Number: 60344164
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 20362
-		Checksum: Incorrect (0xa5)
+		Window Size: 9295
+		Checksum: Incorrect (0x8aa5)
 
 Packet Number: 160  Packet Len: 60
 	Ethernet Header
@@ -4314,10 +4314,10 @@ Packet Number: 160  Packet Len: 60
 		Dest Port: 1663
 		Sequence Number: 1013163091
 		ACK Number: 60344318
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 59871
-		Checksum: Incorrect (0x21)
+		Window Size: 10985
+		Checksum: Incorrect (0xdf21)
 
 Packet Number: 161  Packet Len: 240
 	Ethernet Header
@@ -4342,10 +4342,10 @@ Packet Number: 161  Packet Len: 240
 		Dest Port: 2147
 		Sequence Number: 60344318
 		ACK Number: 1013163091
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 53946
-		Checksum: Incorrect (0x9d)
+		Window Size: 16338
+		Checksum: Incorrect (0xba9d)
 
 Packet Number: 162  Packet Len: 1200
 	Ethernet Header
@@ -4370,10 +4370,10 @@ Packet Number: 162  Packet Len: 1200
 		Dest Port: 1663
 		Sequence Number: 1013163091
 		ACK Number: 60344504
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 33605
-		Checksum: Incorrect (0x38)
+		Window Size: 12675
+		Checksum: Incorrect (0x4538)
 
 Packet Number: 163  Packet Len: 54
 	Ethernet Header
@@ -4398,10 +4398,10 @@ Packet Number: 163  Packet Len: 54
 		Dest Port: 2147
 		Sequence Number: 60344504
 		ACK Number: 1013164237
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4288
-		Checksum: Incorrect (0xc6)
+		Window Size: 17424
+		Checksum: Incorrect (0xc0c6)
 
 Packet Number: 164  Packet Len: 147
 	Ethernet Header
@@ -4426,10 +4426,10 @@ Packet Number: 164  Packet Len: 147
 		Dest Port: 2147
 		Sequence Number: 60344504
 		ACK Number: 1013164237
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4295
-		Checksum: Incorrect (0xa8)
+		Window Size: 17424
+		Checksum: Incorrect (0xc7a8)
 
 Packet Number: 165  Packet Len: 123
 	Ethernet Header
@@ -4454,10 +4454,10 @@ Packet Number: 165  Packet Len: 123
 		Dest Port: 2147
 		Sequence Number: 60344597
 		ACK Number: 1013164237
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4150
-		Checksum: Incorrect (0xfc)
+		Window Size: 17424
+		Checksum: Incorrect (0x36fc)
 
 Packet Number: 166  Packet Len: 60
 	Ethernet Header
@@ -4482,10 +4482,10 @@ Packet Number: 166  Packet Len: 60
 		Dest Port: 1663
 		Sequence Number: 1013164237
 		ACK Number: 60344667
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 33746
-		Checksum: Incorrect (0xaf)
+		Window Size: 12675
+		Checksum: Incorrect (0xd2af)
 
 Packet Number: 167  Packet Len: 54
 	Ethernet Header
@@ -4510,8 +4510,8 @@ Packet Number: 167  Packet Len: 54
 		Dest Port: 2147
 		Sequence Number: 60344667
 		ACK Number: 1013164238
-		Data Offset (bytes): 80
+		Data Offset (bytes): 20
 		Flag: 
-		Window Size: 4288
-		Checksum: Incorrect (0x22)
+		Window Size: 17424
+		Checksum: Incorrect (0xc022)
 

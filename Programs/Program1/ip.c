@@ -72,8 +72,7 @@ IP_HDR* ip(uint8_t *pkt_data) {
     return ip_hdr;
 }
 
-
-void icmp_tcp_udp(uint8_t protocol, uint8_t *pkt_data) {
+void icmp_tcp_udp(uint8_t protocol, uint8_t *pkt_data, IP_HDR *ip_hdr) {
     switch(protocol) {
         case UDP: 
             printf("\tUDP Header\n");
@@ -85,7 +84,7 @@ void icmp_tcp_udp(uint8_t protocol, uint8_t *pkt_data) {
             break;
         case TCP:
             printf("\tTCP Header\n");
-            tcp(pkt_data);
+            tcp(pkt_data, ip_hdr);
             break;
         default: printf("\tUnknown\n");
             break;
@@ -110,7 +109,7 @@ void print_tcp_flag(uint16_t flag) {
     printf("\t\tFlag: \n");
 }
 
-void print_tcp(TCP_HDR *tcp_hdr) {
+void print_tcp(TCP_HDR *tcp_hdr, uint8_t *pseudo_hdr) {
     printf("\t\tSource Port: ");
     print_port(ntohs(tcp_hdr->src_port), TCP);
     printf("\t\tDest Port: ");
@@ -122,15 +121,38 @@ void print_tcp(TCP_HDR *tcp_hdr) {
     print_tcp_flag(ntohs(tcp_hdr->flag));
 
     printf("\t\tWindow Size: %d\n", ntohs(tcp_hdr->win_size));
-    if(in_cksum((unsigned short*) tcp_hdr->tcp_mem_addr, tcp_hdr->data_offset) == 0) 
-        printf("\t\tChecksum: Correct (0x%x)\n", tcp_hdr->checksum);
+    
+    if(in_cksum((unsigned short*) pseudo_hdr, tcp_hdr->data_offset+12) == 0) 
+        printf("\t\tChecksum: Correct (0x%x)\n", ntohs(tcp_hdr->checksum));
     else 
-        printf("\t\tChecksum: Incorrect (0x%x)\n", tcp_hdr->checksum);
+        printf("\t\tChecksum: Incorrect (0x%x)\n", ntohs(tcp_hdr->checksum));
 
 
 }
 
-void tcp(uint8_t *pkt_data) {
+
+uint8_t* mk_pseudo_hdr(uint32_t src, uint32_t dest, uint8_t protocol, uint8_t tcp_len) {
+    uint8_t *pseudo_hdr;
+    uint8_t *temp;
+    pseudo_hdr = calloc((12 + tcp_len), sizeof(uint8_t));
+    temp = pseudo_hdr;
+
+    memcpy(pseudo_hdr, &src, 4);
+    pseudo_hdr += 4;
+    memcpy(pseudo_hdr, &dest, 4);
+    pseudo_hdr += 4;
+    pseudo_hdr += 1;
+    memcpy(pseudo_hdr, &protocol, 1);
+    pseudo_hdr += 1;
+    memcpy(pseudo_hdr, &tcp_len, 1);
+
+    return temp;
+}
+
+void tcp(uint8_t *pkt_data, IP_HDR *ip_hdr) {
+    uint8_t *pseudo_hdr;
+    uint8_t len;
+
     TCP_HDR *tcp_hdr = malloc(sizeof(TCP_HDR));
     tcp_hdr->tcp_mem_addr = pkt_data;
 
@@ -142,18 +164,27 @@ void tcp(uint8_t *pkt_data) {
     pkt_data+=4;
     memcpy(&(tcp_hdr->ack_num), pkt_data, 4);
     pkt_data+=4;
-    memcpy(&(tcp_hdr->data_offset), pkt_data, 1);
+
+    memcpy(&(len), pkt_data, 1);
     pkt_data+=1;
-    memcpy(&(tcp_hdr->flag), pkt_data, 2);
-    pkt_data+=2;
+
+    tcp_hdr->data_offset = 4 * ((len & 0xF0) / 16);
+
+    memcpy(&(tcp_hdr->flag), pkt_data, 1);
+    pkt_data+=1;
+
     memcpy(&(tcp_hdr->win_size), pkt_data, 2);
     pkt_data+=2;
     memcpy(&(tcp_hdr->checksum), pkt_data, 2);
     
+    pseudo_hdr = mk_pseudo_hdr(ip_hdr->src_ip, ip_hdr->dest_ip, ip_hdr->protocol, tcp_hdr->data_offset);        // create pseudo-header
 
-    print_tcp(tcp_hdr);
+    memcpy(pseudo_hdr+13, tcp_hdr->tcp_mem_addr, tcp_hdr->data_offset);
+
+    print_tcp(tcp_hdr, pseudo_hdr);
 
     free(tcp_hdr);
+    free(pseudo_hdr);
 }
 
 void icmp(uint8_t *pkt_data) {
