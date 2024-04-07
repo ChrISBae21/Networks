@@ -7,15 +7,21 @@
 #include "ip.h"
 #include "misc.h"
 
+#define FIN 1 //0b0001
+#define SYN 2 //0b0010
+#define RST 4 //0b0100
+#define ACK 16 //0b10000
 
+/*
+Prints the content of the IP Header
+*/
 void print_ip_hdr(IP_HDR *ip_hdr) {
     
-
     printf("\t\tIP Version: %d\n", ip_hdr->ver);
     printf("\t\tHeader Len (bytes): %d\n", ip_hdr->len);
     printf("\t\tTOS subfields:\n");
-    printf("\t\t\tDiffserv bits: %d\n", (ip_hdr->dscp_ecn & 0xF0) / 16);
-    printf("\t\t\tECN bits: %d\n", (ip_hdr->dscp_ecn & 0x0F));
+    printf("\t\t   Diffserv bits: %d\n", (ip_hdr->dscp_ecn & 0xF0) / 16);
+    printf("\t\t   ECN bits: %d\n", (ip_hdr->dscp_ecn & 0x0F));
     printf("\t\tTTL: %d\n", ip_hdr->ttl);
     printf("\t\tProtocol: ");
     switch(ip_hdr->protocol) {
@@ -30,9 +36,9 @@ void print_ip_hdr(IP_HDR *ip_hdr) {
     }
 
     if(in_cksum((unsigned short*) ip_hdr->ip_mem_addr, ip_hdr->len) == 0) 
-        printf("\t\tChecksum: Correct (0x%x)\n", ip_hdr->checksum);
+        printf("\t\tChecksum: Correct (0x%04x)\n", ip_hdr->checksum);
     else 
-        printf("\t\tChecksum: Incorrect (0x%x)\n", ip_hdr->checksum);
+        printf("\t\tChecksum: Incorrect (0x%04x)\n", ip_hdr->checksum);
 
     printf("\t\tSender IP: ");
     print_ip(ip_hdr->src_ip);
@@ -41,6 +47,9 @@ void print_ip_hdr(IP_HDR *ip_hdr) {
     printf("\n");
 }
 
+/*
+Function that parses the IP Header into a IP_HDR struct
+*/
 IP_HDR* ip(uint8_t *pkt_data) {
     uint8_t ver_len;                // Version and Length
     uint16_t checksum;              // Checksum
@@ -72,6 +81,9 @@ IP_HDR* ip(uint8_t *pkt_data) {
     return ip_hdr;
 }
 
+/*
+Function to identify the Protocol
+*/
 void icmp_tcp_udp(uint8_t protocol, uint8_t *pkt_data, IP_HDR *ip_hdr) {
     switch(protocol) {
         case UDP: 
@@ -92,53 +104,68 @@ void icmp_tcp_udp(uint8_t protocol, uint8_t *pkt_data, IP_HDR *ip_hdr) {
     printf("\n");
 }
 
-
+/*
+Parses and prints the content of the UDP header
+*/
 void udp(uint8_t *pkt_data) {
     uint16_t src_port, dest_port;
 
-    printf("\t\tSource Port: ");
+    printf("\t\tSource Port:  ");
     memcpy(&src_port, pkt_data, 2);
     print_port(ntohs(src_port), UDP);
-    printf("\t\tDest Port: ");
+    printf("\t\tDest Port:  ");
     memcpy(&dest_port, pkt_data+2, 2);
     print_port(ntohs(dest_port), UDP);
 }
 
 
-void print_tcp_flag(uint16_t flag) {
-    printf("\t\tFlag: \n");
+void print_tcp_flag(uint8_t flag) {
+    
+    printf("\t\tSYN Flag: ");
+    ((flag & SYN) != 0) ? printf("Yes\n") : printf("No\n");
+    printf("\t\tRST Flag: ");
+    ((flag & RST) != 0) ? printf("Yes\n") : printf("No\n");
+    printf("\t\tFIN Flag: ");
+    ((flag & FIN) != 0) ? printf("Yes\n") : printf("No\n");
+    printf("\t\tACK Flag: ");
+    ((flag & ACK) != 0) ? printf("Yes\n") : printf("No\n");
 }
 
+/*
+Prints the contents of the TCP header given TCP_HDR struct, and calculates checksum
+*/
 void print_tcp(TCP_HDR *tcp_hdr, uint8_t *pseudo_hdr) {
-    printf("\t\tSource Port: ");
+    printf("\t\tSource Port:  ");
     print_port(ntohs(tcp_hdr->src_port), TCP);
-    printf("\t\tDest Port: ");
+    printf("\t\tDest Port:  ");
     print_port(ntohs(tcp_hdr->dest_port), TCP);
     printf("\t\tSequence Number: %d\n", ntohl(tcp_hdr->seq_num));
     printf("\t\tACK Number: %d\n", ntohl(tcp_hdr->ack_num));
     printf("\t\tData Offset (bytes): %d\n", tcp_hdr->data_offset);
 
-    print_tcp_flag(ntohs(tcp_hdr->flag));
-
+    print_tcp_flag(tcp_hdr->flag);
     printf("\t\tWindow Size: %d\n", ntohs(tcp_hdr->win_size));
-    
     if(in_cksum((unsigned short*) pseudo_hdr, tcp_hdr->data_offset+12) == 0) 
-        printf("\t\tChecksum: Correct (0x%x)\n", ntohs(tcp_hdr->checksum));
+        printf("\t\tChecksum: Correct (0x%04x)\n", ntohs(tcp_hdr->checksum));
     else 
-        printf("\t\tChecksum: Incorrect (0x%x)\n", ntohs(tcp_hdr->checksum));
+        printf("\t\tChecksum: Incorrect (0x%04x)\n", ntohs(tcp_hdr->checksum));
 
 
 }
 
 
+/*
+Creates TCP/UCP Pseudo header from Source IP, Dest IP, Protocol #, and TCP Length (bytes)
+*/
 uint8_t* mk_pseudo_hdr(uint32_t src, uint32_t dest, uint8_t protocol, uint8_t tcp_len) {
     uint8_t *pseudo_hdr;
     uint8_t *temp;
 
-    uint16_t len;
-    pseudo_hdr = calloc((12 + tcp_len), sizeof(uint8_t));
+    // allocate memory for Pseudo Header + TCP Header + Payload
+    pseudo_hdr = calloc((12 + tcp_len), sizeof(uint8_t));   
     temp = pseudo_hdr;
 
+    // copies values into the pseudo header
     memcpy(pseudo_hdr, &src, 4);
     pseudo_hdr += 4;
     memcpy(pseudo_hdr, &dest, 4);
@@ -146,51 +173,58 @@ uint8_t* mk_pseudo_hdr(uint32_t src, uint32_t dest, uint8_t protocol, uint8_t tc
     pseudo_hdr += 1;
     memcpy(pseudo_hdr, &protocol, 1);
     pseudo_hdr += 2;
-    len = (tcp_len);
-
-    memcpy(pseudo_hdr, &len, 1);
+    memcpy(pseudo_hdr, &tcp_len, 1);
 
     return temp;
 }
 
+/*
+Parses the TCP header (pkt_data) and places values into the TCP_HDR struct
+*/
 void tcp(uint8_t *pkt_data, IP_HDR *ip_hdr) {
     uint8_t *pseudo_hdr;
     uint8_t len;
 
+    // allocate memory for TCP header
     TCP_HDR *tcp_hdr = malloc(sizeof(TCP_HDR));
+    // save reference to the "head" of TCP header for checksum
     tcp_hdr->tcp_mem_addr = pkt_data;
 
-    memcpy(&(tcp_hdr->src_port), pkt_data, 2);
+    // copies values into the struct
+    memcpy(&(tcp_hdr->src_port), pkt_data, 2);      // Source Port
     pkt_data+=2;
-    memcpy(&(tcp_hdr->dest_port), pkt_data, 2);
+    memcpy(&(tcp_hdr->dest_port), pkt_data, 2);     // Destination Port
     pkt_data+=2;
-    memcpy(&(tcp_hdr->seq_num), pkt_data, 4);
+    memcpy(&(tcp_hdr->seq_num), pkt_data, 4);       // Sequence Number
     pkt_data+=4;
-    memcpy(&(tcp_hdr->ack_num), pkt_data, 4);
+    memcpy(&(tcp_hdr->ack_num), pkt_data, 4);       // Ack Number
     pkt_data+=4;
 
+    // length is the upper nibble
     memcpy(&(len), pkt_data, 1);
     pkt_data+=1;
-
+    // mask upper nibble and multiply by 4 for number of bytes
     tcp_hdr->data_offset = 4 * ((len & 0xF0) / 16);
-
-    memcpy(&(tcp_hdr->flag), pkt_data, 1);
+    memcpy(&(tcp_hdr->flag), pkt_data, 1);          // Flags
     pkt_data+=1;
-
-    memcpy(&(tcp_hdr->win_size), pkt_data, 2);
+    memcpy(&(tcp_hdr->win_size), pkt_data, 2);      // Window Size
     pkt_data+=2;
-    memcpy(&(tcp_hdr->checksum), pkt_data, 2);
+    memcpy(&(tcp_hdr->checksum), pkt_data, 2);      // Checksum Value
     
-    pseudo_hdr = mk_pseudo_hdr(ip_hdr->src_ip, ip_hdr->dest_ip, ip_hdr->protocol, tcp_hdr->data_offset);        // create pseudo-header
-
+    // create pseudo-header
+    pseudo_hdr = mk_pseudo_hdr(ip_hdr->src_ip, ip_hdr->dest_ip, ip_hdr->protocol, tcp_hdr->data_offset);
+    // combind pseudo-header with TCP header
     memcpy(pseudo_hdr+12, tcp_hdr->tcp_mem_addr, tcp_hdr->data_offset);
 
-    print_tcp(tcp_hdr, pseudo_hdr);
+    print_tcp(tcp_hdr, pseudo_hdr); // print TCP header
 
     free(tcp_hdr);
     free(pseudo_hdr);
 }
 
+/*
+Function for ICMP Request/Reply
+*/
 void icmp(uint8_t *pkt_data) {
     printf("\t\tType: ");
 
@@ -204,6 +238,9 @@ void icmp(uint8_t *pkt_data) {
     }
 }
 
+/*
+Prints the Port given Port number and Protocol
+*/
 void print_port(uint16_t port, uint8_t protocol) {
     switch(port) {
         case DNS: printf("DNS\n");

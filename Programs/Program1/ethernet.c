@@ -9,9 +9,9 @@ Prints the Ethernet header
 */
 void print_eth(uint8_t *dest, uint8_t *src, uint16_t type) {
     printf("\tEthernet Header\n");
-    printf("\t\tDest Mac: ");
+    printf("\t\tDest MAC: ");
     print_mac(dest);
-    printf("\t\tSource Mac: ");
+    printf("\t\tSource MAC: ");
     print_mac(src);
 
     printf("\t\tType: ");

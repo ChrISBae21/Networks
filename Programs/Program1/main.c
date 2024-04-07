@@ -45,12 +45,12 @@ int main(int argc, char* argv[]) {
         printf("error");
     }
 
-
+    printf("\n");
     // Grab the next packet
     while(pcap_next_ex(trace_file, &pkt_header, &pkt_data) == 1) {
 
         pkt_len = pkt_header->caplen;                           // packet length
-        printf("Packet Number: %d  Packet Len: %d\n", pkt_num, pkt_len);
+        printf("Packet number: %d  Packet Len: %d\n\n", pkt_num, pkt_len);
         type = eth_hdr((uint8_t*) pkt_data);
 
         pkt_data += 14;     // skip the ethernet header
