@@ -12,41 +12,7 @@
 #define RST 4 //0b0100
 #define ACK 16 //0b10000
 
-/*
-Prints the content of the IP Header
-*/
-void print_ip_hdr(IP_HDR *ip_hdr) {
-    
-    printf("\t\tIP Version: %d\n", ip_hdr->ver);
-    printf("\t\tHeader Len (bytes): %d\n", ip_hdr->len);
-    printf("\t\tTOS subfields:\n");
-    printf("\t\t   Diffserv bits: %d\n", (ip_hdr->dscp_ecn & 0xF0) / 16);
-    printf("\t\t   ECN bits: %d\n", (ip_hdr->dscp_ecn & 0x0F));
-    printf("\t\tTTL: %d\n", ip_hdr->ttl);
-    printf("\t\tProtocol: ");
-    switch(ip_hdr->protocol) {
-        case UDP: printf("UDP\n");
-            break;
-        case ICMP: printf("ICMP\n");
-            break;
-        case TCP: printf("TCP\n");
-            break;
-        default: printf("Unknown\n");
-            break;
-    }
-
-    if(in_cksum((unsigned short*) ip_hdr->ip_mem_addr, ip_hdr->len) == 0) 
-        printf("\t\tChecksum: Correct (0x%04x)\n", ip_hdr->checksum);
-    else 
-        printf("\t\tChecksum: Incorrect (0x%04x)\n", ip_hdr->checksum);
-
-    printf("\t\tSender IP: ");
-    print_ip(ip_hdr->src_ip);
-    printf("\t\tDest IP: ");
-    print_ip(ip_hdr->dest_ip);
-    printf("\n");
-}
-
+//--------------------------- IP PARSING ---------------------------
 /*
 Function that parses the IP Header into a IP_HDR struct
 */
@@ -86,26 +52,62 @@ IP_HDR* ip(uint8_t *pkt_data) {
 }
 
 /*
+Prints the content of the IP Header
+*/
+void print_ip_hdr(IP_HDR *ip_hdr) {
+    
+    printf("\t\tIP Version: %d\n", ip_hdr->ver);
+    printf("\t\tHeader Len (bytes): %d\n", ip_hdr->len);
+    printf("\t\tTOS subfields:\n");
+    printf("\t\t   Diffserv bits: %d\n", (ip_hdr->dscp_ecn & 0xFC) / 4);
+    printf("\t\t   ECN bits: %d\n", (ip_hdr->dscp_ecn & 0x03));
+    printf("\t\tTTL: %d\n", ip_hdr->ttl);
+    printf("\t\tProtocol: ");
+    switch(ip_hdr->protocol) {
+        case UDP: printf("UDP\n");
+            break;
+        case ICMP: printf("ICMP\n");
+            break;
+        case TCP: printf("TCP\n");
+            break;
+        default: printf("Unknown\n");
+            break;
+    }
+
+    if(in_cksum((unsigned short*) ip_hdr->ip_mem_addr, ip_hdr->len) == 0) 
+        printf("\t\tChecksum: Correct (0x%04x)\n", ip_hdr->checksum);
+    else 
+        printf("\t\tChecksum: Incorrect (0x%04x)\n", ip_hdr->checksum);
+
+    printf("\t\tSender IP: ");
+    print_ip(ip_hdr->src_ip);
+    printf("\t\tDest IP: ");
+    print_ip(ip_hdr->dest_ip);
+    
+}
+
+
+
+/*
 Function to identify the Protocol
 */
 void icmp_tcp_udp(uint8_t protocol, uint8_t *pkt_data, IP_HDR *ip_hdr) {
     switch(protocol) {
         case UDP: 
-            printf("\tUDP Header\n");
+            printf("\n\tUDP Header\n");
             udp(pkt_data);
             break;
         case ICMP: 
-            printf("\tICMP Header\n");
+            printf("\n\tICMP Header\n");
             icmp(pkt_data);
             break;
         case TCP:
-            printf("\tTCP Header\n");
+            printf("\n\tTCP Header\n");
             tcp(pkt_data, ip_hdr);
             break;
-        default: printf("\tUnknown\n");
+        default:
             break;
     }
-    
 }
 
 /*
@@ -127,10 +129,13 @@ void print_tcp_flag(uint8_t flag) {
     
     printf("\t\tSYN Flag: ");
     ((flag & SYN) != 0) ? printf("Yes\n") : printf("No\n");
+
     printf("\t\tRST Flag: ");
     ((flag & RST) != 0) ? printf("Yes\n") : printf("No\n");
+
     printf("\t\tFIN Flag: ");
     ((flag & FIN) != 0) ? printf("Yes\n") : printf("No\n");
+
     printf("\t\tACK Flag: ");
     ((flag & ACK) != 0) ? printf("Yes\n") : printf("No\n");
 }
@@ -141,8 +146,10 @@ Prints the contents of the TCP header given TCP_HDR struct, and calculates check
 void print_tcp(TCP_HDR *tcp_hdr, uint8_t *pseudo_hdr, uint16_t len) {
     printf("\t\tSource Port:  ");
     print_port(ntohs(tcp_hdr->src_port), TCP);
+
     printf("\t\tDest Port:  ");
     print_port(ntohs(tcp_hdr->dest_port), TCP);
+
     printf("\t\tSequence Number: %u\n", ntohl(tcp_hdr->seq_num));
     printf("\t\tACK Number: %u\n", ntohl(tcp_hdr->ack_num));
     printf("\t\tData Offset (bytes): %d\n", tcp_hdr->data_offset);
@@ -153,7 +160,7 @@ void print_tcp(TCP_HDR *tcp_hdr, uint8_t *pseudo_hdr, uint16_t len) {
     if(in_cksum((unsigned short*) pseudo_hdr, 12+len) == 0) 
         printf("\t\tChecksum: Correct (0x%04x)\n", ntohs(tcp_hdr->checksum));
     else 
-        printf("\t\tChecksum: Incorrect (0x%04x), %d\n", ntohs(tcp_hdr->checksum), len);
+        printf("\t\tChecksum: Incorrect (0x%04x)\n", ntohs(tcp_hdr->checksum));
 
 
 }
@@ -241,7 +248,7 @@ void icmp(uint8_t *pkt_data) {
             break;
         case REPLY: printf("Reply\n");
             break;
-        default:
+        default: printf("%u\n", pkt_data[0]);
             break;
     }
 }
