@@ -25,17 +25,17 @@ void print_arp_hdr(ARP_HDR *arp_hdr) {
 }
 
 void arp_hdr(uint8_t *pkt_data) {
-    pkt_data+=6;                        /* skip to opcode */
     ARP_HDR *arp_hdr = malloc(sizeof(ARP_HDR));
-    memcpy(&(arp_hdr->opcode), pkt_data, 2);
+    pkt_data+=6;                        /* skip to opcode */
+    memcpy(&(arp_hdr->opcode), pkt_data, 2);    /* opcode */
     pkt_data+=2;
-    memcpy(arp_hdr->sender_mac, pkt_data, 6);
+    memcpy(arp_hdr->sender_mac, pkt_data, 6);   /* sender MAC*/
     pkt_data+=6;
-    memcpy(&(arp_hdr->sender_ip), pkt_data, 4);
+    memcpy(&(arp_hdr->sender_ip), pkt_data, 4); /* sender IP*/
     pkt_data+=4;
-    memcpy(arp_hdr->target_mac, pkt_data, 6);
+    memcpy(arp_hdr->target_mac, pkt_data, 6);   /* target MAC*/
     pkt_data+=6;
-    memcpy(&(arp_hdr->target_ip), pkt_data, 4);
+    memcpy(&(arp_hdr->target_ip), pkt_data, 4); /* target IP*/
     print_arp_hdr(arp_hdr);
     free(arp_hdr);
 

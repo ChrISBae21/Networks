@@ -87,21 +87,21 @@ void print_ip_hdr(IP_HDR *ip_hdr) {
 }
 
 
-/*--------------------------- ICMP, TCP, AND UDP ---------------------------
+/*--------------------------- ICMP, TCP, AND UDP ---------------------------*/
 /*
 Function to identify the Protocol
 */
 void icmp_tcp_udp(uint8_t protocol, uint8_t *pkt_data, IP_HDR *ip_hdr) {
     switch(protocol) {
-        case UDP: 
+        case UDP:   /* UDP */
             printf("\n\tUDP Header\n");
             udp(pkt_data);
             break;
-        case ICMP: 
+        case ICMP:  /* ICMP */
             printf("\n\tICMP Header\n");
             icmp(pkt_data);
             break;
-        case TCP:
+        case TCP:   /* TCP */
             printf("\n\tTCP Header\n");
             tcp(pkt_data, ip_hdr);
             break;
@@ -110,7 +110,7 @@ void icmp_tcp_udp(uint8_t protocol, uint8_t *pkt_data, IP_HDR *ip_hdr) {
     }
 }
 
-/*--------------------------- UDP ---------------------------
+/*--------------------------- UDP ---------------------------*/
 /*
 Parses and prints the content of the UDP header
 */
@@ -125,7 +125,7 @@ void udp(uint8_t *pkt_data) {
     print_port(ntohs(dest_port), UDP);
 }
 
-/*--------------------------- TCP ---------------------------
+/*--------------------------- TCP ---------------------------*/
 
 /*
 Parses the TCP header (pkt_data) and places values into the TCP_HDR struct
@@ -237,7 +237,7 @@ uint8_t* mk_pseudo_hdr(uint32_t src, uint32_t dest, uint8_t protocol, uint16_t t
     return temp;
 }
 
-/*--------------------------- ICMP ---------------------------
+/*--------------------------- ICMP ---------------------------*/
 
 
 /*
