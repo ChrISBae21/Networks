@@ -32,6 +32,7 @@ typedef struct __attribute__((packed)) IP_HDR {
     uint16_t checksum;              // Checksum
     uint32_t src_ip;                // Source IP
     uint32_t dest_ip;               // Destination IP
+    uint16_t tot_len;               // Total length from IP header on
 } IP_HDR;
 
 typedef struct __attribute__((packed)) TCP_HDR {

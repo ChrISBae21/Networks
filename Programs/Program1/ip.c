@@ -53,6 +53,7 @@ Function that parses the IP Header into a IP_HDR struct
 IP_HDR* ip(uint8_t *pkt_data) {
     uint8_t ver_len;                // Version and Length
     uint16_t checksum;              // Checksum
+    uint16_t tot_len;               // total length
 
     IP_HDR *ip_hdr = malloc(sizeof(IP_HDR));
     ip_hdr->ip_mem_addr = pkt_data;             
@@ -63,7 +64,10 @@ IP_HDR* ip(uint8_t *pkt_data) {
     pkt_data+=1;                                // move 1 byte
 
     memcpy(&(ip_hdr->dscp_ecn), pkt_data, 1);   // grab dscp and ecn byte
-    pkt_data+=7;                                // move 7 bytes
+    pkt_data+=1;
+    memcpy(&tot_len, pkt_data, 2);              // get total length
+    ip_hdr->tot_len = ntohs(tot_len);
+    pkt_data+=6;                                // move 7 bytes
 
     memcpy(&(ip_hdr->ttl), pkt_data, 1);        // grab ttl byte
     pkt_data+=1;                                // move 1 byte
@@ -101,7 +105,7 @@ void icmp_tcp_udp(uint8_t protocol, uint8_t *pkt_data, IP_HDR *ip_hdr) {
         default: printf("\tUnknown\n");
             break;
     }
-    printf("\n");
+    
 }
 
 /*
@@ -134,21 +138,22 @@ void print_tcp_flag(uint8_t flag) {
 /*
 Prints the contents of the TCP header given TCP_HDR struct, and calculates checksum
 */
-void print_tcp(TCP_HDR *tcp_hdr, uint8_t *pseudo_hdr) {
+void print_tcp(TCP_HDR *tcp_hdr, uint8_t *pseudo_hdr, uint16_t len) {
     printf("\t\tSource Port:  ");
     print_port(ntohs(tcp_hdr->src_port), TCP);
     printf("\t\tDest Port:  ");
     print_port(ntohs(tcp_hdr->dest_port), TCP);
-    printf("\t\tSequence Number: %d\n", ntohl(tcp_hdr->seq_num));
-    printf("\t\tACK Number: %d\n", ntohl(tcp_hdr->ack_num));
+    printf("\t\tSequence Number: %u\n", ntohl(tcp_hdr->seq_num));
+    printf("\t\tACK Number: %u\n", ntohl(tcp_hdr->ack_num));
     printf("\t\tData Offset (bytes): %d\n", tcp_hdr->data_offset);
 
     print_tcp_flag(tcp_hdr->flag);
     printf("\t\tWindow Size: %d\n", ntohs(tcp_hdr->win_size));
-    if(in_cksum((unsigned short*) pseudo_hdr, tcp_hdr->data_offset+12) == 0) 
+
+    if(in_cksum((unsigned short*) pseudo_hdr, 12+len) == 0) 
         printf("\t\tChecksum: Correct (0x%04x)\n", ntohs(tcp_hdr->checksum));
     else 
-        printf("\t\tChecksum: Incorrect (0x%04x)\n", ntohs(tcp_hdr->checksum));
+        printf("\t\tChecksum: Incorrect (0x%04x), %d\n", ntohs(tcp_hdr->checksum), len);
 
 
 }
@@ -157,9 +162,10 @@ void print_tcp(TCP_HDR *tcp_hdr, uint8_t *pseudo_hdr) {
 /*
 Creates TCP/UCP Pseudo header from Source IP, Dest IP, Protocol #, and TCP Length (bytes)
 */
-uint8_t* mk_pseudo_hdr(uint32_t src, uint32_t dest, uint8_t protocol, uint8_t tcp_len) {
+uint8_t* mk_pseudo_hdr(uint32_t src, uint32_t dest, uint8_t protocol, uint16_t tcp_len) {
     uint8_t *pseudo_hdr;
     uint8_t *temp;
+    uint16_t len;
 
     // allocate memory for Pseudo Header + TCP Header + Payload
     pseudo_hdr = calloc((12 + tcp_len), sizeof(uint8_t));   
@@ -172,8 +178,10 @@ uint8_t* mk_pseudo_hdr(uint32_t src, uint32_t dest, uint8_t protocol, uint8_t tc
     pseudo_hdr += 4;
     pseudo_hdr += 1;
     memcpy(pseudo_hdr, &protocol, 1);
-    pseudo_hdr += 2;
-    memcpy(pseudo_hdr, &tcp_len, 1);
+    pseudo_hdr += 1;
+
+    len = htons(tcp_len);
+    memcpy(pseudo_hdr, &len, 2);
 
     return temp;
 }
@@ -212,11 +220,11 @@ void tcp(uint8_t *pkt_data, IP_HDR *ip_hdr) {
     memcpy(&(tcp_hdr->checksum), pkt_data, 2);      // Checksum Value
     
     // create pseudo-header
-    pseudo_hdr = mk_pseudo_hdr(ip_hdr->src_ip, ip_hdr->dest_ip, ip_hdr->protocol, tcp_hdr->data_offset);
-    // combind pseudo-header with TCP header
-    memcpy(pseudo_hdr+12, tcp_hdr->tcp_mem_addr, tcp_hdr->data_offset);
+    pseudo_hdr = mk_pseudo_hdr(ip_hdr->src_ip, ip_hdr->dest_ip, ip_hdr->protocol, ip_hdr->tot_len - ip_hdr->len);
+    // combined pseudo-header with TCP header
+    memcpy(pseudo_hdr+12, tcp_hdr->tcp_mem_addr, ip_hdr->tot_len - ip_hdr->len);
 
-    print_tcp(tcp_hdr, pseudo_hdr); // print TCP header
+    print_tcp(tcp_hdr, pseudo_hdr, ip_hdr->tot_len - ip_hdr->len); // print TCP header
 
     free(tcp_hdr);
     free(pseudo_hdr);

@@ -20,7 +20,7 @@ void print_arp_hdr(ARP_HDR *arp_hdr) {
     print_mac(arp_hdr->target_mac);
     printf("\t\tTarget IP: ");
     print_ip(arp_hdr->target_ip);
-    printf("\n\n");
+    printf("\n");
 
 }
 
