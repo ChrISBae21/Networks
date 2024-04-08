@@ -5,7 +5,8 @@ Prints formatted IP address
 */
 void print_ip(uint32_t ip) {
     uint8_t *str_ip;
-    struct in_addr addr = {ip};
+    struct in_addr addr;
+    addr.s_addr = ip;
     str_ip = (uint8_t*) inet_ntoa(addr);
     printf("%s\n", str_ip);
 

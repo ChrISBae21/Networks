@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <pcap/pcap.h>
+#include <arpa/inet.h>
 
 #include "ethernet.h"
 #include "ip.h"
@@ -61,4 +62,6 @@ int main(int argc, char* argv[]) {
         pkt_num++;
     }
     pcap_close(trace_file);         /* closes the trace file */
+
+    return 0;
 }
