@@ -12,7 +12,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-// common TCP/UDP ports
+/* common TCP/UDP ports */
 #define HTTP 80
 #define TELNET 23
 #define FTP 21

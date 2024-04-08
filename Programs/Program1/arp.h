@@ -11,11 +11,11 @@
 
 
 typedef struct __attribute__((packed)) ARP_HDR {
-    uint16_t opcode;                // Opcode               
-    uint8_t sender_mac[6];          // Sender MAC
-    uint8_t target_mac[6];          // Target MAC 
-    uint32_t sender_ip;             // Sender IP
-    uint32_t target_ip;             // Target IP
+    uint16_t opcode;                /* Opcode */
+    uint8_t sender_mac[6];          /* Sender MAC */
+    uint8_t target_mac[6];          /* Target MAC */
+    uint32_t sender_ip;             /* Sender IP */
+    uint32_t target_ip;             /* Target IP */
 } ARP_HDR;
 
 

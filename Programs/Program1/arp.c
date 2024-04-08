@@ -25,7 +25,7 @@ void print_arp_hdr(ARP_HDR *arp_hdr) {
 }
 
 void arp_hdr(uint8_t *pkt_data) {
-    pkt_data+=6;                        // skip to opcode
+    pkt_data+=6;                        /* skip to opcode */
     ARP_HDR *arp_hdr = malloc(sizeof(ARP_HDR));
     memcpy(&(arp_hdr->opcode), pkt_data, 2);
     pkt_data+=2;

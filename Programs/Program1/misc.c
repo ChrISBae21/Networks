@@ -1,6 +1,5 @@
 #include "misc.h"
 
-
 /*
 Prints formatted IP address
 */

@@ -15,7 +15,7 @@ void IP_ARP(uint16_t type, uint8_t *pkt_data) {
         case IP: 
             printf("\tIP Header\n");
             IP_HDR *ip_hdr = ip(pkt_data);
-            pkt_data += ip_hdr->len;     // skip the ip header
+            pkt_data += ip_hdr->len;            /* skip the ip header */
             icmp_tcp_udp(ip_hdr->protocol, pkt_data, ip_hdr);
             free(ip_hdr);
             break;
@@ -39,27 +39,27 @@ int main(int argc, char* argv[]) {
     struct pcap_pkthdr *pkt_header;
     const uint8_t *pkt_data;
 
-    trace_file = pcap_open_offline(argv[1], (char*) errbuf);     // opens the trace file
+    trace_file = pcap_open_offline(argv[1], (char*) errbuf);     /* opens the trace file */
 
     if(trace_file == NULL) {
         printf("error");
     }
 
     
-    // Grab the next packet
+    /* Grab the next packet */
     while(pcap_next_ex(trace_file, &pkt_header, &pkt_data) == 1) {
         printf("\n");
-        pkt_len = pkt_header->caplen;                           // packet length
+        pkt_len = pkt_header->caplen;                           /* packet length */
         printf("Packet number: %d  Packet Len: %d\n\n", pkt_num, pkt_len);
         type = eth_hdr((uint8_t*) pkt_data);
 
-        pkt_data += 14;     // skip the ethernet header
+        pkt_data += 14;             /* skip the ethernet header */
         IP_ARP(type, (uint8_t*) pkt_data);
 
         pkt_num++;
     }
     
     
-    pcap_close(trace_file);         // closes the trace file
+    pcap_close(trace_file);         /* closes the trace file */
 
 }

@@ -31,7 +31,7 @@ void print_eth(uint8_t *dest, uint8_t *src, uint16_t type) {
 }
 
 uint16_t eth_hdr(uint8_t *pkt_data) {
-    // always has dest, src, and type
+    /* always has dest, src, and type */
     uint8_t dest[6];
     uint8_t src[6];
     uint16_t type;
