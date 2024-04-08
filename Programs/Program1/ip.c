@@ -87,7 +87,7 @@ void print_ip_hdr(IP_HDR *ip_hdr) {
 }
 
 
-
+//--------------------------- ICMP, TCP, AND UDP ---------------------------
 /*
 Function to identify the Protocol
 */
@@ -110,6 +110,7 @@ void icmp_tcp_udp(uint8_t protocol, uint8_t *pkt_data, IP_HDR *ip_hdr) {
     }
 }
 
+//--------------------------- UDP ---------------------------
 /*
 Parses and prints the content of the UDP header
 */
@@ -124,74 +125,7 @@ void udp(uint8_t *pkt_data) {
     print_port(ntohs(dest_port), UDP);
 }
 
-
-void print_tcp_flag(uint8_t flag) {
-    
-    printf("\t\tSYN Flag: ");
-    ((flag & SYN) != 0) ? printf("Yes\n") : printf("No\n");
-
-    printf("\t\tRST Flag: ");
-    ((flag & RST) != 0) ? printf("Yes\n") : printf("No\n");
-
-    printf("\t\tFIN Flag: ");
-    ((flag & FIN) != 0) ? printf("Yes\n") : printf("No\n");
-
-    printf("\t\tACK Flag: ");
-    ((flag & ACK) != 0) ? printf("Yes\n") : printf("No\n");
-}
-
-/*
-Prints the contents of the TCP header given TCP_HDR struct, and calculates checksum
-*/
-void print_tcp(TCP_HDR *tcp_hdr, uint8_t *pseudo_hdr, uint16_t len) {
-    printf("\t\tSource Port:  ");
-    print_port(ntohs(tcp_hdr->src_port), TCP);
-
-    printf("\t\tDest Port:  ");
-    print_port(ntohs(tcp_hdr->dest_port), TCP);
-
-    printf("\t\tSequence Number: %u\n", ntohl(tcp_hdr->seq_num));
-    printf("\t\tACK Number: %u\n", ntohl(tcp_hdr->ack_num));
-    printf("\t\tData Offset (bytes): %d\n", tcp_hdr->data_offset);
-
-    print_tcp_flag(tcp_hdr->flag);
-    printf("\t\tWindow Size: %d\n", ntohs(tcp_hdr->win_size));
-
-    if(in_cksum((unsigned short*) pseudo_hdr, 12+len) == 0) 
-        printf("\t\tChecksum: Correct (0x%04x)\n", ntohs(tcp_hdr->checksum));
-    else 
-        printf("\t\tChecksum: Incorrect (0x%04x)\n", ntohs(tcp_hdr->checksum));
-
-
-}
-
-
-/*
-Creates TCP/UCP Pseudo header from Source IP, Dest IP, Protocol #, and TCP Length (bytes)
-*/
-uint8_t* mk_pseudo_hdr(uint32_t src, uint32_t dest, uint8_t protocol, uint16_t tcp_len) {
-    uint8_t *pseudo_hdr;
-    uint8_t *temp;
-    uint16_t len;
-
-    // allocate memory for Pseudo Header + TCP Header + Payload
-    pseudo_hdr = calloc((12 + tcp_len), sizeof(uint8_t));   
-    temp = pseudo_hdr;
-
-    // copies values into the pseudo header
-    memcpy(pseudo_hdr, &src, 4);
-    pseudo_hdr += 4;
-    memcpy(pseudo_hdr, &dest, 4);
-    pseudo_hdr += 4;
-    pseudo_hdr += 1;
-    memcpy(pseudo_hdr, &protocol, 1);
-    pseudo_hdr += 1;
-
-    len = htons(tcp_len);
-    memcpy(pseudo_hdr, &len, 2);
-
-    return temp;
-}
+//--------------------------- TCP ---------------------------
 
 /*
 Parses the TCP header (pkt_data) and places values into the TCP_HDR struct
@@ -237,6 +171,75 @@ void tcp(uint8_t *pkt_data, IP_HDR *ip_hdr) {
     free(pseudo_hdr);
 }
 
+
+/*
+Prints the contents of the TCP header given TCP_HDR struct, and calculates checksum
+*/
+void print_tcp(TCP_HDR *tcp_hdr, uint8_t *pseudo_hdr, uint16_t len) {
+    printf("\t\tSource Port:  ");
+    print_port(ntohs(tcp_hdr->src_port), TCP);
+
+    printf("\t\tDest Port:  ");
+    print_port(ntohs(tcp_hdr->dest_port), TCP);
+
+    printf("\t\tSequence Number: %u\n", ntohl(tcp_hdr->seq_num));
+    printf("\t\tACK Number: %u\n", ntohl(tcp_hdr->ack_num));
+    printf("\t\tData Offset (bytes): %d\n", tcp_hdr->data_offset);
+
+    print_tcp_flag(tcp_hdr->flag);
+    printf("\t\tWindow Size: %d\n", ntohs(tcp_hdr->win_size));
+
+    if(in_cksum((unsigned short*) pseudo_hdr, 12+len) == 0) 
+        printf("\t\tChecksum: Correct (0x%04x)\n", ntohs(tcp_hdr->checksum));
+    else 
+        printf("\t\tChecksum: Incorrect (0x%04x)\n", ntohs(tcp_hdr->checksum));
+}
+
+void print_tcp_flag(uint8_t flag) {
+    
+    printf("\t\tSYN Flag: ");
+    ((flag & SYN) != 0) ? printf("Yes\n") : printf("No\n");
+
+    printf("\t\tRST Flag: ");
+    ((flag & RST) != 0) ? printf("Yes\n") : printf("No\n");
+
+    printf("\t\tFIN Flag: ");
+    ((flag & FIN) != 0) ? printf("Yes\n") : printf("No\n");
+
+    printf("\t\tACK Flag: ");
+    ((flag & ACK) != 0) ? printf("Yes\n") : printf("No\n");
+}
+
+/*
+Creates TCP/UCP Pseudo header from Source IP, Dest IP, Protocol #, and TCP Length (bytes)
+*/
+uint8_t* mk_pseudo_hdr(uint32_t src, uint32_t dest, uint8_t protocol, uint16_t tcp_len) {
+    uint8_t *pseudo_hdr;
+    uint8_t *temp;
+    uint16_t len;
+
+    // allocate memory for Pseudo Header + TCP Header + Payload
+    pseudo_hdr = calloc((12 + tcp_len), sizeof(uint8_t));   
+    temp = pseudo_hdr;
+
+    // copies values into the pseudo header
+    memcpy(pseudo_hdr, &src, 4);
+    pseudo_hdr += 4;
+    memcpy(pseudo_hdr, &dest, 4);
+    pseudo_hdr += 4;
+    pseudo_hdr += 1;
+    memcpy(pseudo_hdr, &protocol, 1);
+    pseudo_hdr += 1;
+
+    len = htons(tcp_len);
+    memcpy(pseudo_hdr, &len, 2);
+
+    return temp;
+}
+
+//--------------------------- ICMP ---------------------------
+
+
 /*
 Function for ICMP Request/Reply
 */
@@ -253,24 +256,5 @@ void icmp(uint8_t *pkt_data) {
     }
 }
 
-/*
-Prints the Port given Port number and Protocol
-*/
-void print_port(uint16_t port, uint8_t protocol) {
-    switch(port) {
-        case DNS: printf("DNS\n");
-            break;
-        case HTTP: printf("HTTP\n");
-            break;
-        case TELNET: printf("TELNET\n");
-            break;
-        case FTP: (protocol != TCP) ? printf("%d\n", port) : printf("FTP\n");
-            break;
-        case POP3: printf("POP3\n");
-            break;
-        case SMTP: printf("SMTP\n");
-            break;
-        default:
-            printf("%d\n", port);   
-    }
-}
+
+

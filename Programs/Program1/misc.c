@@ -21,3 +21,25 @@ void print_mac(uint8_t* mac_addr) {
     printf("%s\n", ptr);
 
 }
+
+/*
+Prints the Port given Port number and Protocol
+*/
+void print_port(uint16_t port, uint8_t protocol) {
+    switch(port) {
+        case DNS: printf("DNS\n");
+            break;
+        case HTTP: printf("HTTP\n");
+            break;
+        case TELNET: printf("TELNET\n");
+            break;
+        case FTP: (protocol != TCP) ? printf("%d\n", port) : printf("FTP\n");
+            break;
+        case POP3: printf("POP3\n");
+            break;
+        case SMTP: printf("SMTP\n");
+            break;
+        default:
+            printf("%d\n", port);   
+    }
+}
