@@ -8,3 +8,5 @@ Labs/Lab2/myServer
 Labs/Lab2/networks.o
 Labs/Lab2/pollLib.o
 Labs/Lab2/safeUtil.o
+Labs/Lab2/cclient
+Labs/Lab2/server
