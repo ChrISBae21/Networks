@@ -8,26 +8,26 @@
 Prints the Ethernet header
 */
 void print_eth(uint8_t *dest, uint8_t *src, uint16_t type) {
-    printf("\tEthernet Header\n");
-    printf("\t\tDest MAC: ");
+    fprintf(stdout, "\tEthernet Header\n");
+    fprintf(stdout, "\t\tDest MAC: ");
     print_mac(dest);
-    printf("\t\tSource MAC: ");
+    fprintf(stdout, "\t\tSource MAC: ");
     print_mac(src);
 
-    printf("\t\tType: ");
+    fprintf(stdout, "\t\tType: ");
     switch(ntohs(type)) {
         case IP: 
-            printf("IP");
+            fprintf(stdout, "IP");
             break;
         case ARP:
-            printf("ARP");
+            fprintf(stdout, "ARP");
             break;
         default:
-            printf("Unknown");
+            fprintf(stdout, "Unknown");
                 
     }
 
-    printf("\n\n");
+    fprintf(stdout, "\n\n");
 }
 
 uint16_t eth_hdr(uint8_t *pkt_data) {

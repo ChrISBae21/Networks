@@ -22,6 +22,10 @@ IP_HDR* ip(uint8_t *pkt_data) {
     uint16_t tot_len;               /* total length */
 
     IP_HDR *ip_hdr = malloc(sizeof(IP_HDR));
+    if(ip_hdr == NULL) {
+        perror("IP Header Malloc Error\n");
+        exit(-1);
+    }
     ip_hdr->ip_mem_addr = pkt_data;             
 
     memcpy(&ver_len, pkt_data, 1);              /* grab ver and len byte */
@@ -56,32 +60,32 @@ Prints the content of the IP Header
 */
 void print_ip_hdr(IP_HDR *ip_hdr) {
     
-    printf("\t\tIP Version: %d\n", ip_hdr->ver);
-    printf("\t\tHeader Len (bytes): %d\n", ip_hdr->len);
-    printf("\t\tTOS subfields:\n");
-    printf("\t\t   Diffserv bits: %d\n", (ip_hdr->dscp_ecn & 0xFC) / 4);
-    printf("\t\t   ECN bits: %d\n", (ip_hdr->dscp_ecn & 0x03));
-    printf("\t\tTTL: %d\n", ip_hdr->ttl);
-    printf("\t\tProtocol: ");
+    fprintf(stdout, "\t\tIP Version: %d\n", ip_hdr->ver);
+    fprintf(stdout, "\t\tHeader Len (bytes): %d\n", ip_hdr->len);
+    fprintf(stdout, "\t\tTOS subfields:\n");
+    fprintf(stdout, "\t\t   Diffserv bits: %d\n", (ip_hdr->dscp_ecn & 0xFC) / 4);
+    fprintf(stdout, "\t\t   ECN bits: %d\n", (ip_hdr->dscp_ecn & 0x03));
+    fprintf(stdout, "\t\tTTL: %d\n", ip_hdr->ttl);
+    fprintf(stdout, "\t\tProtocol: ");
     switch(ip_hdr->protocol) {
-        case UDP: printf("UDP\n");
+        case UDP: fprintf(stdout, "UDP\n");
             break;
-        case ICMP: printf("ICMP\n");
+        case ICMP: fprintf(stdout, "ICMP\n");
             break;
-        case TCP: printf("TCP\n");
+        case TCP: fprintf(stdout, "TCP\n");
             break;
-        default: printf("Unknown\n");
+        default: fprintf(stdout, "Unknown\n");
             break;
     }
 
     if(in_cksum((unsigned short*) ip_hdr->ip_mem_addr, ip_hdr->len) == 0) 
-        printf("\t\tChecksum: Correct (0x%04x)\n", ip_hdr->checksum);
+        fprintf(stdout, "\t\tChecksum: Correct (0x%04x)\n", ip_hdr->checksum);
     else 
-        printf("\t\tChecksum: Incorrect (0x%04x)\n", ip_hdr->checksum);
+        fprintf(stdout, "\t\tChecksum: Incorrect (0x%04x)\n", ip_hdr->checksum);
 
-    printf("\t\tSender IP: ");
+    fprintf(stdout, "\t\tSender IP: ");
     print_ip(ip_hdr->src_ip);
-    printf("\t\tDest IP: ");
+    fprintf(stdout, "\t\tDest IP: ");
     print_ip(ip_hdr->dest_ip);
     
 }
@@ -94,15 +98,15 @@ Function to identify the Protocol
 void icmp_tcp_udp(uint8_t protocol, uint8_t *pkt_data, IP_HDR *ip_hdr) {
     switch(protocol) {
         case UDP:   /* UDP */
-            printf("\n\tUDP Header\n");
+            fprintf(stdout, "\n\tUDP Header\n");
             udp(pkt_data);
             break;
         case ICMP:  /* ICMP */
-            printf("\n\tICMP Header\n");
+            fprintf(stdout, "\n\tICMP Header\n");
             icmp(pkt_data);
             break;
         case TCP:   /* TCP */
-            printf("\n\tTCP Header\n");
+            fprintf(stdout, "\n\tTCP Header\n");
             tcp(pkt_data, ip_hdr);
             break;
         default:
@@ -117,10 +121,10 @@ Parses and prints the content of the UDP header
 void udp(uint8_t *pkt_data) {
     uint16_t src_port, dest_port;
 
-    printf("\t\tSource Port:  ");
+    fprintf(stdout, "\t\tSource Port:  ");
     memcpy(&src_port, pkt_data, 2);
     print_port(ntohs(src_port), UDP);
-    printf("\t\tDest Port:  ");
+    fprintf(stdout, "\t\tDest Port:  ");
     memcpy(&dest_port, pkt_data+2, 2);
     print_port(ntohs(dest_port), UDP);
 }
@@ -136,6 +140,10 @@ void tcp(uint8_t *pkt_data, IP_HDR *ip_hdr) {
 
     /* allocate memory for TCP header */
     TCP_HDR *tcp_hdr = malloc(sizeof(TCP_HDR));
+    if(tcp_hdr == NULL) {
+        perror("TCP Header Malloc Error\n");
+        exit(-1);
+    }
     /* save reference to the "head" of TCP header for checksum */
     tcp_hdr->tcp_mem_addr = pkt_data;
 
@@ -176,38 +184,38 @@ void tcp(uint8_t *pkt_data, IP_HDR *ip_hdr) {
 Prints the contents of the TCP header given TCP_HDR struct, and calculates checksum
 */
 void print_tcp(TCP_HDR *tcp_hdr, uint8_t *pseudo_hdr, uint16_t len) {
-    printf("\t\tSource Port:  ");
+    fprintf(stdout, "\t\tSource Port:  ");
     print_port(ntohs(tcp_hdr->src_port), TCP);
 
-    printf("\t\tDest Port:  ");
+    fprintf(stdout, "\t\tDest Port:  ");
     print_port(ntohs(tcp_hdr->dest_port), TCP);
 
-    printf("\t\tSequence Number: %u\n", ntohl(tcp_hdr->seq_num));
-    printf("\t\tACK Number: %u\n", ntohl(tcp_hdr->ack_num));
-    printf("\t\tData Offset (bytes): %d\n", tcp_hdr->data_offset);
+    fprintf(stdout, "\t\tSequence Number: %u\n", ntohl(tcp_hdr->seq_num));
+    fprintf(stdout, "\t\tACK Number: %u\n", ntohl(tcp_hdr->ack_num));
+    fprintf(stdout, "\t\tData Offset (bytes): %d\n", tcp_hdr->data_offset);
 
     print_tcp_flag(tcp_hdr->flag);
-    printf("\t\tWindow Size: %d\n", ntohs(tcp_hdr->win_size));
+    fprintf(stdout, "\t\tWindow Size: %d\n", ntohs(tcp_hdr->win_size));
 
     if(in_cksum((unsigned short*) pseudo_hdr, 12+len) == 0) 
-        printf("\t\tChecksum: Correct (0x%04x)\n", ntohs(tcp_hdr->checksum));
+        fprintf(stdout, "\t\tChecksum: Correct (0x%04x)\n", ntohs(tcp_hdr->checksum));
     else 
-        printf("\t\tChecksum: Incorrect (0x%04x)\n", ntohs(tcp_hdr->checksum));
+        fprintf(stdout, "\t\tChecksum: Incorrect (0x%04x)\n", ntohs(tcp_hdr->checksum));
 }
 
 void print_tcp_flag(uint8_t flag) {
     
-    printf("\t\tSYN Flag: ");
-    ((flag & SYN) != 0) ? printf("Yes\n") : printf("No\n");
+    fprintf(stdout, "\t\tSYN Flag: ");
+    ((flag & SYN) != 0) ? fprintf(stdout, "Yes\n") : fprintf(stdout, "No\n");
 
-    printf("\t\tRST Flag: ");
-    ((flag & RST) != 0) ? printf("Yes\n") : printf("No\n");
+    fprintf(stdout, "\t\tRST Flag: ");
+    ((flag & RST) != 0) ? fprintf(stdout, "Yes\n") : fprintf(stdout, "No\n");
 
-    printf("\t\tFIN Flag: ");
-    ((flag & FIN) != 0) ? printf("Yes\n") : printf("No\n");
+    fprintf(stdout, "\t\tFIN Flag: ");
+    ((flag & FIN) != 0) ? fprintf(stdout, "Yes\n") : fprintf(stdout, "No\n");
 
-    printf("\t\tACK Flag: ");
-    ((flag & ACK) != 0) ? printf("Yes\n") : printf("No\n");
+    fprintf(stdout, "\t\tACK Flag: ");
+    ((flag & ACK) != 0) ? fprintf(stdout, "Yes\n") : fprintf(stdout, "No\n");
 }
 
 /*
@@ -244,14 +252,14 @@ uint8_t* mk_pseudo_hdr(uint32_t src, uint32_t dest, uint8_t protocol, uint16_t t
 Function for ICMP Request/Reply
 */
 void icmp(uint8_t *pkt_data) {
-    printf("\t\tType: ");
+    fprintf(stdout, "\t\tType: ");
 
     switch(pkt_data[0]) {
-        case REQUEST: printf("Request\n");
+        case REQUEST: fprintf(stdout, "Request\n");
             break;
-        case REPLY: printf("Reply\n");
+        case REPLY: fprintf(stdout, "Reply\n");
             break;
-        default: printf("%u\n", pkt_data[0]);
+        default: fprintf(stdout, "%u\n", pkt_data[0]);
             break;
     }
 }

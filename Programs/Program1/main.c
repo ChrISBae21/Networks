@@ -15,14 +15,14 @@ void IP_ARP(uint16_t type, uint8_t *pkt_data) {
 
     switch(ntohs(type)) {
         case IP: 
-            printf("\tIP Header\n");
+            fprintf(stdout, "\tIP Header\n");
             ip_hdr = ip(pkt_data);
             pkt_data += ip_hdr->len;            /* skip the ip header */
             icmp_tcp_udp(ip_hdr->protocol, pkt_data, ip_hdr);
             free(ip_hdr);
             break;
         case ARP:
-            printf("\tARP header\n");
+            fprintf(stdout, "\tARP header\n");
             arp_hdr(pkt_data);
             break;
         default:
@@ -47,13 +47,14 @@ int main(int argc, char* argv[]) {
     trace_file = pcap_open_offline(argv[1], (char*) errbuf);     /* opens the trace file */
 
     if(trace_file == NULL) {
-        printf("error");
+        perror("pcap_open_offline() error");
+        exit(-1);
     }
     /* Grab the next packet */
     while(pcap_next_ex(trace_file, &pkt_header, &pkt_data) == 1) {
-        printf("\n");
+        fprintf(stdout, "\n");
         pkt_len = pkt_header->caplen;                           /* packet length */
-        printf("Packet number: %d  Packet Len: %d\n\n", pkt_num, pkt_len);
+        fprintf(stdout, "Packet number: %d  Packet Len: %d\n\n", pkt_num, pkt_len);
         type = eth_hdr((uint8_t*) pkt_data);
 
         pkt_data += 14;             /* skip the ethernet header */
