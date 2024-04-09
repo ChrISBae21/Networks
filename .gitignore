@@ -2,3 +2,9 @@ Programs/Program1/trace
 Programs/Program1/Makefile:Zone.Identifier
 Programs/Program1/myOut.txt
 
+Labs/Lab2/gethostbyname.o
+Labs/Lab2/myClient
+Labs/Lab2/myServer
+Labs/Lab2/networks.o
+Labs/Lab2/pollLib.o
+Labs/Lab2/safeUtil.o
