@@ -48,8 +48,8 @@ int safeSend(int socketNum, uint8_t * buffer, int bufferLen, int flag)
 	if ((bytesSent = send(socketNum, buffer, bufferLen, flag)) < 0)
 	{
         perror("recv call");
-       exit(-1);
-     }
+        exit(-1);
+    }
 	 
     return bytesSent;
 }
