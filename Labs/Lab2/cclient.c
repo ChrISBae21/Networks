@@ -24,6 +24,8 @@
 #include "networks.h"
 #include "safeUtil.h"
 #include "pdu.h"
+#include "pollLib.h"
+
 
 #define MAXBUF 1024
 #define DEBUG_FLAG 1
@@ -41,8 +43,9 @@ int main(int argc, char * argv[])
 	/* set up the TCP Client socket  */
 	socketNum = tcpClientSetup(argv[1], argv[2], DEBUG_FLAG);
 	
-	sendToServer(socketNum);
-	
+	while(1) {
+		sendToServer(socketNum);
+	}
 	close(socketNum);
 	
 	return 0;

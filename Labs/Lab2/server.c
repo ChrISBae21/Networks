@@ -2,6 +2,7 @@
 * myServer.c
 * 
 * Writen by Prof. Smith, updated Jan 2023
+* Modified by Chris Bae
 * Use at your own risk.  
 *
 *****************************************************************************/
@@ -24,28 +25,53 @@
 #include "networks.h"
 #include "safeUtil.h"
 #include "pdu.h"
+#include "pollLib.h"
 
 #define MAXBUF 1024
 #define DEBUG_FLAG 1
 
-void recvFromClient(int clientSocket);
+int recvFromClient(int clientSocket);
 int checkArgs(int argc, char *argv[]);
+void addNewClient(int mainServerSocket);
+int processClient();
+
 
 int main(int argc, char *argv[])
 {
 	int mainServerSocket = 0;   //socket descriptor for the server socket
 	int clientSocket = 0;   //socket descriptor for the client socket
 	int portNumber = 0;
-	
+	int pollReturn = 0;
+	int numBytes;
+
 	portNumber = checkArgs(argc, argv);
 	
 	//create the server socket
 	mainServerSocket = tcpServerSetup(portNumber);
 
-	// wait for client to connect
-	clientSocket = tcpAccept(mainServerSocket, DEBUG_FLAG);
+	setupPollSet();
+	addToPollSet(mainServerSocket);
 
-	recvFromClient(clientSocket);
+	while(1) {
+		pollReturn = pollCall(-1);
+		if(pollReturn == -1) {
+			perror("Timeout Error while Polling\n");
+			exit(-1);
+		}
+
+		if(pollReturn == mainServerSocket) {
+			// wait for client to connect
+			addNewClient(mainServerSocket);
+		}
+
+		else {
+			numBytes = processClient(pollReturn);
+			printf("here1\n");
+			if(numBytes == 0) {
+				removeFromPollSet(pollReturn);
+			}
+		}
+	}
 	
 	/* close the sockets */
 	close(clientSocket);
@@ -55,7 +81,18 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
-void recvFromClient(int clientSocket)
+void addNewClient(int mainServerSocket) {
+	int clientSocket;
+	clientSocket = tcpAccept(mainServerSocket, DEBUG_FLAG);
+	addToPollSet(clientSocket);
+}
+
+int processClient(int pollReturn) {
+	printf("here2\n");
+	return recvFromClient(pollReturn);
+}
+
+int recvFromClient(int clientSocket)
 {
 	uint8_t dataBuffer[MAXBUF];
 	int messageLen = 0;
@@ -71,10 +108,12 @@ void recvFromClient(int clientSocket)
 	if (messageLen > 0)
 	{
 		printf("Message received, length: %d Data: %s\n", messageLen, dataBuffer);
+		return messageLen;
 	}
 	else
 	{
 		printf("Connection closed by other side\n");
+		return 0;
 	}
 }
 

@@ -37,7 +37,7 @@ int sendPDU(int socketNumber, uint8_t * dataBuffer, int lengthOfData) {
 }
 
 
-
+/* returns the number of bytes received */
 int recvPDU(int clientSocket, uint8_t * dataBuffer, int bufferSize) {
     uint16_t pduHeader;         // Total PDU Length
     uint16_t bytesReceived;
@@ -60,6 +60,5 @@ int recvPDU(int clientSocket, uint8_t * dataBuffer, int bufferSize) {
         return 0;
     }
     return bytesReceived;
-
 
 }
