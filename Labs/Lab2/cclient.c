@@ -35,7 +35,7 @@ int readFromStdin(uint8_t * buffer);
 void checkArgs(int argc, char * argv[]);
 void clientControl(int mainServerSocket);
 void processMsgFromServer(int mainServerSocket);
-
+void processStdin(int mainServerSocket);
 int main(int argc, char * argv[])
 {
 	int socketNum = 0;         //socket descriptor
@@ -79,16 +79,18 @@ void clientControl(int mainServerSocket) {
 			processMsgFromServer(mainServerSocket);
 			printf("\nEnter data: ");
 			fflush(stdout);
-			// fflush(stdout);
+			
 		}
 		else {
-			
-			
-			sendToServer(mainServerSocket);
+			processStdin(mainServerSocket);
 		}
 		
 	}
 
+}
+
+void processStdin(int mainServerSocket) {
+	sendToServer(mainServerSocket);
 }
 
 void processMsgFromServer(int mainServerSocket) {

@@ -105,13 +105,13 @@ void recvFromClient(int clientSocket)
 
 	if (messageLen > 0)
 	{
-		printf("\nMessage received, length: %d Data: %s\n", messageLen, dataBuffer);
+		printf("\nMessage received on Socket %d, length: %d Data: %s\n", clientSocket, messageLen, dataBuffer);
 		sendConfToClient(clientSocket, messageLen);
 
 	}
 	else
 	{
-		printf("Connection closed by client\n");
+		printf("Connection closed by client socket %d\n", clientSocket);
 		removeFromPollSet(clientSocket);
 		close(clientSocket);
 	}
