@@ -30,28 +30,39 @@
 #define MAXBUF 1024
 #define DEBUG_FLAG 1
 
-int recvFromClient(int clientSocket);
+void recvFromClient(int clientSocket);
 int checkArgs(int argc, char *argv[]);
 void addNewSocket(int mainServerSocket);
-int processClient(int pollReturn);
-
+void processClient(int pollReturn);
+void serverControl(int mainServerSocket);
+void sendConfToClient(int socketNum, int recMsgLen);
 
 int main(int argc, char *argv[])
 {
 	int mainServerSocket = 0;   //socket descriptor for the server socket
 	int clientSocket = 0;   //socket descriptor for the client socket
 	int portNumber = 0;
-	int pollReturn = 0;
-	int numBytes;
 
 	portNumber = checkArgs(argc, argv);
 	
 	//create the server socket
 	mainServerSocket = tcpServerSetup(portNumber);
 
+	//start doing server things
+	serverControl(mainServerSocket);
+
+	/* close the sockets */
+	close(clientSocket);
+	close(mainServerSocket);
+	return 0;
+}
+
+
+void serverControl(int mainServerSocket) {
+	int pollReturn;
+
 	setupPollSet();
 	addToPollSet(mainServerSocket);
-
 	while(1) {
 		pollReturn = pollCall(-1);
 		if(pollReturn == -1) {
@@ -64,16 +75,9 @@ int main(int argc, char *argv[])
 			addNewSocket(mainServerSocket);
 		}
 		else {
-			numBytes = processClient(pollReturn);
+			processClient(pollReturn);
 		}
 	}
-	
-	/* close the sockets */
-	close(clientSocket);
-	close(mainServerSocket);
-
-	
-	return 0;
 }
 
 void addNewSocket(int mainServerSocket) {
@@ -82,11 +86,11 @@ void addNewSocket(int mainServerSocket) {
 	addToPollSet(clientSocket);
 }
 
-int processClient(int pollReturn) {
-	return recvFromClient(pollReturn);
+void processClient(int pollReturn) {
+	recvFromClient(pollReturn);
 }
 
-int recvFromClient(int clientSocket)
+void recvFromClient(int clientSocket)
 {
 	uint8_t dataBuffer[MAXBUF];
 	int messageLen = 0;
@@ -101,15 +105,39 @@ int recvFromClient(int clientSocket)
 
 	if (messageLen > 0)
 	{
-		printf("Message received, length: %d Data: %s\n", messageLen, dataBuffer);
-		return messageLen;
+		printf("\nMessage received, length: %d Data: %s\n", messageLen, dataBuffer);
+		sendConfToClient(clientSocket, messageLen);
+
 	}
 	else
 	{
-		printf("Connection closed by other side\n");
+		printf("Connection closed by client\n");
 		removeFromPollSet(clientSocket);
-		return 0;
+		close(clientSocket);
 	}
+}
+
+
+void sendConfToClient(int socketNum, int recMsgLen)
+{
+	// uint8_t sendBuf[MAXBUF];   //data buffer
+	// int sendLen = 0;        //amount of data to send
+	int sent = 0;            //actual amount of data sent/* get the data and send it   */
+	uint8_t confMsg[] = {'M', 'e', 's', 's', 'a', 'g', 'e', ' ', 'R', 'e', 'c', 'e', 'i', 'v', 'e', 'd', '\0'};
+	int sendLen = 17;
+	
+	// sendLen = readFromStdin(sendBuf);
+	printf("Sending Confirmation to Client...\n");
+	
+	//sent =  safeSend(socketNum, sendBuf, sendLen, 0);
+	sent =  sendPDU(socketNum, confMsg, sendLen);
+	if (sent < 0)
+	{
+		perror("send call");
+		exit(-1);
+	}
+
+	printf("Sent Confirmation\n");
 }
 
 int checkArgs(int argc, char *argv[])

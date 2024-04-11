@@ -33,6 +33,8 @@
 void sendToServer(int socketNum);
 int readFromStdin(uint8_t * buffer);
 void checkArgs(int argc, char * argv[]);
+void clientControl(int mainServerSocket);
+void processMsgFromServer(int mainServerSocket);
 
 int main(int argc, char * argv[])
 {
@@ -43,12 +45,77 @@ int main(int argc, char * argv[])
 	/* set up the TCP Client socket  */
 	socketNum = tcpClientSetup(argv[1], argv[2], DEBUG_FLAG);
 	
-	while(1) {
-		sendToServer(socketNum);
-	}
-	close(socketNum);
+	clientControl(socketNum);
+	
 	
 	return 0;
+}
+
+
+void clientControl(int mainServerSocket) {
+
+	int pollReturn;
+	
+	setupPollSet();
+	addToPollSet(STDIN_FILENO);
+	addToPollSet(mainServerSocket);
+	
+	
+	// sendToServer(mainServerSocket);
+
+	printf("Enter Data: ");
+	fflush(stdout);
+	while(1) {
+		
+		pollReturn = pollCall(-1);
+		// fflush(stdout);
+		if(pollReturn == -1) {
+			perror("Timeout Error while Polling\n");
+			exit(-1);
+		}
+
+		if(pollReturn == mainServerSocket) {
+			// wait for client to connect
+			processMsgFromServer(mainServerSocket);
+			printf("\nEnter data: ");
+			fflush(stdout);
+			// fflush(stdout);
+		}
+		else {
+			
+			
+			sendToServer(mainServerSocket);
+		}
+		
+	}
+
+}
+
+void processMsgFromServer(int mainServerSocket) {
+	uint8_t dataBuffer[MAXBUF];
+	int messageLen = 0;
+	
+	// get message from the main server
+	if ((messageLen = recvPDU(mainServerSocket, dataBuffer, MAXBUF)) < 0)
+	{
+		perror("recv call");
+		exit(-1);
+	}
+
+	if (messageLen > 0)
+	{
+		printf("From Server: %s of Length %d\n", dataBuffer, messageLen);
+		// printf("\n\nEnter Data: ");
+	
+	}
+	else
+	{
+		printf("Connection closed by server\n");
+		removeFromPollSet(mainServerSocket);
+		removeFromPollSet(STDIN_FILENO);
+		close(mainServerSocket);
+		exit(-1);
+	}
 }
 
 void sendToServer(int socketNum)
@@ -78,7 +145,7 @@ int readFromStdin(uint8_t * buffer)
 	
 	// Important you don't input more characters than you have space 
 	buffer[0] = '\0';
-	printf("Enter data: ");
+
 	while (inputLen < (MAXBUF - 1) && aChar != '\n')
 	{
 		aChar = getchar();
