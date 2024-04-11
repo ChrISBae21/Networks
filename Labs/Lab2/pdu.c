@@ -31,7 +31,6 @@ int sendPDU(int socketNumber, uint8_t * dataBuffer, int lengthOfData) {
     memcpy(pduBuffer, &nLen, 2);
     memcpy(pduBuffer+2, dataBuffer, lengthOfData);
     bytesSent = safeSend(socketNumber, pduBuffer, hLen, 0);
-    
     free(pduBuffer);
     return bytesSent;
 }
@@ -47,15 +46,18 @@ int recvPDU(int clientSocket, uint8_t * dataBuffer, int bufferSize) {
     if(bytesReceived == 0) {
         return 0;
     }
-    
+
     pduHeader = ntohs(pduHeader);       
+
 
     if(bufferSize < pduHeader) {
         perror("buffer size is too small on the receiving side\n");
         exit(-1);
     }
 
-    bytesReceived = safeRecv(clientSocket, dataBuffer, pduHeader, MSG_WAITALL);
+    bytesReceived = safeRecv(clientSocket, dataBuffer, pduHeader-2, MSG_WAITALL);
+
+    
     if(bytesReceived == 0) {
         return 0;
     }

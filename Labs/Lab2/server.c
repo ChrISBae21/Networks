@@ -32,8 +32,8 @@
 
 int recvFromClient(int clientSocket);
 int checkArgs(int argc, char *argv[]);
-void addNewClient(int mainServerSocket);
-int processClient();
+void addNewSocket(int mainServerSocket);
+int processClient(int pollReturn);
 
 
 int main(int argc, char *argv[])
@@ -61,15 +61,10 @@ int main(int argc, char *argv[])
 
 		if(pollReturn == mainServerSocket) {
 			// wait for client to connect
-			addNewClient(mainServerSocket);
+			addNewSocket(mainServerSocket);
 		}
-
 		else {
 			numBytes = processClient(pollReturn);
-			printf("here1\n");
-			if(numBytes == 0) {
-				removeFromPollSet(pollReturn);
-			}
 		}
 	}
 	
@@ -81,14 +76,13 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
-void addNewClient(int mainServerSocket) {
+void addNewSocket(int mainServerSocket) {
 	int clientSocket;
 	clientSocket = tcpAccept(mainServerSocket, DEBUG_FLAG);
 	addToPollSet(clientSocket);
 }
 
 int processClient(int pollReturn) {
-	printf("here2\n");
 	return recvFromClient(pollReturn);
 }
 
@@ -113,6 +107,7 @@ int recvFromClient(int clientSocket)
 	else
 	{
 		printf("Connection closed by other side\n");
+		removeFromPollSet(clientSocket);
 		return 0;
 	}
 }
