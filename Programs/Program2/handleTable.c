@@ -13,13 +13,22 @@
 #include <netdb.h>
 #include <stdint.h>
 
+#include "safeUtil.h"
+
 // Handle Table Public Variables
-static struct pollfd * pollFileDescriptors;
+static struct HND_TBL *handleTable;
 static int maxFileDescriptor = 0;
 static int currentPollSetSize = 0;
+
+typedef struct __attribute__((packed)) HND_TBL {
+    uint8_t valid;          // Valid Handle
+    uint8_t socketNo;       // Socket Number
+    uint8_t *handle;        // Handle Name
+} HND_TBL;
 
 
 
 void setupHandleTable() {
+    handleTable = (HND_TBL*) sCalloc(10, sizeof(HND_TBL));
 
 }
