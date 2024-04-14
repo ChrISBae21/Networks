@@ -106,7 +106,7 @@ void processMsgFromServer(int mainServerSocket) {
 
 	if (messageLen > 0)
 	{
-		printf("From Server: %s of Length %d\n", dataBuffer, messageLen);
+		printf("From Server: %s\n", dataBuffer);
 		// printf("\n\nEnter Data: ");
 	
 	}
