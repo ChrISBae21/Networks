@@ -32,7 +32,7 @@ int sendPDU(int socketNumber, uint8_t * dataBuffer, int lengthOfData) {
     memcpy(pduBuffer+2, dataBuffer, lengthOfData);
     bytesSent = safeSend(socketNumber, pduBuffer, hLen, 0);
     free(pduBuffer);
-    return bytesSent;
+    return hLen-2;
 }
 
 
