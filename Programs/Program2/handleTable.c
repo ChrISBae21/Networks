@@ -16,7 +16,7 @@
 #include "safeUtil.h"
 
 
-void addHandle(uint8_t *handle, uint8_t handleLength);
+void addHandle(uint8_t *handle, uint8_t handleLength, uint8_t socket);
 void setupHandleTable();
 void teardownHandleTable();
 void removeHandle(uint8_t *handle, uint8_t handleLength);
@@ -31,7 +31,6 @@ static int max = 10;
 
 typedef struct __attribute__((packed)) HND_TBL {
     uint8_t valid;          // Valid Handle
-    uint8_t socketNo;       // Socket Number
     uint8_t handle[101];    // Handle Name (101 to account for addition of a possible null terminator)
 } HND_TBL;
 
@@ -40,7 +39,7 @@ void setupHandleTable() {
     handleTable = (HND_TBL*) sCalloc(max, sizeof(HND_TBL));   
 }
 
-void addHandle(uint8_t *handle, uint8_t handleLength) {
+void addHandle(uint8_t *handle, uint8_t handleLength, uint8_t socket) {
     uint8_t flag = 1;
     HND_TBL *tempHandleTable = handleTable;
     uint8_t index = 0;
@@ -55,7 +54,6 @@ void addHandle(uint8_t *handle, uint8_t handleLength) {
     while(flag) {
         if(!(tempHandleTable->valid)) {
             tempHandleTable->valid = 1;
-            tempHandleTable->socketNo = index;
             memcpy(tempHandleTable->handle, handle, handleLength);
             //(tempHandleTable->handle)[handleLength] = '\0';             // NULL terminate
             flag = 0;
@@ -85,8 +83,12 @@ void teardownHandleTable() {
 
 
 // both these two functions need to check if the valid bit is set
-void getHandleName() {
+void getHandleName(uint8_t *handle, uint8_t handleLength) {
+    HND_TBL *tempHandleTable = handleTable;
 
+    while( (memcmp(tempHandleTable->handle, handle, handleLength) != 0) ) {
+        tempHandleTable += 1;
+    }
 }
 
 void getSocketNumber() {
