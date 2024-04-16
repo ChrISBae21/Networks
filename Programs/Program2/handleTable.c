@@ -15,20 +15,80 @@
 
 #include "safeUtil.h"
 
+
+void addHandle(uint8_t *handle, uint8_t handleLength);
+void setupHandleTable();
+void teardownHandleTable();
+void removeHandle(uint8_t *handle, uint8_t handleLength);
+
+
+
 // Handle Table Public Variables
-static struct HND_TBL *handleTable;
+static HND_TBL *handleTable;
 static int maxFileDescriptor = 0;
 static int currentPollSetSize = 0;
+static int max = 10;
 
 typedef struct __attribute__((packed)) HND_TBL {
     uint8_t valid;          // Valid Handle
     uint8_t socketNo;       // Socket Number
-    uint8_t *handle;        // Handle Name
+    uint8_t handle[101];    // Handle Name (101 to account for addition of a possible null terminator)
 } HND_TBL;
 
 
-
 void setupHandleTable() {
-    handleTable = (HND_TBL*) sCalloc(10, sizeof(HND_TBL));
+    handleTable = (HND_TBL*) sCalloc(max, sizeof(HND_TBL));   
+}
 
+void addHandle(uint8_t *handle, uint8_t handleLength) {
+    uint8_t flag = 1;
+    HND_TBL *tempHandleTable = handleTable;
+    uint8_t index = 0;
+
+
+
+    if(currentPollSetSize == max) {
+        max *= 2;
+        handleTable = srealloc(handleTable, max);
+    }
+
+    while(flag) {
+        if(!(tempHandleTable->valid)) {
+            tempHandleTable->valid = 1;
+            tempHandleTable->socketNo = index;
+            memcpy(tempHandleTable->handle, handle, handleLength);
+            //(tempHandleTable->handle)[handleLength] = '\0';             // NULL terminate
+            flag = 0;
+        }
+        index++;
+        tempHandleTable += 1;       // next node
+    }
+    
+
+}
+
+void removeHandle(uint8_t *handle, uint8_t handleLength) {
+    uint8_t index = 0;
+    uint8_t flag = 1;
+    HND_TBL *tempHandleTable = handleTable;
+
+    while( (memcmp(tempHandleTable->handle, handle, handleLength) != 0) ) {
+        tempHandleTable += 1;
+    }
+
+    tempHandleTable->valid = 0; 
+}
+
+void teardownHandleTable() {
+    free(handleTable);
+}
+
+
+// both these two functions need to check if the valid bit is set
+void getHandleName() {
+
+}
+
+void getSocketNumber() {
+    
 }
