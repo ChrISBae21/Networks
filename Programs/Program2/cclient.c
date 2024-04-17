@@ -30,29 +30,42 @@
 #define MAXBUF 1024
 #define DEBUG_FLAG 1
 
-void sendToServer(int socketNum);
+void sendToServer(int socketNum, uint8_t *sendBuf, uint8_t sendLen);
 int readFromStdin(uint8_t * buffer);
 void checkArgs(int argc, char * argv[]);
-void clientControl(int mainServerSocket);
+void clientControl(int mainServerSocket, char* handleName);
 void processMsgFromServer(int mainServerSocket);
 void processStdin(int mainServerSocket);
+
+
 int main(int argc, char * argv[])
 {
 	int socketNum = 0;         //socket descriptor
-	
+
 	checkArgs(argc, argv);
 
+
 	/* set up the TCP Client socket  */
-	socketNum = tcpClientSetup(argv[1], argv[2], DEBUG_FLAG);
+	socketNum = tcpClientSetup(argv[2], argv[3], DEBUG_FLAG);
 	
-	clientControl(socketNum);
+	initialPacket(argv[1], socketNum);
+	clientControl(socketNum, argv[1]);
 	
 	
 	return 0;
 }
 
+void initialPacket(int mainServerSocket, char *handleName) {
+	uint8_t dataBuffer[1400] = {};
+	buildInitialPDU(dataBuffer, handleName, strlen(handleName), 1);
 
-void clientControl(int mainServerSocket) {
+	// +1 len is for the handle length
+	sendToServer(mainServerSocket, dataBuffer, strlen(handleName) + 1);
+
+	// NEED TO RECIEVE THE PDU FROM THE SERVER AND VERIFY THE FLAG !!!!!!!!!!!!!!!!!!!!!!!!!!!
+}
+
+void clientControl(int mainServerSocket, char *handleName) {
 
 	int pollReturn;
 	
@@ -90,7 +103,13 @@ void clientControl(int mainServerSocket) {
 }
 
 void processStdin(int mainServerSocket) {
-	sendToServer(mainServerSocket);
+	uint8_t sendBuf[MAXBUF];   	//data buffer
+	int sendLen = 0;        	//amount of data to send
+	
+	sendLen = readFromStdin(sendBuf);
+	printf("read: %s string len: %d (including null)\n", sendBuf, sendLen);
+	sendToServer(mainServerSocket, sendBuf, sendLen);
+	
 }
 
 void processMsgFromServer(int mainServerSocket) {
@@ -120,14 +139,13 @@ void processMsgFromServer(int mainServerSocket) {
 	}
 }
 
-void sendToServer(int socketNum)
-{
-	uint8_t sendBuf[MAXBUF];   	//data buffer
-	int sendLen = 0;        	//amount of data to send
+void sendToServer(int socketNum, uint8_t *sendBuf, uint8_t sendLen) {
+	// uint8_t sendBuf[MAXBUF];   	//data buffer
+	// int sendLen = 0;        	//amount of data to send
 	int sent = 0;            	//actual amount of data sent/* get the data and send it   */
 	
-	sendLen = readFromStdin(sendBuf);
-	printf("read: %s string len: %d (including null)\n", sendBuf, sendLen);
+	// sendLen = readFromStdin(sendBuf);
+	// printf("read: %s string len: %d (including null)\n", sendBuf, sendLen);
 	
 	//sent =  safeSend(socketNum, sendBuf, sendLen, 0);
 	sent =  sendPDU(socketNum, sendBuf, sendLen);
@@ -168,9 +186,9 @@ int readFromStdin(uint8_t * buffer)
 void checkArgs(int argc, char * argv[])
 {
 	/* check command line arguments  */
-	if (argc != 3)
+	if (argc != 4)
 	{
-		printf("usage: %s host-name port-number \n", argv[0]);
+		printf("usage: %s handle server-name server-port \n", argv[0]);
 		exit(1);
 	}
 }

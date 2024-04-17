@@ -19,20 +19,34 @@
 
 
 
+void buildChatHeader(uint8_t * dataBuffer, int lengthOfData, uint8_t flag) {
+    uint16_t nLen;
+    nLen = htons(lengthOfData + 3);
+    memcpy(dataBuffer, &nLen, 2);
+    memcpy(dataBuffer+2, flag, 1);
+}
+
+void buildInitialPDU(uint8_t * dataBuffer, uint8_t *handleName, uint8_t handleLen, uint8_t flag) {
+
+	buildChatHeader(dataBuffer, handleLen, flag);
+    dataBuffer += 3;
+    memcpy(dataBuffer, &handleLen, 1);
+    dataBuffer += 1;
+    memcpy(dataBuffer, handleName, handleLen);
+}
+
+
+
+
 int sendPDU(int socketNumber, uint8_t * dataBuffer, int lengthOfData) {
-    uint8_t *pduBuffer;
     int bytesSent;
     uint16_t nLen, hLen;
 
-    hLen = lengthOfData + 2;
-    nLen = htons(lengthOfData + 2);
-    pduBuffer = (uint8_t*) sCalloc(hLen, sizeof(uint8_t));
+    hLen = lengthOfData + 3;
+    nLen = htons(lengthOfData + 3);
 
-    memcpy(pduBuffer, &nLen, 2);
-    memcpy(pduBuffer+2, dataBuffer, lengthOfData);
-    bytesSent = safeSend(socketNumber, pduBuffer, hLen, 0);
-    free(pduBuffer);
-    return bytesSent;
+    bytesSent = safeSend(socketNumber, dataBuffer, hLen, 0);
+    return bytesSent-3;
 }
 
 
