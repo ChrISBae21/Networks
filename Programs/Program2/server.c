@@ -40,16 +40,17 @@ void sendConfToClient(int socketNum, int recMsgLen);
 
 int main(int argc, char *argv[])
 {
-	int mainServerSocket = 0;   //socket descriptor for the server socket
+	uint32_t mainServerSocket = 0;   //socket descriptor for the server socket
 	int clientSocket = 0;   //socket descriptor for the client socket
 	int portNumber = 0;
 
 	portNumber = checkArgs(argc, argv);
-
-
 	
 	//create the server socket
 	mainServerSocket = tcpServerSetup(portNumber);
+
+	//initializes the handle table
+	setupHandleTable(mainServerSocket);
 
 	//start doing server things
 	serverControl(mainServerSocket);
@@ -109,7 +110,7 @@ void recvFromClient(int clientSocket)
 	if (messageLen > 0)
 	{
 		printf("\nMessage received on Socket %d, length: %d Data: %s\n", clientSocket, messageLen, dataBuffer);
-		
+
 		sendConfToClient(clientSocket, messageLen);
 
 	}
