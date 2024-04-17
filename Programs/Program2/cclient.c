@@ -122,9 +122,9 @@ void processMsgFromServer(int mainServerSocket) {
 
 void sendToServer(int socketNum)
 {
-	uint8_t sendBuf[MAXBUF];   //data buffer
-	int sendLen = 0;        //amount of data to send
-	int sent = 0;            //actual amount of data sent/* get the data and send it   */
+	uint8_t sendBuf[MAXBUF];   	//data buffer
+	int sendLen = 0;        	//amount of data to send
+	int sent = 0;            	//actual amount of data sent/* get the data and send it   */
 	
 	sendLen = readFromStdin(sendBuf);
 	printf("read: %s string len: %d (including null)\n", sendBuf, sendLen);

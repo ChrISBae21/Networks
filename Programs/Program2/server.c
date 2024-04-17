@@ -26,6 +26,7 @@
 #include "safeUtil.h"
 #include "pdu.h"
 #include "pollLib.h"
+#include "handleTable.h"
 
 #define MAXBUF 1024
 #define DEBUG_FLAG 1
@@ -33,7 +34,7 @@
 void recvFromClient(int clientSocket);
 int checkArgs(int argc, char *argv[]);
 void addNewSocket(int mainServerSocket);
-void processClient(int pollReturn);
+void processClient(int pollSocket);
 void serverControl(int mainServerSocket);
 void sendConfToClient(int socketNum, int recMsgLen);
 
@@ -44,6 +45,8 @@ int main(int argc, char *argv[])
 	int portNumber = 0;
 
 	portNumber = checkArgs(argc, argv);
+
+
 	
 	//create the server socket
 	mainServerSocket = tcpServerSetup(portNumber);
@@ -59,23 +62,23 @@ int main(int argc, char *argv[])
 
 
 void serverControl(int mainServerSocket) {
-	int pollReturn;
+	int pollSocket;
 
 	setupPollSet();
 	addToPollSet(mainServerSocket);
 	while(1) {
-		pollReturn = pollCall(-1);
-		if(pollReturn == -1) {
+		pollSocket = pollCall(-1);
+		if(pollSocket == -1) {
 			perror("Timeout Error while Polling\n");
 			exit(-1);
 		}
 
-		if(pollReturn == mainServerSocket) {
+		if(pollSocket == mainServerSocket) {
 			// wait for client to connect
 			addNewSocket(mainServerSocket);
 		}
 		else {
-			processClient(pollReturn);
+			processClient(pollSocket);
 		}
 	}
 }
@@ -86,8 +89,8 @@ void addNewSocket(int mainServerSocket) {
 	addToPollSet(clientSocket);
 }
 
-void processClient(int pollReturn) {
-	recvFromClient(pollReturn);
+void processClient(int pollSocket) {
+	recvFromClient(pollSocket);
 }
 
 void recvFromClient(int clientSocket)
@@ -106,6 +109,7 @@ void recvFromClient(int clientSocket)
 	if (messageLen > 0)
 	{
 		printf("\nMessage received on Socket %d, length: %d Data: %s\n", clientSocket, messageLen, dataBuffer);
+		
 		sendConfToClient(clientSocket, messageLen);
 
 	}

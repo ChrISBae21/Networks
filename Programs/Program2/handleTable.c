@@ -14,15 +14,7 @@
 #include <stdint.h>
 
 #include "safeUtil.h"
-
-
-uint8_t addHandle(uint8_t *handle, uint8_t handleLength, uint8_t socket);
-void setupHandleTable(uint32_t mainSocket);
-void teardownHandleTable();
-uint8_t removeHandle(uint8_t socket);
-uint8_t* getSocketToHandle(uint8_t socketNo);
-uint32_t getHandleToSocket(uint8_t* handle, uint8_t handleLen);
-
+#include "handleTable.h"
 
 
 
