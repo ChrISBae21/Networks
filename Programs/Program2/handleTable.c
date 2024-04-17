@@ -122,36 +122,36 @@ uint32_t getHandleToSocket(uint8_t* handle, uint8_t handleLen) {
 
 }
 
-int main() {
-    setupHandleTable(4);
+// int main() {
+//     setupHandleTable(4);
 
-    uint8_t handle[8] = {'h', 'a', 'n', 'd', 'l', 'e', '1', '\0'};
-    uint8_t handle2[8] = {'h', 'a', 'n', 'd', 'l', 'e', '2', '\0'};
-    uint8_t done = addHandle(handle, 8, 4);
-    uint8_t done2 = addHandle(handle2, 8, 5);
-    printf("Handle1 Name: %d\n", done);
-    printf("Handle2 Name: %d\n", done2);
+//     uint8_t handle[8] = {'h', 'a', 'n', 'd', 'l', 'e', '1', '\0'};
+//     uint8_t handle2[8] = {'h', 'a', 'n', 'd', 'l', 'e', '2', '\0'};
+//     uint8_t done = addHandle(handle, 8, 4);
+//     uint8_t done2 = addHandle(handle2, 8, 5);
+//     printf("Handle1 Name: %d\n", done);
+//     printf("Handle2 Name: %d\n", done2);
 
-    uint8_t *ptr;
-    ptr = getSocketToHandle(4);
-    printf("Handle from Socket: %s\n", ptr);
-    removeHandle(4);
-    ptr = getSocketToHandle(4);
-    if(ptr == NULL) printf("does not exist\n");
-    else printf("Handle from Socket: %s\n", ptr);
+//     uint8_t *ptr;
+//     ptr = getSocketToHandle(4);
+//     printf("Handle from Socket: %s\n", ptr);
+//     removeHandle(4);
+//     ptr = getSocketToHandle(4);
+//     if(ptr == NULL) printf("does not exist\n");
+//     else printf("Handle from Socket: %s\n", ptr);
 
-    uint32_t socket;
-    socket = getHandleToSocket(handle, 8);
+//     uint32_t socket;
+//     socket = getHandleToSocket(handle, 8);
 
-    if(socket == 0) printf("no such handle\n");
-    else printf("found: %d\n", socket);
+//     if(socket == 0) printf("no such handle\n");
+//     else printf("found: %d\n", socket);
 
-    done = addHandle(handle, 8, 4);
-    ptr = getSocketToHandle(4);
-    printf("Handle from Socket: %s\n", ptr);
+//     done = addHandle(handle, 8, 4);
+//     ptr = getSocketToHandle(4);
+//     printf("Handle from Socket: %s\n", ptr);
 
-    socket = getHandleToSocket(handle, 8);
+//     socket = getHandleToSocket(handle, 8);
 
-    if(socket == 0) printf("no such handle\n");
-    else printf("found: %d\n", socket);
-}
+//     if(socket == 0) printf("no such handle\n");
+//     else printf("found: %d\n", socket);
+// }

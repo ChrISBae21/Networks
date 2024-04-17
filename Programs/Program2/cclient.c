@@ -33,9 +33,10 @@
 void sendToServer(int socketNum, uint8_t *sendBuf, uint8_t sendLen);
 int readFromStdin(uint8_t * buffer);
 void checkArgs(int argc, char * argv[]);
-void clientControl(int mainServerSocket, char* handleName);
+void clientControl(int mainServerSocket);
 void processMsgFromServer(int mainServerSocket);
 void processStdin(int mainServerSocket);
+void initialPacket(int mainServerSocket, char *handleName);
 
 
 int main(int argc, char * argv[])
@@ -48,8 +49,8 @@ int main(int argc, char * argv[])
 	/* set up the TCP Client socket  */
 	socketNum = tcpClientSetup(argv[2], argv[3], DEBUG_FLAG);
 	
-	initialPacket(argv[1], socketNum);
-	clientControl(socketNum, argv[1]);
+	initialPacket(socketNum, argv[1]);
+	clientControl(socketNum);
 	
 	
 	return 0;
@@ -57,7 +58,7 @@ int main(int argc, char * argv[])
 
 void initialPacket(int mainServerSocket, char *handleName) {
 	uint8_t dataBuffer[1400] = {};
-	buildInitialPDU(dataBuffer, handleName, strlen(handleName), 1);
+	buildInitialPDU(dataBuffer, dataBuffer, strlen(handleName), 1);
 
 	// +1 len is for the handle length
 	sendToServer(mainServerSocket, dataBuffer, strlen(handleName) + 1);
@@ -65,7 +66,7 @@ void initialPacket(int mainServerSocket, char *handleName) {
 	// NEED TO RECIEVE THE PDU FROM THE SERVER AND VERIFY THE FLAG !!!!!!!!!!!!!!!!!!!!!!!!!!!
 }
 
-void clientControl(int mainServerSocket, char *handleName) {
+void clientControl(int mainServerSocket) {
 
 	int pollReturn;
 	

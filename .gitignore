@@ -11,3 +11,7 @@ Labs/Lab2/safeUtil.o
 Labs/Lab2/cclient
 Labs/Lab2/server
 Programs/Program1/out.txt:Zone.Identifier
+Programs/Program2/cclient
+Programs/Program2/handletable
+Programs/Program2/server
+Programs/Program2/pdu.o
