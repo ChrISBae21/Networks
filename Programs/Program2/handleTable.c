@@ -16,18 +16,15 @@
 #include "safeUtil.h"
 
 
-void addHandle(uint8_t *handle, uint8_t handleLength, uint8_t socket);
-void setupHandleTable();
+uint8_t addHandle(uint8_t *handle, uint8_t handleLength, uint8_t socket);
+void setupHandleTable(uint32_t mainSocket);
 void teardownHandleTable();
-void removeHandle(uint8_t *handle, uint8_t handleLength);
-uint8_t* getHandleName(uint8_t socketNo);
+uint8_t removeHandle(uint8_t socket);
+uint8_t* getSocketToHandle(uint8_t socketNo);
+uint32_t getHandleToSocket(uint8_t* handle, uint8_t handleLen);
 
-// Handle Table Public Variables
-static HND_TBL *handleTable;
-static int max = 64;
 
-// static int maxFileDescriptor = 0;
-// static int currentPollSetSize = 0;
+
 
 typedef struct __attribute__((packed)) HND_TBL {
     uint8_t valid;          // Valid Handle
@@ -35,47 +32,62 @@ typedef struct __attribute__((packed)) HND_TBL {
 } HND_TBL;
 
 
+// Handle Table Public Variables
+static HND_TBL *handleTable;
+static uint32_t max = 64;
+static uint32_t serverSocket = 4;   // keeps track of the server's socket
 
-
-void setupHandleTable() {
+void setupHandleTable(uint32_t mainSocket) {
     handleTable = (HND_TBL*) sCalloc(max, sizeof(HND_TBL));   
+    serverSocket = mainSocket;
 }
 
 
 
-void addHandle(uint8_t *handle, uint8_t handleLength, uint8_t socketNo) {
-    uint8_t flag = 1;
-    HND_TBL *tempHandleTable = handleTable;
-    uint8_t index = 0;
-
-    while(flag) {
-        if(!(tempHandleTable->valid)) {
-            tempHandleTable->valid = 1;
-            memcpy(tempHandleTable->handle, handle, handleLength);
-            //(tempHandleTable->handle)[handleLength] = '\0';             // NULL terminate
-            flag = 0;
+/*
+* returns a 1 if the client handle already exists
+* returns a 0 on successful addition of client handle
+*/
+uint8_t addHandle(uint8_t *handle, uint8_t handleLength, uint8_t socketNo) {
+    uint32_t newMax = max;
+    uint32_t temp;
+    // expand the list of sockets
+    if(socketNo >= max) {
+        while(newMax <= socketNo) {
+            newMax *= 2;
         }
-        index++;
-        tempHandleTable += 1;       // next node
+        newMax+=serverSocket;
+        handleTable = srealloc(handleTable, newMax);
+        // Initializes the new memory allocation valid bits to 0
+        for(uint32_t i = max; i < newMax; i++) {
+            (&handleTable[i])->valid = 0;
+        }
+        
+        max = newMax;
     }
-
-
-    if(socketNo == max) {
-        max *= 2;
-        handleTable = srealloc(handleTable, max);
+    
+    // if the handle name exists, return 1
+    if( (temp = getHandleToSocket(handle, handleLength)) > 0 ) {
+        return 1;
     }
+    (&handleTable[socketNo])->valid = 1;
+    memcpy((&handleTable[socketNo])->handle, handle, handleLength);
+    return 0;
+
 }
 
-void removeHandle(uint8_t *handle, uint8_t handleLength) {
-    uint8_t index = 0;
-    uint8_t flag = 1;
-    HND_TBL *tempHandleTable = handleTable;
-
-    while( (memcmp(tempHandleTable->handle, handle, handleLength) != 0) ) {
-        tempHandleTable += 1;
+/*
+* removeHandle:
+* removes the handle based on socket number
+* returns 1 on success, 0 if the handle/socket doesn't exist
+*/
+uint8_t removeHandle(uint8_t socket) {
+    if((&handleTable[socket])->valid == 0) {
+        return 0;
     }
 
-    tempHandleTable->valid = 0; 
+    (&handleTable[socket])->valid = 0; 
+    return 1;
 }
 
 void teardownHandleTable() {
@@ -83,50 +95,71 @@ void teardownHandleTable() {
 }
 
 
-// both these two functions need to check if the valid bit is set
 
 /*
-* getHandleName
+* getSocketToHandle
 * returns a pointer to the handle name if found
 * else returns NULL if it does not exist
 */
-uint8_t* getHandleName(uint8_t socketNo) {
+uint8_t* getSocketToHandle(uint8_t socketNo) {
     
     if(handleTable[socketNo].valid) {
-        return &(handleTable[socketNo].handle);
+        return (&handleTable[socketNo])->handle;
     }
-
     return NULL;
-    // HND_TBL *tempHandleTable = handleTable;
-
-    // while( (memcmp(tempHandleTable->handle, handle, handleLength) != 0) ) {
-    //     tempHandleTable += 1;
-    // }
 }
 
 
 
 /*
-* getSocketNumber: returns the socket number for the handle name
+* getHandleToSocket: returns the socket number for the handle name
 * if the handle doesn't exist, returns 0
 */
-void getSocketNumber(uint8_t* handle, uint8_t len) {
-    HND_TBL *tempHandleTable = handleTable;
-    int flag = 1;
-    int socket = 0;
-
-
-
-
-    while(flag) {
-        if(!(tempHandleTable->valid)) {
-            tempHandleTable->valid = 1;
-            memcpy(tempHandleTable->handle, handle, handleLength);
-            //(tempHandleTable->handle)[handleLength] = '\0';             // NULL terminate
-            flag = 0;
-        }
-        index++;
-        tempHandleTable += 1;       // next node
+uint32_t getHandleToSocket(uint8_t* handle, uint8_t handleLen) {
+    uint32_t compare;       // temp variable to compare handles
+    uint32_t socket = 3;    // Sockets 0, 1, and 2 occupied by STDIN/OUT/ERR
+    while(socket < max) {
+        compare = memcmp(&((&handleTable[socket])->handle), handle, handleLen);     // compare handle names
+        if( ((&handleTable[socket])->valid) && (compare == 0) )                  // check if the socket is valid and matches handle
+            return socket;          
+        socket++;
     }
 
+
+    return 0;
+
+}
+
+int main() {
+    setupHandleTable(4);
+
+    uint8_t handle[8] = {'h', 'a', 'n', 'd', 'l', 'e', '1', '\0'};
+    uint8_t handle2[8] = {'h', 'a', 'n', 'd', 'l', 'e', '2', '\0'};
+    uint8_t done = addHandle(handle, 8, 4);
+    uint8_t done2 = addHandle(handle2, 8, 5);
+    printf("Handle1 Name: %d\n", done);
+    printf("Handle2 Name: %d\n", done2);
+
+    uint8_t *ptr;
+    ptr = getSocketToHandle(4);
+    printf("Handle from Socket: %s\n", ptr);
+    removeHandle(4);
+    ptr = getSocketToHandle(4);
+    if(ptr == NULL) printf("does not exist\n");
+    else printf("Handle from Socket: %s\n", ptr);
+
+    uint32_t socket;
+    socket = getHandleToSocket(handle, 8);
+
+    if(socket == 0) printf("no such handle\n");
+    else printf("found: %d\n", socket);
+
+    done = addHandle(handle, 8, 4);
+    ptr = getSocketToHandle(4);
+    printf("Handle from Socket: %s\n", ptr);
+
+    socket = getHandleToSocket(handle, 8);
+
+    if(socket == 0) printf("no such handle\n");
+    else printf("found: %d\n", socket);
 }
