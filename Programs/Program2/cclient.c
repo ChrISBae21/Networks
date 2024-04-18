@@ -39,20 +39,13 @@ void processStdin(int mainServerSocket);
 void initialPacket(int mainServerSocket, char *handleName);
 
 
-int main(int argc, char * argv[])
-{
+int main(int argc, char * argv[]) {
 	int socketNum = 0;         //socket descriptor
-
 	checkArgs(argc, argv);
-
-
 	/* set up the TCP Client socket  */
 	socketNum = tcpClientSetup(argv[2], argv[3], DEBUG_FLAG);
-	
 	initialPacket(socketNum, argv[1]);
 	clientControl(socketNum);
-	
-	
 	return 0;
 }
 
@@ -135,7 +128,7 @@ uint8_t processMsgFromServer(int mainServerSocket, uint8_t *retBuffer) {
 		exit(-1);
 	}
 
-	// only a flag was sent
+	
 	if (messageLen > 0)
 	{
 		memcpy(retBuffer, dataBuffer, messageLen);
