@@ -34,7 +34,7 @@ void sendToServer(int socketNum, uint8_t *sendBuf, uint8_t sendLen);
 int readFromStdin(uint8_t * buffer);
 void checkArgs(int argc, char * argv[]);
 void clientControl(int mainServerSocket);
-void processMsgFromServer(int mainServerSocket);
+uint8_t processMsgFromServer(int mainServerSocket, uint8_t *retBuffer);
 void processStdin(int mainServerSocket);
 void initialPacket(int mainServerSocket, char *handleName);
 
@@ -58,11 +58,22 @@ int main(int argc, char * argv[])
 
 void initialPacket(int mainServerSocket, char *handleName) {
 	uint8_t dataBuffer[1400] = {};
-	buildInitialPDU(dataBuffer, dataBuffer, strlen(handleName), 1);
+	uint8_t msgLen;
+	uint8_t flag = 0;
+	buildInitialPDU(dataBuffer, handleName, strlen(handleName), 1);
 
 	// +1 len is for the handle length
 	sendToServer(mainServerSocket, dataBuffer, strlen(handleName) + 1);
 
+	msgLen = processMsgFromServer(mainServerSocket, &flag);
+
+	if(flag == 2) {
+		printf("Handle: %s has been verified by the server\n", handleName);
+	}
+	else if(flag == 3) {
+		printf("Handle: %s has been taken\n", handleName);
+		exit(-1);
+	}
 	// NEED TO RECIEVE THE PDU FROM THE SERVER AND VERIFY THE FLAG !!!!!!!!!!!!!!!!!!!!!!!!!!!
 }
 
@@ -113,7 +124,7 @@ void processStdin(int mainServerSocket) {
 	
 }
 
-void processMsgFromServer(int mainServerSocket) {
+uint8_t processMsgFromServer(int mainServerSocket, uint8_t *retBuffer) {
 	uint8_t dataBuffer[MAXBUF];
 	int messageLen = 0;
 	
@@ -124,10 +135,13 @@ void processMsgFromServer(int mainServerSocket) {
 		exit(-1);
 	}
 
+	// only a flag was sent
 	if (messageLen > 0)
 	{
+		memcpy(retBuffer, dataBuffer, messageLen);
 		printf("From Server: %s of Length %d\n", dataBuffer, messageLen);
 		// printf("\n\nEnter Data: ");
+		return messageLen;
 	
 	}
 	else
