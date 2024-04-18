@@ -26,13 +26,19 @@ void buildChatHeader(uint8_t * dataBuffer, int lengthOfData, uint8_t flag) {
     memcpy(dataBuffer+2, &flag, 1);
 }
 
-void buildInitialPDU(uint8_t * dataBuffer, uint8_t *handleName, uint8_t handleLen, uint8_t flag) {
+void buildEntirePDU(uint8_t * dataBuffer, uint8_t *srcHandle, uint8_t srcHandleLen, uint8_t uint8_t flag) {
 
 	buildChatHeader(dataBuffer, handleLen, flag);
-    dataBuffer += 3;
+    dataBuffer += 3;    // increment pointer by 3 to offset the header
     memcpy(dataBuffer, &handleLen, 1);
     dataBuffer += 1;
     memcpy(dataBuffer, handleName, handleLen);
+
+    if(flag > 1) {
+
+    }
+
+
 }
 
 

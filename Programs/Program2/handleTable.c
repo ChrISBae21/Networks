@@ -122,6 +122,14 @@ uint32_t getHandleToSocket(uint8_t* handle, uint8_t handleLen) {
 
 }
 
+void listHandleTable() {
+    for(uint32_t i = 0; i < max; i++) {
+        if(((&handleTable[i])->valid)) {
+            fprintf(stdout, "Socket: %d, Handle: %s\n", i, (char*) &((&handleTable[i])->handle));
+        }
+    }
+}
+
 // int main() {
 //     setupHandleTable(4);
 

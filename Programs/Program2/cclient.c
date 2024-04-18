@@ -27,13 +27,13 @@
 #include "pollLib.h"
 
 
-#define MAXBUF 1024
+#define MAXBUF 1400
 #define DEBUG_FLAG 1
 
 void sendToServer(int socketNum, uint8_t *sendBuf, uint8_t sendLen);
 int readFromStdin(uint8_t * buffer);
 void checkArgs(int argc, char * argv[]);
-void clientControl(int mainServerSocket);
+void clientControl(int mainServerSocket, char *handleName, uint8_t handleLen);
 uint8_t processMsgFromServer(int mainServerSocket, uint8_t *retBuffer);
 void processStdin(int mainServerSocket);
 void initialPacket(int mainServerSocket, char *handleName);
@@ -44,18 +44,22 @@ int main(int argc, char * argv[]) {
 	checkArgs(argc, argv);
 	/* set up the TCP Client socket  */
 	socketNum = tcpClientSetup(argv[2], argv[3], DEBUG_FLAG);
-	initialPacket(socketNum, argv[1]);
-	clientControl(socketNum);
+	clientControl(socketNum, argv[1], strlen(argv[1]));
 	return 0;
 }
 
+
+
 void initialPacket(int mainServerSocket, char *handleName) {
-	uint8_t dataBuffer[1400] = {};
+	uint8_t dataBuffer[MAXBUF] = {};
 	uint8_t msgLen;
 	uint8_t flag = 0;
-	buildInitialPDU(dataBuffer, handleName, strlen(handleName), 1);
 
-	// +1 len is for the handle length
+	
+	// builds the PDU Chat header and the PDU packet
+	buildEntirePDU(dataBuffer, handleName, strlen(handleName), 1);
+
+	// +1 len is for the handle length byte
 	sendToServer(mainServerSocket, dataBuffer, strlen(handleName) + 1);
 
 	msgLen = processMsgFromServer(mainServerSocket, &flag);
@@ -70,7 +74,7 @@ void initialPacket(int mainServerSocket, char *handleName) {
 	// NEED TO RECIEVE THE PDU FROM THE SERVER AND VERIFY THE FLAG !!!!!!!!!!!!!!!!!!!!!!!!!!!
 }
 
-void clientControl(int mainServerSocket) {
+void clientControl(int mainServerSocket, char *handleName, uint8_t handleLen) {
 
 	int pollReturn;
 	
@@ -78,6 +82,8 @@ void clientControl(int mainServerSocket) {
 	addToPollSet(STDIN_FILENO);
 	addToPollSet(mainServerSocket);
 	
+	// sends handle name to the server and waits for a response back
+	initialPacket(mainServerSocket, handleName);
 	
 	// sendToServer(mainServerSocket);
 
@@ -112,7 +118,7 @@ void processStdin(int mainServerSocket) {
 	int sendLen = 0;        	//amount of data to send
 	
 	sendLen = readFromStdin(sendBuf);
-	printf("read: %s string len: %d (including null)\n", sendBuf, sendLen);
+	// printf("read: %s string len: %d (including null)\n", sendBuf, sendLen);
 	sendToServer(mainServerSocket, sendBuf, sendLen);
 	
 }
