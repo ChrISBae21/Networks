@@ -35,8 +35,8 @@ int readFromStdin(uint8_t * buffer);
 void checkArgs(int argc, char * argv[]);
 void clientControl(int mainServerSocket, char *handleName, uint8_t handleLen);
 uint8_t processMsgFromServer(int mainServerSocket, uint8_t *retBuffer);
-void processStdin(int mainServerSocket);
 void initialPacket(int mainServerSocket, char *handleName);
+uint32_t processStdin(uint8_t *pckDataBuf, uint8_t *stdinBuf, uint32_t stdinLen);
 
 
 int main(int argc, char * argv[]) {
@@ -77,7 +77,10 @@ void initialPacket(int mainServerSocket, char *handleName) {
 void clientControl(int mainServerSocket, char *handleName, uint8_t handleLen) {
 
 	int pollReturn;
-	
+	uint8_t stdinBuf[MAXBUF];
+	uint8_t pckDataBuf[MAXBUF];
+	uint32_t stdinLen, pckDataLen;
+
 	setupPollSet();
 	addToPollSet(STDIN_FILENO);
 	addToPollSet(mainServerSocket);
@@ -106,20 +109,62 @@ void clientControl(int mainServerSocket, char *handleName, uint8_t handleLen) {
 			
 		}
 		else {
-			processStdin(mainServerSocket);
+			stdinLen = readFromStdin(stdinBuf);
+			pckDataLen = processStdin(pckDataBuf, stdinBuf, stdinLen);
 		}
 		
 	}
 
 }
 
-void processStdin(int mainServerSocket) {
-	uint8_t sendBuf[MAXBUF];   	//data buffer
-	int sendLen = 0;        	//amount of data to send
+
+uint8_t getHandleName(uint8_t *inputData, uint8_t *destHandle) {
+	destHandle = strtok(inputData, ' ');
+	return strlen(destHandle);
+}
+
+uint8_t addDestHandle(uint8_t *pckDataBuf, uint8_t *stdinBuf) {
+	uint8_t destHandleLen;
+	destHandleLen = getHandleName(stdinBuf, destHandle);	// grabs the Handle name
+
+}
+
+uint32_t processStdin(uint8_t *pckDataBuf, uint8_t *stdinBuf, uint32_t stdinLen) {
+
+	uint8_t destHandle[101];
+	uint8_t destHandleLen = 0;
+
+	uint32_t pckDataLen = 0;	
+	// ERROR CHECK A PERCENT SIGN
+	stdinBuf += 1;
+	stdinLen -= 1;
+
 	
-	sendLen = readFromStdin(sendBuf);
+	switch(tolower(stdinBuf[0])) {
+		stdinBuf += 2;
+		stdinLen -= 2;
+		case 'm':
+			destHandleLen = getHandleName(stdinBuf, destHandle);	// grabs the Handle name
+			pckDataLen += destHandleLen;							// adds the length of the handle name
+			memcpy(pckDataBuf, destHandle, destHandleLen);
+			pckDataBuf += destHandleLen;
+
+			stdinBuf += destHandleLen + 1;							// increment STDIN Pointer
+			stdinLen -= destHandleLen + 1;							// decrement STDIN Length. Now left with text length (including NULL)
+
+			break;
+		case 'b':
+			break;
+
+		case 'c':
+			break;
+		case 'l':
+			break;
+		case 'e':
+			break;
+		
+	}
 	// printf("read: %s string len: %d (including null)\n", sendBuf, sendLen);
-	sendToServer(mainServerSocket, sendBuf, sendLen);
 	
 }
 
