@@ -34,10 +34,11 @@ void sendToServer(int socketNum, uint8_t *sendBuf, uint8_t sendLen);
 int readFromStdin(uint8_t * buffer);
 void checkArgs(int argc, char * argv[]);
 void clientControl(int mainServerSocket, char *handleName, uint8_t handleLen);
-uint8_t processMsgFromServer(int mainServerSocket, uint8_t *retBuffer);
+// uint8_t processMsgFromServer(int mainServerSocket, uint8_t *retBuffer);
+uint8_t processMsgFromServer(int mainServerSocket);
 void initialPacket(int mainServerSocket, char *handleName);
 uint32_t processStdin(uint8_t *pckDataBuf, uint8_t *stdinBuf, uint32_t stdinLen);
-
+uint8_t getDestHandles(uint8_t *handleBuf, uint8_t *stdinBuf, uint8_t numHandles);
 
 int main(int argc, char * argv[]) {
 	int socketNum = 0;         //socket descriptor
@@ -111,6 +112,7 @@ void clientControl(int mainServerSocket, char *handleName, uint8_t handleLen) {
 		else {
 			stdinLen = readFromStdin(stdinBuf);
 			pckDataLen = processStdin(pckDataBuf, stdinBuf, stdinLen);
+			// add the header and the src handle
 		}
 		
 	}
@@ -123,35 +125,50 @@ uint8_t getHandleName(uint8_t *inputData, uint8_t *destHandle) {
 	return strlen(destHandle);
 }
 
-uint8_t addDestHandle(uint8_t *pckDataBuf, uint8_t *stdinBuf) {
+uint8_t getDestHandles(uint8_t *handleBuf, uint8_t *stdinBuf, uint8_t numHandles) {
 	uint8_t destHandleLen;
-	destHandleLen = getHandleName(stdinBuf, destHandle);	// grabs the Handle name
+	uint8_t totLen = 0;
+	uint8_t destHandle[101];
 
+	for(uint8_t i = 0; i < numHandles; i++) {
+		destHandleLen = getHandleName(stdinBuf, destHandle);	// grabs the Handle name
+		memcpy(handleBuf, &destHandleLen, 1);					// add handle length
+		memcpy(handleBuf+1, destHandle, destHandleLen);			// add handle name
+		handleBuf += (destHandleLen + 1);						// increments output data pointer with len + handle name
+		totLen += (destHandleLen + 1);							// increments total length	
+		stdinBuf += (destHandleLen + 1);						// increments stdin buffer with handle len + space
+	}
+
+	return totLen;
 }
+
+
 
 uint32_t processStdin(uint8_t *pckDataBuf, uint8_t *stdinBuf, uint32_t stdinLen) {
 
-	uint8_t destHandle[101];
+	
 	uint8_t destHandleLen = 0;
+	uint32_t pckDataLen = 0;
 
-	uint32_t pckDataLen = 0;	
+	uint8_t destHandles[918];		// max of 9 destination handles (100 bytes) + 9 length bytes
+
 	// ERROR CHECK A PERCENT SIGN
+	// foregoes the % sign in the STDIN buffer
 	stdinBuf += 1;
 	stdinLen -= 1;
 
-	
 	switch(tolower(stdinBuf[0])) {
+		// foregoes the command and space in STDIN buffer
 		stdinBuf += 2;
 		stdinLen -= 2;
 		case 'm':
-			destHandleLen = getHandleName(stdinBuf, destHandle);	// grabs the Handle name
-			pckDataLen += destHandleLen;							// adds the length of the handle name
-			memcpy(pckDataBuf, destHandle, destHandleLen);
+			destHandleLen = getDestHandles(destHandles, stdinBuf, 1);
+			pckDataLen += destHandleLen;			// keep track of total packet length
+			stdinLen -= destHandleLen;				// remaining length is data length
 			pckDataBuf += destHandleLen;
-
-			stdinBuf += destHandleLen + 1;							// increment STDIN Pointer
-			stdinLen -= destHandleLen + 1;							// decrement STDIN Length. Now left with text length (including NULL)
-
+			stdinBuf += destHandleLen;
+			memcpy(pckDataBuf, stdinBuf, stdinLen);
+			pckDataLen += stdinLen;					// keep track of total packet length
 			break;
 		case 'b':
 			break;
@@ -168,7 +185,8 @@ uint32_t processStdin(uint8_t *pckDataBuf, uint8_t *stdinBuf, uint32_t stdinLen)
 	
 }
 
-uint8_t processMsgFromServer(int mainServerSocket, uint8_t *retBuffer) {
+// uint8_t processMsgFromServer(int mainServerSocket, uint8_t *retBuffer) {
+uint8_t processMsgFromServer(int mainServerSocket) {
 	uint8_t dataBuffer[MAXBUF];
 	int messageLen = 0;
 	
@@ -182,7 +200,7 @@ uint8_t processMsgFromServer(int mainServerSocket, uint8_t *retBuffer) {
 	
 	if (messageLen > 0)
 	{
-		memcpy(retBuffer, dataBuffer, messageLen);
+		//memcpy(retBuffer, dataBuffer, messageLen);
 		printf("From Server: %s of Length %d\n", dataBuffer, messageLen);
 		// printf("\n\nEnter Data: ");
 		return messageLen;
