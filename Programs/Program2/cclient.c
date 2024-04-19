@@ -64,7 +64,7 @@ void initialPacket(int mainServerSocket, uint8_t *handleName) {
 	buildPduPacket(dataBuffer, strlen((char*)handleName) + 1, 1);
 
 	// +1 len is for the handle length byte
-	sendToServer(mainServerSocket, dataBuffer, strlen((char*) handleName) + 1);
+	sendToServer(mainServerSocket, dataBuffer, strlen((char*) handleName));
 
 	msgLen = processMsgFromServer(mainServerSocket, &flag);
 
