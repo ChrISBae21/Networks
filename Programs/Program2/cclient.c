@@ -66,17 +66,18 @@ void initialPacket(int mainServerSocket, uint8_t *handleName) {
 	// +1 len is for the handle length byte
 	sendToServer(mainServerSocket, dataBuffer, strlen((char*) handleName));
 
-	msgLen = processMsgFromServer(mainServerSocket, &flag);
+	// msgLen = processMsgFromServer(mainServerSocket, &flag);
 
-	fprintf(stderr, "msgLen: %d\n", msgLen);
+	// fprintf(stderr, "msgLen: %d\n", msgLen);
 
-	if(flag == 2) {
-		printf("Handle: %s has been verified by the server\n", handleName);
-	}
-	else if(flag == 3) {
-		printf("Handle: %s has been taken\n", handleName);
-		exit(-1);
-	}
+	// if(flag == 2) {
+	// 	printf("Handle: %s has been verified by the server\n", handleName);
+	// }
+	// else if(flag == 3) {
+	// 	printf("Handle: %s has been taken\n", handleName);
+	// 	exit(-1);
+	// }
+	
 	// NEED TO RECIEVE THE PDU FROM THE SERVER AND VERIFY THE FLAG !!!!!!!!!!!!!!!!!!!!!!!!!!!
 }
 

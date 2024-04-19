@@ -36,6 +36,8 @@ int sendPDU(int socketNumber, uint8_t * dataBuffer, int lengthOfData) {
     hLen = lengthOfData + 3;
 
     bytesSent = safeSend(socketNumber, dataBuffer, hLen, 0);
+    dataBuffer[hLen] = '\0';
+    printf("Text: %c\n", dataBuffer[3]);
     return bytesSent-3;
 }
 
