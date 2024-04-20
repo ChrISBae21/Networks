@@ -53,20 +53,16 @@ int main(int argc, char * argv[]) {
 	return 0;
 }
 
-
-
-void initialPacket(int mainServerSocket, uint8_t *handleName) {
+void sendInitialPacket(int mainServerSocket, uint8_t *handleName) {
 	uint8_t dataBuffer[MAXBUF] = {};
 	uint8_t msgLen;
-	uint8_t flag = 0;
 	msgLen = addSrcHandle(dataBuffer, strlen((char*) handleName), handleName, 1);
-	
 	sendToServer(mainServerSocket, dataBuffer, msgLen);
+}
 
-	msgLen = recvPDU(mainServerSocket, &flag, 1);
-
-	
-
+void recvInitialPacket(int mainServerSocket, uint8_t *handleName) {
+	uint8_t flag = 0;
+	recvPDU(mainServerSocket, &flag, 1);
 	if(flag == 2) {
 		printf("Handle name \"%s\" has been accepted by the server!\n", handleName);
 	}
@@ -74,8 +70,11 @@ void initialPacket(int mainServerSocket, uint8_t *handleName) {
 		printf("Handle name \"%s\" has already been taken. Please try again with a different handle name\n", handleName);
 		kill(getpid(), 2);
 	}
-	
-	// NEED TO RECIEVE THE PDU FROM THE SERVER AND VERIFY THE FLAG !!!!!!!!!!!!!!!!!!!!!!!!!!!
+}
+
+void initialPacket(int mainServerSocket, uint8_t *handleName) {
+	sendInitialPacket(mainServerSocket, handleName);
+	recvInitialPacket(mainServerSocket, handleName);	
 }
 
 void clientControl(int mainServerSocket, uint8_t *handleName, uint8_t handleLen) {
@@ -95,9 +94,6 @@ void clientControl(int mainServerSocket, uint8_t *handleName, uint8_t handleLen)
 	addToPollSet(mainServerSocket);
 	
 	// sends handle name to the server and waits for a response back
-	
-	
-	// sendToServer(mainServerSocket);
 
 	printf("Enter Data: ");
 	fflush(stdout);
@@ -116,17 +112,11 @@ void clientControl(int mainServerSocket, uint8_t *handleName, uint8_t handleLen)
 			processMsgFromServer(mainServerSocket, tempBuf);
 			printf("\nEnter data: ");
 			fflush(stdout);
-		//%m aa l
-		//%m l a	
 		}
 		else {
 			pckDataLen += (2 + handleLen);
 			stdinLen = readFromStdin(stdinBuf);
-			
 			pckDataLen += processStdin(sendBuf + PDU_HEADER_LEN + pckDataLen, stdinBuf, stdinLen, &flag);
-			
-			
-
 			addSrcHandle(sendBuf, handleLen, handleName, flag);
 			// buildPduPacket(sendBuf, pckDataLen, flag);
 			sendPDU(mainServerSocket, sendBuf, pckDataLen);
@@ -250,9 +240,9 @@ void fromServer(int clientSocket, uint8_t msgLen, uint8_t *dataBuf) {
 	uint8_t destHandleLen;
 	uint8_t destHandle[101];
 	uint8_t numDestHandle = 1;
-	uint32_t destSocket = 4;
+	// uint32_t destSocket = 4;
 
-	uint8_t *message;
+	// uint8_t *message;
 	
 
 	
