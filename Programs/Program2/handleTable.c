@@ -43,6 +43,9 @@ void setupHandleTable(uint32_t mainSocket) {
 uint8_t addHandle(uint8_t *handle, uint8_t handleLength, uint8_t socketNo) {
     uint32_t newMax = max;
     uint32_t temp;
+
+    handle[handleLength] = '\0';
+
     // expand the list of sockets
     if(socketNo >= max) {
         while(newMax <= socketNo) {
@@ -63,7 +66,7 @@ uint8_t addHandle(uint8_t *handle, uint8_t handleLength, uint8_t socketNo) {
         return 1;
     }
     (&handleTable[socketNo])->valid = 1;
-    memcpy((&handleTable[socketNo])->handle, handle, handleLength);
+    memcpy((&handleTable[socketNo])->handle, handle, handleLength+1);
     return 0;
 
 }
@@ -106,12 +109,16 @@ uint8_t* getSocketToHandle(uint8_t socketNo) {
 /*
 * getHandleToSocket: returns the socket number for the handle name
 * if the handle doesn't exist, returns 0
+* ASSUMED HANDLES ARE NULL TERMINATED
 */
 uint32_t getHandleToSocket(uint8_t* handle, uint8_t handleLen) {
     uint32_t compare;       // temp variable to compare handles
     uint32_t socket = 3;    // Sockets 0, 1, and 2 occupied by STDIN/OUT/ERR
+
+    printf("%d\n", handleLen);
     while(socket < max) {
-        compare = memcmp(&((&handleTable[socket])->handle), handle, handleLen);     // compare handle names
+        compare = strcmp((char*)&((&handleTable[socket])->handle), (char*)handle);     // compare handle names
+        
         if( ((&handleTable[socket])->valid) && (compare == 0) )                  // check if the socket is valid and matches handle
             return socket;          
         socket++;

@@ -65,7 +65,8 @@ int recvPDU(int clientSocket, uint8_t * dataBuffer, int bufferSize) {
     pduHeader = ntohs(pduHeader);       
 
     
-    if(bufferSize < pduHeader) {
+    
+    if(bufferSize < pduHeader-2) {
         perror("buffer size is too small on the receiving side\n");
         exit(-1);
     }

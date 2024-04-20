@@ -63,7 +63,7 @@ void initialPacket(int mainServerSocket, uint8_t *handleName) {
 	
 	sendToServer(mainServerSocket, dataBuffer, msgLen);
 
-	msgLen = processMsgFromServer(mainServerSocket, &flag);
+	msgLen = recvPDU(mainServerSocket, &flag, 1);
 
 	
 
@@ -116,12 +116,16 @@ void clientControl(int mainServerSocket, uint8_t *handleName, uint8_t handleLen)
 			processMsgFromServer(mainServerSocket, tempBuf);
 			printf("\nEnter data: ");
 			fflush(stdout);
-			
+		//%m aa l
+		//%m l a	
 		}
 		else {
 			pckDataLen += (2 + handleLen);
 			stdinLen = readFromStdin(stdinBuf);
+			
 			pckDataLen += processStdin(sendBuf + PDU_HEADER_LEN + pckDataLen, stdinBuf, stdinLen, &flag);
+			
+			
 
 			addSrcHandle(sendBuf, handleLen, handleName, flag);
 			// buildPduPacket(sendBuf, pckDataLen, flag);
@@ -139,13 +143,24 @@ uint8_t addSrcHandle(uint8_t *sendBuf, uint8_t handleLen, uint8_t *handleName, u
 	return handleLen + 2;
 }
 
+uint8_t spaceDelimiter(uint8_t *inputData, uint8_t *destHandle) {
+	uint8_t len = 0;
+	while(inputData[len] != ' ') {
+		destHandle[len] = inputData[len];
+		len++;
+	}
+	// destHandle[len] = '\0';
+	// len++;
+	return len;
+}
+
 uint8_t getHandleName(uint8_t *inputData, uint8_t *destHandle) {
 
-	uint8_t *tempHandle;
-	tempHandle = (uint8_t*) strtok((char*) inputData, " ");
+	uint8_t destHandleLen;
+	destHandleLen = spaceDelimiter(inputData, destHandle);
 
-	memcpy(destHandle, tempHandle, strlen((char*) tempHandle));
-	return strlen((char*) destHandle);
+	return destHandleLen;
+	
 }
 
 uint8_t getDestHandles(uint8_t *handleBuf, uint8_t *stdinBuf, uint8_t numHandles) {
@@ -158,13 +173,14 @@ uint8_t getDestHandles(uint8_t *handleBuf, uint8_t *stdinBuf, uint8_t numHandles
 	handleBuf+=1;
 	for(uint8_t i = 0; i < numHandles; i++) {
 		destHandleLen = getHandleName(stdinBuf, destHandle);	// grabs the Handle name
-		
+
 		memcpy(handleBuf, &destHandleLen, 1);					// add handle length
 		memcpy(handleBuf+1, destHandle, destHandleLen);			// add handle name
 		handleBuf += (destHandleLen + 1);						// increments output data pointer with len + handle name
 		totLen += (destHandleLen + 1);							// increments total length	
 		stdinBuf += (destHandleLen + 1);						// increments stdin buffer with handle len + space
 	}
+
 	return totLen;
 }
 
@@ -195,6 +211,9 @@ uint32_t processStdin(uint8_t *pckDataBuf, uint8_t *stdinBuf, uint32_t stdinLen,
 
 			*flag = 5;
 			destHandleLen = getDestHandles(destHandles, stdinBuf, numDestHandles);
+			
+
+			// printf("%d\n", destHandleLen);
 			memcpy(pckDataBuf, destHandles, destHandleLen);
 			pckDataLen += destHandleLen;			// keep track of total packet length
 			
@@ -202,8 +221,10 @@ uint32_t processStdin(uint8_t *pckDataBuf, uint8_t *stdinBuf, uint32_t stdinLen,
 			pckDataBuf += destHandleLen;
 			stdinBuf += destHandleLen-1;
 			memcpy(pckDataBuf, stdinBuf, stdinLen);
-			
 			pckDataLen += stdinLen;					// keep track of total packet length
+
+			
+
 			break;
 		case 'b':
 			break;
@@ -239,6 +260,7 @@ void fromServer(int clientSocket, uint8_t msgLen, uint8_t *dataBuf) {
 
 		case 7:
 			destHandleLen = dataBuf[1];
+
 			memcpy(destHandle, &dataBuf[2], destHandleLen);
 			destHandle[destHandleLen] = '\0';
 			printf("Client with handle %s does not exist\n", destHandle);
@@ -352,5 +374,4 @@ void checkArgs(int argc, char * argv[])
 		exit(1);
 	}
 }
-
 

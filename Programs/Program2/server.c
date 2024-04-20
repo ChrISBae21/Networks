@@ -132,6 +132,7 @@ void processClient(int clientSocket, uint8_t msgLen, uint8_t *dataBuf) {
 			while(numDestHandle != 0) {
 				memcpy(&destHandleLen, tempBuf, 1);
 				memcpy(destHandle, tempBuf+1, destHandleLen);
+				destHandle[destHandleLen] = '\0';
 				if((destSocket = getHandleToSocket(destHandle, destHandleLen)) > 0) {	// handle exists
 					memcpy(sendBuf + 2, dataBuf, msgLen);
 
