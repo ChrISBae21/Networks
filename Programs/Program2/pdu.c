@@ -33,12 +33,16 @@ int sendPDU(int socketNumber, uint8_t * dataBuffer, int lengthOfData) {
     int bytesSent;
     uint16_t hLen;
     uint16_t nLen;
+
+
+
+    
+
     nLen = htons(lengthOfData + PDU_HEADER_LEN);
     memcpy(dataBuffer, &nLen, PDU_HEADER_LEN);
 
 
     hLen = lengthOfData + PDU_HEADER_LEN;
-    printf("hLEN: %d\n", hLen);
 
     bytesSent = safeSend(socketNumber, dataBuffer, hLen, 0);
     
@@ -60,7 +64,7 @@ int recvPDU(int clientSocket, uint8_t * dataBuffer, int bufferSize) {
 
     pduHeader = ntohs(pduHeader);       
 
-
+    
     if(bufferSize < pduHeader) {
         perror("buffer size is too small on the receiving side\n");
         exit(-1);

@@ -87,7 +87,7 @@ int tcpAccept(int mainServerSocket, int debugFlag)
 	  
 	if (debugFlag)
 	{
-		printf("Client accepted.  Client IP: %s Client Port Number: %d\n",  
+		printf("New Connection Attempt.  Client IP: %s Client Port Number: %d\n",  
 				getIPAddressString6(clientAddress.sin6_addr.s6_addr), ntohs(clientAddress.sin6_port));
 	}
 	

@@ -28,13 +28,13 @@
 #include "pollLib.h"
 #include "handleTable.h"
 
-#define MAXBUF 1024
+#define MAXBUF 1400
 #define DEBUG_FLAG 1
 
 void recvFromClient(int clientSocket);
 int checkArgs(int argc, char *argv[]);
 void addNewSocket(int mainServerSocket);
-void processClient(int pollSocket);
+void processClient(int clientSocket, uint8_t msgLen, uint8_t *dataBuf);
 void serverControl(int mainServerSocket);
 void sendConfToClient(int socketNum, int recMsgLen);
 
@@ -79,7 +79,7 @@ void serverControl(int mainServerSocket) {
 			addNewSocket(mainServerSocket);
 		}
 		else {
-			processClient(pollSocket);
+			recvFromClient(pollSocket);
 		}
 	}
 }
@@ -90,9 +90,71 @@ void addNewSocket(int mainServerSocket) {
 	addToPollSet(clientSocket);
 }
 
-void processClient(int pollSocket) {
-	recvFromClient(pollSocket);
+void processClient(int clientSocket, uint8_t msgLen, uint8_t *dataBuf) {
+	uint8_t *tempBuf = dataBuf;
+	uint8_t flag = dataBuf[0];
+	uint8_t srcHandleLen = dataBuf[1];
+	uint8_t srcHandle[101];
+	uint8_t destHandleLen;
+	uint8_t destHandle[101];
+	uint8_t numDestHandle = 1;
+	uint32_t destSocket = 4;
+
+	uint8_t sendBuf[MAXBUF] = {};
+
+
+	uint8_t messageLen = 0;
+	
+
+	memcpy(srcHandle, &dataBuf[2], srcHandleLen);
+	srcHandle[srcHandleLen] = '\0';
+	
+
+	switch(flag) {
+		case 1:
+
+			if(addHandle(srcHandle, srcHandleLen, clientSocket)) {		// handle name exists
+				dataBuf[2] = 3;
+				
+				sendPDU(clientSocket, dataBuf, 1);
+			}
+			else {
+				dataBuf[2] = 2;
+				sendPDU(clientSocket, dataBuf, 1);
+			}
+			break;
+
+		case 5:
+			tempBuf += srcHandleLen + 2;
+			numDestHandle = tempBuf[0];
+			
+			tempBuf += 1;
+			while(numDestHandle != 0) {
+				memcpy(&destHandleLen, tempBuf, 1);
+				memcpy(destHandle, tempBuf+1, destHandleLen);
+				if((destSocket = getHandleToSocket(destHandle, destHandleLen)) > 0) {	// handle exists
+					memcpy(sendBuf + 2, dataBuf, msgLen);
+
+					// WORK HERE TO LIMIT
+					sendPDU(destSocket, sendBuf, msgLen);
+				}
+				else {
+					dataBuf[2] = 7;
+					memcpy(dataBuf + 3, &destHandleLen, 1);
+					memcpy(dataBuf + 4, destHandle, destHandleLen);
+					sendPDU(clientSocket, dataBuf, 2 + destHandleLen);
+				}
+				numDestHandle -= 1;
+			}
+
+	}
+		
 }
+
+void getDestHandles() {
+
+}
+
 
 void recvFromClient(int clientSocket)
 {
@@ -109,15 +171,17 @@ void recvFromClient(int clientSocket)
 
 	if (messageLen > 0)
 	{
-		printf("\nMessage received on Socket %d, length: %d Data: %s\n", clientSocket, messageLen, dataBuffer);
+		processClient(clientSocket, messageLen, dataBuffer);
+		// printf("\nMessage received on Socket %d, length: %d Data: %s\n", clientSocket, messageLen, dataBuffer);
 
-		sendConfToClient(clientSocket, messageLen);
+		// sendConfToClient(clientSocket, messageLen);
 
 	}
 	else
 	{
 		printf("Connection closed by client socket %d\n", clientSocket);
 		removeFromPollSet(clientSocket);
+		removeHandle(clientSocket);
 		close(clientSocket);
 	}
 }

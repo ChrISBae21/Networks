@@ -26,6 +26,7 @@
 #include "safeUtil.h"
 #include "pdu.h"
 #include "pollLib.h"
+#include "signal.h"
 
 
 #define MAXBUF 1400
@@ -40,6 +41,7 @@ void initialPacket(int mainServerSocket, uint8_t *handleName);
 uint32_t processStdin(uint8_t *pckDataBuf, uint8_t *stdinBuf, uint32_t stdinLen, uint8_t *flag);
 uint8_t getDestHandles(uint8_t *handleBuf, uint8_t *stdinBuf, uint8_t numHandles);
 uint8_t addSrcHandle(uint8_t *sendBuf, uint8_t handleLen, uint8_t *handleName, uint8_t flag);
+void fromServer(int clientSocket, uint8_t msgLen, uint8_t *dataBuf);
 
 
 int main(int argc, char * argv[]) {
@@ -56,21 +58,22 @@ int main(int argc, char * argv[]) {
 void initialPacket(int mainServerSocket, uint8_t *handleName) {
 	uint8_t dataBuffer[MAXBUF] = {};
 	uint8_t msgLen;
+	uint8_t flag = 0;
 	msgLen = addSrcHandle(dataBuffer, strlen((char*) handleName), handleName, 1);
 	
 	sendToServer(mainServerSocket, dataBuffer, msgLen);
 
-	// msgLen = processMsgFromServer(mainServerSocket, &flag);
+	msgLen = processMsgFromServer(mainServerSocket, &flag);
 
-	// fprintf(stderr, "msgLen: %d\n", msgLen);
+	
 
-	// if(flag == 2) {
-	// 	printf("Handle: %s has been verified by the server\n", handleName);
-	// }
-	// else if(flag == 3) {
-	// 	printf("Handle: %s has been taken\n", handleName);
-	// 	exit(-1);
-	// }
+	if(flag == 2) {
+		printf("Handle name \"%s\" has been accepted by the server!\n", handleName);
+	}
+	else if(flag == 3) {
+		printf("Handle name \"%s\" has already been taken. Please try again with a different handle name\n", handleName);
+		kill(getpid(), 2);
+	}
 	
 	// NEED TO RECIEVE THE PDU FROM THE SERVER AND VERIFY THE FLAG !!!!!!!!!!!!!!!!!!!!!!!!!!!
 }
@@ -81,16 +84,18 @@ void clientControl(int mainServerSocket, uint8_t *handleName, uint8_t handleLen)
 	
 	uint8_t stdinBuf[MAXBUF];
 	uint8_t sendBuf[MAXBUF];
+	uint8_t tempBuf[MAXBUF];
 	uint32_t stdinLen;
 	uint32_t pckDataLen = 0; 
 	uint8_t flag = 0;
 
+	initialPacket(mainServerSocket, handleName);
 	setupPollSet();
 	addToPollSet(STDIN_FILENO);
 	addToPollSet(mainServerSocket);
 	
 	// sends handle name to the server and waits for a response back
-	initialPacket(mainServerSocket, handleName);
+	
 	
 	// sendToServer(mainServerSocket);
 
@@ -108,7 +113,7 @@ void clientControl(int mainServerSocket, uint8_t *handleName, uint8_t handleLen)
 
 		if(pollReturn == mainServerSocket) {
 			// wait for client to connect
-			processMsgFromServer(mainServerSocket, NULL);
+			processMsgFromServer(mainServerSocket, tempBuf);
 			printf("\nEnter data: ");
 			fflush(stdout);
 			
@@ -153,6 +158,7 @@ uint8_t getDestHandles(uint8_t *handleBuf, uint8_t *stdinBuf, uint8_t numHandles
 	handleBuf+=1;
 	for(uint8_t i = 0; i < numHandles; i++) {
 		destHandleLen = getHandleName(stdinBuf, destHandle);	// grabs the Handle name
+		
 		memcpy(handleBuf, &destHandleLen, 1);					// add handle length
 		memcpy(handleBuf+1, destHandle, destHandleLen);			// add handle name
 		handleBuf += (destHandleLen + 1);						// increments output data pointer with len + handle name
@@ -169,7 +175,7 @@ uint32_t processStdin(uint8_t *pckDataBuf, uint8_t *stdinBuf, uint32_t stdinLen,
 	
 	uint8_t destHandleLen = 0;
 	uint32_t pckDataLen = 0;
-
+	uint8_t numDestHandles = 1;
 	uint8_t destHandles[918];		// max of 9 destination handles (100 bytes) + 9 length bytes
 
 	// ERROR CHECK A PERCENT SIGN
@@ -179,13 +185,17 @@ uint32_t processStdin(uint8_t *pckDataBuf, uint8_t *stdinBuf, uint32_t stdinLen,
 
 	switch(tolower(stdinBuf[0])) {
 		// foregoes the command and space in STDIN buffer
+
+		case 'c':
+			// find the number of dest handles
+			
 		case 'm':
 			stdinBuf += 2;
 			stdinLen -= 2;
 
 			*flag = 5;
-			destHandleLen = getDestHandles(destHandles, stdinBuf, 1);
-			memcpy(pckDataBuf, destHandles, pckDataLen);
+			destHandleLen = getDestHandles(destHandles, stdinBuf, numDestHandles);
+			memcpy(pckDataBuf, destHandles, destHandleLen);
 			pckDataLen += destHandleLen;			// keep track of total packet length
 			
 			stdinLen -= destHandleLen -1;				// remaining length is data length
@@ -197,9 +207,6 @@ uint32_t processStdin(uint8_t *pckDataBuf, uint8_t *stdinBuf, uint32_t stdinLen,
 			break;
 		case 'b':
 			break;
-		case 'c':
-		
-			break;
 		case 'l':
 			break;
 		case 'e':
@@ -210,6 +217,56 @@ uint32_t processStdin(uint8_t *pckDataBuf, uint8_t *stdinBuf, uint32_t stdinLen,
 	// printf("read: %s string len: %d (including null)\n", sendBuf, sendLen);
 	
 }
+
+
+void fromServer(int clientSocket, uint8_t msgLen, uint8_t *dataBuf) {
+	uint8_t *tempBuf = dataBuf;
+	uint8_t flag = dataBuf[0];
+	uint8_t srcHandleLen;
+
+
+	uint8_t srcHandle[101];
+	uint8_t destHandleLen;
+	uint8_t destHandle[101];
+	uint8_t numDestHandle = 1;
+	uint32_t destSocket = 4;
+
+	uint8_t *message;
+	
+
+	
+	switch(flag) {
+
+		case 7:
+			destHandleLen = dataBuf[1];
+			memcpy(destHandle, &dataBuf[2], destHandleLen);
+			destHandle[destHandleLen] = '\0';
+			printf("Client with handle %s does not exist\n", destHandle);
+			break;
+
+		case 5:
+			srcHandleLen = dataBuf[1];
+			memcpy(srcHandle, &dataBuf[2], srcHandleLen);
+			srcHandle[srcHandleLen] = '\0';
+
+			tempBuf += srcHandleLen + 2;
+			numDestHandle = tempBuf[0];
+			
+			tempBuf += 1;
+			while(numDestHandle != 0) {
+				memcpy(&destHandleLen, tempBuf, 1);
+				tempBuf += 1 + destHandleLen;
+				numDestHandle -= 1;
+			}
+
+			printf("%s: %s\n", srcHandle, tempBuf);
+			break;
+
+	}
+		
+}
+
+
 
 uint8_t processMsgFromServer(int mainServerSocket, uint8_t *retBuffer) {
 	uint8_t dataBuffer[MAXBUF];
@@ -225,8 +282,9 @@ uint8_t processMsgFromServer(int mainServerSocket, uint8_t *retBuffer) {
 	
 	if (messageLen > 0)
 	{
-		//memcpy(retBuffer, dataBuffer, messageLen);
-		printf("From Server: %s of Length %d\n", dataBuffer, messageLen);
+		fromServer(mainServerSocket, messageLen, dataBuffer);
+		// memcpy(retBuffer, dataBuffer, messageLen);
+		// printf("From Server: %s of Length %d\n", dataBuffer, messageLen);
 		// printf("\n\nEnter Data: ");
 		return messageLen;
 	
@@ -257,7 +315,7 @@ void sendToServer(int socketNum, uint8_t *sendBuf, uint8_t sendLen) {
 		exit(-1);
 	}
 
-	printf("Amount of data sent is: %d\n", sent);
+	// printf("Amount of data sent is: %d\n", sent);
 }
 
 int readFromStdin(uint8_t * buffer)
