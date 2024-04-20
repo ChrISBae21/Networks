@@ -39,7 +39,8 @@ uint8_t processMsgFromServer(int mainServerSocket, uint8_t *retBuffer);
 void initialPacket(int mainServerSocket, uint8_t *handleName);
 uint32_t processStdin(uint8_t *pckDataBuf, uint8_t *stdinBuf, uint32_t stdinLen, uint8_t *flag);
 uint8_t getDestHandles(uint8_t *handleBuf, uint8_t *stdinBuf, uint8_t numHandles);
-uint8_t addSrcHandle(uint8_t *sendBuf, uint8_t handleLen, uint8_t *handleName);
+uint8_t addSrcHandle(uint8_t *sendBuf, uint8_t handleLen, uint8_t *handleName, uint8_t flag);
+
 
 int main(int argc, char * argv[]) {
 	int socketNum = 0;         //socket descriptor
@@ -55,16 +56,9 @@ int main(int argc, char * argv[]) {
 void initialPacket(int mainServerSocket, uint8_t *handleName) {
 	uint8_t dataBuffer[MAXBUF] = {};
 	uint8_t msgLen;
-	uint8_t flag = 0;
-
+	msgLen = addSrcHandle(dataBuffer, strlen((char*) handleName), handleName, 1);
 	
-	addSrcHandle(dataBuffer, strlen((char*) handleName), handleName);
-
-	// builds the PDU Chat header and the PDU packet
-	buildPduPacket(dataBuffer, strlen((char*)handleName) + 1, 1);
-
-	// +1 len is for the handle length byte
-	sendToServer(mainServerSocket, dataBuffer, strlen((char*) handleName));
+	sendToServer(mainServerSocket, dataBuffer, msgLen);
 
 	// msgLen = processMsgFromServer(mainServerSocket, &flag);
 
@@ -84,9 +78,11 @@ void initialPacket(int mainServerSocket, uint8_t *handleName) {
 void clientControl(int mainServerSocket, uint8_t *handleName, uint8_t handleLen) {
 
 	int pollReturn;
+	
 	uint8_t stdinBuf[MAXBUF];
 	uint8_t sendBuf[MAXBUF];
-	uint32_t stdinLen, pckDataLen;
+	uint32_t stdinLen;
+	uint32_t pckDataLen = 0; 
 	uint8_t flag = 0;
 
 	setupPollSet();
@@ -101,6 +97,7 @@ void clientControl(int mainServerSocket, uint8_t *handleName, uint8_t handleLen)
 	printf("Enter Data: ");
 	fflush(stdout);
 	while(1) {
+		pckDataLen = stdinLen = 0;
 		
 		pollReturn = pollCall(-1);
 		// fflush(stdout);
@@ -117,10 +114,12 @@ void clientControl(int mainServerSocket, uint8_t *handleName, uint8_t handleLen)
 			
 		}
 		else {
-			pckDataLen = addSrcHandle(sendBuf, handleLen, handleName);
+			pckDataLen += (2 + handleLen);
 			stdinLen = readFromStdin(stdinBuf);
-			pckDataLen += processStdin(sendBuf + pckDataLen, stdinBuf, stdinLen, &flag);
-			buildPduPacket(sendBuf, pckDataLen, flag);
+			pckDataLen += processStdin(sendBuf + PDU_HEADER_LEN + pckDataLen, stdinBuf, stdinLen, &flag);
+
+			addSrcHandle(sendBuf, handleLen, handleName, flag);
+			// buildPduPacket(sendBuf, pckDataLen, flag);
 			sendPDU(mainServerSocket, sendBuf, pckDataLen);
 		}
 		
@@ -128,14 +127,19 @@ void clientControl(int mainServerSocket, uint8_t *handleName, uint8_t handleLen)
 
 }
 
-uint8_t addSrcHandle(uint8_t *sendBuf, uint8_t handleLen, uint8_t *handleName) {
+uint8_t addSrcHandle(uint8_t *sendBuf, uint8_t handleLen, uint8_t *handleName, uint8_t flag) {
+	memcpy(sendBuf + 2, &flag, 1);
 	memcpy(sendBuf + 3, &handleLen, 1);
-	memcpy(sendBuf + 1, handleName, handleLen);
-	return handleLen + 1;
+	memcpy(sendBuf + 4, handleName, handleLen);
+	return handleLen + 2;
 }
 
 uint8_t getHandleName(uint8_t *inputData, uint8_t *destHandle) {
-	destHandle = (uint8_t*) strtok((char*) inputData, " ");
+
+	uint8_t *tempHandle;
+	tempHandle = (uint8_t*) strtok((char*) inputData, " ");
+
+	memcpy(destHandle, tempHandle, strlen((char*) tempHandle));
 	return strlen((char*) destHandle);
 }
 
@@ -144,6 +148,9 @@ uint8_t getDestHandles(uint8_t *handleBuf, uint8_t *stdinBuf, uint8_t numHandles
 	uint8_t totLen = 0;
 	uint8_t destHandle[101];
 
+	memcpy(handleBuf, &numHandles, 1);
+	totLen+=1;
+	handleBuf+=1;
 	for(uint8_t i = 0; i < numHandles; i++) {
 		destHandleLen = getHandleName(stdinBuf, destHandle);	// grabs the Handle name
 		memcpy(handleBuf, &destHandleLen, 1);					// add handle length
@@ -152,7 +159,6 @@ uint8_t getDestHandles(uint8_t *handleBuf, uint8_t *stdinBuf, uint8_t numHandles
 		totLen += (destHandleLen + 1);							// increments total length	
 		stdinBuf += (destHandleLen + 1);						// increments stdin buffer with handle len + space
 	}
-
 	return totLen;
 }
 
@@ -176,20 +182,23 @@ uint32_t processStdin(uint8_t *pckDataBuf, uint8_t *stdinBuf, uint32_t stdinLen,
 		case 'm':
 			stdinBuf += 2;
 			stdinLen -= 2;
+
 			*flag = 5;
 			destHandleLen = getDestHandles(destHandles, stdinBuf, 1);
+			memcpy(pckDataBuf, destHandles, pckDataLen);
 			pckDataLen += destHandleLen;			// keep track of total packet length
-			stdinLen -= destHandleLen;				// remaining length is data length
+			
+			stdinLen -= destHandleLen -1;				// remaining length is data length
 			pckDataBuf += destHandleLen;
-			stdinBuf += destHandleLen;
+			stdinBuf += destHandleLen-1;
 			memcpy(pckDataBuf, stdinBuf, stdinLen);
-
+			
 			pckDataLen += stdinLen;					// keep track of total packet length
 			break;
 		case 'b':
 			break;
-
 		case 'c':
+		
 			break;
 		case 'l':
 			break;
@@ -285,3 +294,5 @@ void checkArgs(int argc, char * argv[])
 		exit(1);
 	}
 }
+
+

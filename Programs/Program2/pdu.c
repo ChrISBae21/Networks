@@ -19,9 +19,9 @@
 
 
 
-
 void buildPduPacket(uint8_t *dataBuffer, int lengthOfData, uint8_t flag) {
     uint16_t nLen;
+    
     nLen = htons(lengthOfData + 3);
     memcpy(dataBuffer, &nLen, 2);
     memcpy(dataBuffer+2, &flag, 1);
@@ -32,13 +32,18 @@ void buildPduPacket(uint8_t *dataBuffer, int lengthOfData, uint8_t flag) {
 int sendPDU(int socketNumber, uint8_t * dataBuffer, int lengthOfData) {
     int bytesSent;
     uint16_t hLen;
+    uint16_t nLen;
+    nLen = htons(lengthOfData + PDU_HEADER_LEN);
+    memcpy(dataBuffer, &nLen, PDU_HEADER_LEN);
 
-    hLen = lengthOfData + 3;
+
+    hLen = lengthOfData + PDU_HEADER_LEN;
+    printf("hLEN: %d\n", hLen);
 
     bytesSent = safeSend(socketNumber, dataBuffer, hLen, 0);
-    dataBuffer[hLen] = '\0';
-    printf("Text: %c\n", dataBuffer[3]);
-    return bytesSent-3;
+    
+    
+    return (bytesSent - PDU_HEADER_LEN);
 }
 
 
