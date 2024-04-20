@@ -115,7 +115,6 @@ uint32_t getHandleToSocket(uint8_t* handle, uint8_t handleLen) {
     uint32_t compare;       // temp variable to compare handles
     uint32_t socket = 3;    // Sockets 0, 1, and 2 occupied by STDIN/OUT/ERR
 
-    printf("%d\n", handleLen);
     while(socket < max) {
         compare = strcmp((char*)&((&handleTable[socket])->handle), (char*)handle);     // compare handle names
         
