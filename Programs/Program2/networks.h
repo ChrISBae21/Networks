@@ -18,6 +18,11 @@
 
 #define LISTEN_BACKLOG 10
 
+#define MAXBUF 1214
+#define MAX_STDIN 1400
+#define MAX_TEXT 200
+#define MAX_HANDLE 101
+
 // for the TCP server side
 int tcpServerSetup(int serverPort);
 int tcpAccept(int mainServerSocket, int debugFlag);
