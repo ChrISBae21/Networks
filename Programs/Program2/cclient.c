@@ -104,8 +104,8 @@ void clientControl(int mainServerSocket, uint8_t *handleName, uint8_t handleLen)
 		// Message from Server, unpack the packet
 		if(pollReturn == mainServerSocket) {		
 			unpackPacket(mainServerSocket);
-			// printf("\n$: ");
-			// fflush(stdout);
+			printf("\n$: ");
+			fflush(stdout);
 		}
 
 		// From STDIN, send out a packet
@@ -205,7 +205,6 @@ uint32_t processStdin(uint8_t *pckDataBuf, uint8_t *stdinBuf, uint32_t stdinLen,
 				numDestHandles = 1;
 			}
 			pckDataLen = packMessagePacket(pckDataBuf, stdinBuf, stdinLen, numDestHandles);
-			
 			break;
 		case 'b':
 			break;
@@ -232,9 +231,13 @@ uint32_t packMessagePacket(uint8_t *pckDataBuf, uint8_t *stdinBuf, uint32_t stdi
 	
 	stdinLen -= destHandleLen -1;				// remaining length is data length
 	// stdinBuf += destHandleLen-1;
+	
+	RIGHT HERE NEED TO USE STDINLEN TO FIGURE OUT THE MESSAGE LENGTH THEN CHOP IT UP
 
 	memcpy(pckDataBuf + destHandleLen, stdinBuf + destHandleLen - 1, stdinLen);
 	pckDataLen += stdinLen;					// keep track of total packet length
+
+
 
 	return pckDataLen;
 }
@@ -290,8 +293,8 @@ void processServerPacket(int clientSocket, uint8_t msgLen, uint8_t *inputBuf) {
 		case 13:
 	}	
 
-	printf("\n$: ");
-	fflush(stdout);
+	// printf("\n$: ");
+	// fflush(stdout);
 	
 }
 
