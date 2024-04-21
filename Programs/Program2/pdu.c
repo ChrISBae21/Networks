@@ -69,7 +69,7 @@ int recvPDU(int clientSocket, uint8_t * dataBuffer, int bufferSize) {
     }
 
     pduHeader = ntohs(pduHeader);       
-
+    
     
     
     if(bufferSize < pduHeader-2) {
