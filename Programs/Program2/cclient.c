@@ -1,7 +1,8 @@
 /******************************************************************************
-* myClient.c
+* cclient.c
 *
 * Writen by Prof. Smith, updated Jan 2023
+* Modified by Chris Bae
 * Use at your own risk.  
 *
 *****************************************************************************/
@@ -45,7 +46,7 @@ uint8_t getDestHandles(uint8_t *handleBuf, uint8_t *stdinBuf, uint8_t numHandles
 void processServerPacket(int clientSocket, uint8_t msgLen, uint8_t *inputBuf);
 void closeClient(int mainServerSocket);
 void packPacket(int mainServerSocket, uint8_t *handleName, uint8_t handleLen);
-
+uint32_t packMessagePacket(uint8_t *pckDataBuf, uint8_t *stdinBuf, uint32_t stdinLen, uint8_t numDestHandles);
 
 int main(int argc, char * argv[]) {
 	int socketNum = 0;         //socket descriptor
@@ -89,7 +90,7 @@ void clientControl(int mainServerSocket, uint8_t *handleName, uint8_t handleLen)
 	addToPollSet(mainServerSocket);
 	
 
-	printf("Enter Data: ");
+	printf("$: ");
 	fflush(stdout);
 	while(1) {
 		pollReturn = pollCall(-1);
@@ -103,13 +104,15 @@ void clientControl(int mainServerSocket, uint8_t *handleName, uint8_t handleLen)
 		// Message from Server, unpack the packet
 		if(pollReturn == mainServerSocket) {		
 			unpackPacket(mainServerSocket);
-			printf("\nEnter data: ");
-			fflush(stdout);
+			// printf("\n$: ");
+			// fflush(stdout);
 		}
 
 		// From STDIN, send out a packet
 		else {				
 			packPacket(mainServerSocket, handleName, handleLen);
+			printf("$: ");
+			fflush(stdout);
 		}
 		
 	}
@@ -174,11 +177,8 @@ uint8_t getDestHandles(uint8_t *handleBuf, uint8_t *stdinBuf, uint8_t numHandles
 
 uint32_t processStdin(uint8_t *pckDataBuf, uint8_t *stdinBuf, uint32_t stdinLen, uint8_t *flag) {
 	char command;
-	
-	uint8_t destHandleLen = 0;
 	uint32_t pckDataLen = 0;
 	uint8_t numDestHandles = 1;
-	uint8_t destHandles[9*MAX_HANDLE];		// max of 9 destination handles (100 bytes) + 9 length bytes
 
 	// ERROR CHECK A PERCENT SIGN
 	// foregoes the % sign in the STDIN buffer
@@ -188,7 +188,6 @@ uint32_t processStdin(uint8_t *pckDataBuf, uint8_t *stdinBuf, uint32_t stdinLen,
 	switch(tolower(command)) {
 
 		case 'c':
-			
 		case 'm':
 			// foregoes the command and space in STDIN buffer
 			stdinBuf += 2;
@@ -205,19 +204,7 @@ uint32_t processStdin(uint8_t *pckDataBuf, uint8_t *stdinBuf, uint32_t stdinLen,
 				*flag = 5;
 				numDestHandles = 1;
 			}
-			
-			destHandleLen = getDestHandles(destHandles, stdinBuf, numDestHandles);
-
-			memcpy(pckDataBuf, destHandles, destHandleLen);
-
-			pckDataLen += destHandleLen;			// keep track of total packet length
-			
-			stdinLen -= destHandleLen -1;				// remaining length is data length
-			pckDataBuf += destHandleLen;
-			stdinBuf += destHandleLen-1;
-			memcpy(pckDataBuf, stdinBuf, stdinLen);
-			pckDataLen += stdinLen;					// keep track of total packet length
-
+			pckDataLen = packMessagePacket(pckDataBuf, stdinBuf, stdinLen, numDestHandles);
 			
 			break;
 		case 'b':
@@ -229,12 +216,27 @@ uint32_t processStdin(uint8_t *pckDataBuf, uint8_t *stdinBuf, uint32_t stdinLen,
 		
 	}
 	return pckDataLen;
-	// printf("read: %s string len: %d (including null)\n", sendBuf, sendLen);
+	
 	
 }
 
-void packMessagePacket() {
+uint32_t packMessagePacket(uint8_t *pckDataBuf, uint8_t *stdinBuf, uint32_t stdinLen, uint8_t numDestHandles) {
+	uint32_t destHandleLen;
+	uint8_t destHandles[9*MAX_HANDLE];		// max of 9 destination handles (100 bytes) + 9 length bytes
+	uint32_t pckDataLen = 0;
 
+	destHandleLen = getDestHandles(destHandles, stdinBuf, numDestHandles);
+	memcpy(pckDataBuf, destHandles, destHandleLen);
+	pckDataLen += destHandleLen;			// keep track of total packet length
+	// pckDataBuf += destHandleLen;			
+	
+	stdinLen -= destHandleLen -1;				// remaining length is data length
+	// stdinBuf += destHandleLen-1;
+
+	memcpy(pckDataBuf + destHandleLen, stdinBuf + destHandleLen - 1, stdinLen);
+	pckDataLen += stdinLen;					// keep track of total packet length
+
+	return pckDataLen;
 }
 
 void unpackMessagePacket(uint8_t *inputBuf) {
@@ -257,14 +259,14 @@ void unpackMessagePacket(uint8_t *inputBuf) {
 		numDestHandle -= 1;						// decrement number of handles
 	}
 
-	printf("%s: %s\n", srcHandle, inputBuf);	// print the message from the source client!
+	printf("%s: %s", srcHandle, inputBuf);	// print the message from the source client!
 }
 
 void processServerPacket(int clientSocket, uint8_t msgLen, uint8_t *inputBuf) {
 	uint8_t flag = inputBuf[0];
 	uint8_t destHandle[MAX_HANDLE];
 	
-	
+	printf("\n");
 	switch(flag) {
 		case 4:
 			break;
@@ -272,11 +274,12 @@ void processServerPacket(int clientSocket, uint8_t msgLen, uint8_t *inputBuf) {
 		case 5:
 		case 6:
 			unpackMessagePacket(++inputBuf);
+			
 			break;
 		case 7:
 
 			unpackPacketHandle(&inputBuf[1], destHandle);
-			printf("Client with handle %s does not exist\n", destHandle);
+			printf("Client with handle %s does not exist", destHandle);
 			break;
 		case 9:
 
@@ -286,6 +289,10 @@ void processServerPacket(int clientSocket, uint8_t msgLen, uint8_t *inputBuf) {
 
 		case 13:
 	}	
+
+	printf("\n$: ");
+	fflush(stdout);
+	
 }
 
 
@@ -303,11 +310,11 @@ void unpackPacket(int mainServerSocket) {
 
 	if (messageLen > 0) {		// Got a Packet from the server
 		processServerPacket(mainServerSocket, messageLen, dataBuffer);
-		return messageLen;
+		
 	}
 	else {						// Server has closed
 		closeClient(mainServerSocket);
-		return 0;
+		
 	}
 }
 

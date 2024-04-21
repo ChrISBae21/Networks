@@ -18,7 +18,7 @@
 #include "pdu.h"
 
 
-#define MAXBUF 1400
+
 /*
 * Adds
 */

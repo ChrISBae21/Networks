@@ -1,5 +1,5 @@
 /******************************************************************************
-* myServer.c
+* server.c
 * 
 * Writen by Prof. Smith, updated Jan 2023
 * Modified by Chris Bae
