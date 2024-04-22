@@ -25,6 +25,7 @@
 #include <stdint.h>
 #include <ctype.h>
 
+#include "cclient.h"
 #include "networks.h"
 #include "safeUtil.h"
 #include "pdu.h"
@@ -34,23 +35,6 @@
 
 
 #define DEBUG_FLAG 1
-
-void sendToServer(int socketNum, uint8_t *sendBuf, uint8_t sendLen);
-uint16_t readFromStdin(uint8_t * buffer);
-void checkArgs(int argc, char * argv[]);
-void clientControl(int mainServerSocket, uint8_t *handleName, uint8_t handleLen);
-void unpackPacket(int mainServerSocket);
-void initialPacket(int mainServerSocket, uint8_t *handleName);
-uint16_t processStdin(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t srcHandleLen, uint8_t *srcHandleName, uint8_t socket);
-uint16_t getDestHandles(uint8_t *handleBuf, uint8_t *stdinBuf, uint8_t numHandles);
-void processServerPacket(int mainServerSocket, uint16_t msgLen, uint8_t *inputBuf);
-void closeClient(int mainServerSocket);
-void packPacket(int mainServerSocket, uint8_t *handleName, uint8_t handleLen);
-uint16_t packMessagePacket(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t numDestHandles, uint8_t srcHandleLen, uint8_t *srcHandleName, uint8_t flag, uint8_t socket, uint8_t broadcast);
-void fragmentMsg(uint16_t msgLen, uint8_t *msg, uint8_t *pckMsg, uint8_t *payload, uint16_t payloadLen, int8_t socket);
-void listClients(int mainServerSocket, uint16_t msgLen, uint8_t *inputBuf);
-void unpackMessagePacket(uint8_t *inputBuf, uint8_t broadcast);
-int verifyRecv(int mainServerSocket, uint8_t *dataBuffer, int bufferSize);
 
 int main(int argc, char * argv[]) {
 	int socketNum = 0;         //socket descriptor
@@ -104,7 +88,6 @@ void clientControl(int mainServerSocket, uint8_t *handleName, uint8_t handleLen)
 	addToPollSet(STDIN_FILENO);
 	addToPollSet(mainServerSocket);
 	
-
 	printf("$: ");
 	fflush(stdout);
 	while(1) {
@@ -145,9 +128,6 @@ void packPacket(int mainServerSocket, uint8_t *handleName, uint8_t handleLen) {
 	processStdin(stdinBuf, stdinLen, handleLen, handleName, mainServerSocket);			// Process STDIN data
 }
 
-
-
-
 uint8_t getHandleName(uint8_t *inputData, uint8_t *destHandle) {
 
 	uint8_t len = 0;
@@ -182,14 +162,10 @@ uint16_t getDestHandles(uint8_t *handleBuf, uint8_t *stdinBuf, uint8_t numHandle
 		handleBuf += (destHandleLen + 1);						// increments output data pointer with len + handle name
 		totLen += (destHandleLen + 1);							// increments total length	
 		stdinBuf += (destHandleLen + 1);						// increments stdin buffer with handle len + space
-
-		
 	}
 
 	return totLen;
 }
-
-
 
 uint16_t processStdin(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t srcHandleLen, uint8_t *srcHandleName, uint8_t socket) {
 	char command;
@@ -198,7 +174,6 @@ uint16_t processStdin(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t srcHandleLen
 	uint8_t flag;
 	uint8_t broadcastFlag = 0;
 
-	// ERROR CHECK A PERCENT SIGN
 	// foregoes the % sign in the STDIN buffer
 	if(*stdinBuf != '%') {
 		printf("Invalid command format\n");
@@ -235,7 +210,6 @@ uint16_t processStdin(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t srcHandleLen
 				flag = 5;
 				numDestHandles = 1;
 			}
-
 			pckDataLen = packMessagePacket(stdinBuf, stdinLen, numDestHandles, srcHandleLen, srcHandleName, flag, socket, broadcastFlag);
 			break;
 		case 'l':
@@ -243,7 +217,6 @@ uint16_t processStdin(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t srcHandleLen
 			sendPDU(socket, &flag, 1);
 			break;
 		case 'e':
-
 			flag = 8;
 			sendPDU(socket, &flag, 1);
 			break;

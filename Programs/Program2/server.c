@@ -22,6 +22,7 @@
 #include <netdb.h>
 #include <stdint.h>
 
+#include "server.h"
 #include "networks.h"
 #include "safeUtil.h"
 #include "pdu.h"
@@ -31,14 +32,6 @@
 
 #define DEBUG_FLAG 1
 
-void recvFromClient(int clientSocket);
-int checkArgs(int argc, char *argv[]);
-void addNewSocket(int mainServerSocket);
-void processClient(int clientSocket, uint8_t msgLen, uint8_t *dataBuf);
-void serverControl(int mainServerSocket);
-void unpackMessagePacket(int srcClientSocket, uint8_t inputBufLen, uint8_t *inputBuf);
-void sendClientList(int clientSocket, uint8_t *sendBuf);
-void sendBroadcast(int clientSocket, uint8_t sendLen, uint8_t *sendBuf);
 
 
 int main(int argc, char *argv[])
