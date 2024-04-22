@@ -50,6 +50,7 @@ uint16_t packMessagePacket(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t numDest
 void fragmentMsg(uint16_t msgLen, uint8_t *msg, uint8_t *pckMsg, uint8_t *payload, uint16_t payloadLen, int8_t socket);
 void listClients(int mainServerSocket, uint16_t msgLen, uint8_t *inputBuf);
 void unpackMessagePacket(uint8_t *inputBuf, uint8_t broadcast);
+int verifyRecv(int mainServerSocket, uint8_t *dataBuffer, int bufferSize);
 
 int main(int argc, char * argv[]) {
 	int socketNum = 0;         //socket descriptor
@@ -64,13 +65,24 @@ int main(int argc, char * argv[]) {
 void sendInitialPacket(int mainServerSocket, uint8_t *handleName) {
 	uint8_t dataBuffer[MAXBUF] = {};
 	uint8_t msgLen;
+	if(strlen((char*) handleName) > 100) {
+		printf("Invalid handle, handle longer than 100 characters: %s\n", handleName);
+		exit(-1);
+	}
+	if( ((handleName[0] - '0') >= 0) && (handleName[0] - '0') <= 9 ) {
+		printf("Invalid handle, handle starts with a number\n");
+		exit(-1);
+	}
 	msgLen = packFlagAndHandle(dataBuffer, strlen((char*) handleName), handleName, 1);
 	sendToServer(mainServerSocket, dataBuffer, msgLen);
 }
 
 void recvInitialPacket(int mainServerSocket, uint8_t *handleName) {
 	uint8_t flag = 0;
-	recvPDU(mainServerSocket, &flag, 1);
+
+	verifyRecv(mainServerSocket, &flag, 1);
+
+	// recvPDU(mainServerSocket, &flag, 1);
 	if(flag == 2) {
 		printf("Handle name \"%s\" has been accepted by the server!\n", handleName);
 	}
@@ -139,12 +151,11 @@ void packPacket(int mainServerSocket, uint8_t *handleName, uint8_t handleLen) {
 uint8_t getHandleName(uint8_t *inputData, uint8_t *destHandle) {
 
 	uint8_t len = 0;
-	while(inputData[len] != ' ') {
+	while(!isspace(inputData[len]) && (inputData[len] != '\0')) {	// '\0' means no message entered 
 		destHandle[len] = inputData[len];
 		len++;
 	}
 	destHandle[len] = '\0';
-	
 	return len;
 }
 
@@ -156,9 +167,14 @@ uint16_t getDestHandles(uint8_t *handleBuf, uint8_t *stdinBuf, uint8_t numHandle
 	memcpy(handleBuf, &numHandles, 1);
 	totLen+=1;
 	handleBuf+=1;
+
+	
 	for(uint8_t i = 0; i < numHandles; i++) {
 		destHandleLen = getHandleName(stdinBuf, destHandle);	// grabs the Handle name
-
+		if(destHandleLen == 0) {
+			printf("Not enough handles listed\n");
+			return 0;
+		}
 		memcpy(handleBuf, &destHandleLen, 1);					// add handle length
 		memcpy(handleBuf+1, destHandle, destHandleLen);			// add handle name
 		
@@ -166,6 +182,8 @@ uint16_t getDestHandles(uint8_t *handleBuf, uint8_t *stdinBuf, uint8_t numHandle
 		handleBuf += (destHandleLen + 1);						// increments output data pointer with len + handle name
 		totLen += (destHandleLen + 1);							// increments total length	
 		stdinBuf += (destHandleLen + 1);						// increments stdin buffer with handle len + space
+
+		
 	}
 
 	return totLen;
@@ -182,6 +200,10 @@ uint16_t processStdin(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t srcHandleLen
 
 	// ERROR CHECK A PERCENT SIGN
 	// foregoes the % sign in the STDIN buffer
+	if(*stdinBuf != '%') {
+		printf("Invalid command format\n");
+		return 0;
+	}
 	command = *++stdinBuf;
 	stdinLen--;
 
@@ -225,6 +247,10 @@ uint16_t processStdin(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t srcHandleLen
 			flag = 8;
 			sendPDU(socket, &flag, 1);
 			break;
+		default:
+			printf("Invalid command\n");
+			return 0;
+			break;
 		
 	}
 	return pckDataLen;
@@ -241,10 +267,12 @@ uint16_t packMessagePacket(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t numDest
 	
 
 	pckDataLen += packFlagAndHandle(payloadPtr, srcHandleLen, srcHandleName, flag);	// Append Source Handle data and flag
-
+	
 	payloadPtr += pckDataLen;
 	if(!broadcast) {
 		destHandleLen = getDestHandles(payloadPtr, stdinBuf, numDestHandles);
+		if(destHandleLen == 0) return 0;
+
 		payloadPtr += destHandleLen;
 		pckDataLen += destHandleLen;			// keep track of total packet length	
 		stdinLen -= destHandleLen -1;				// remaining length is data length
@@ -265,8 +293,12 @@ void fragmentMsg(uint16_t msgLen, uint8_t *msg, uint8_t *pckMsg, uint8_t *payloa
 		msgLen -= 199;
 	}
 	
+	
 	memcpy(pckMsg, msg, msgLen);
 	pckMsg[msgLen] = '\0';
+	if(msgLen == 0) {
+		msgLen++;
+	}
 	sendPDU(socket, payload, payloadLen + msgLen);
 	
 }
@@ -337,8 +369,7 @@ void listClients(int mainServerSocket, uint16_t msgLen, uint8_t *inputBuf) {
 	hostNumClients = ntohl(netNumClients);
 	printf("Number of clients: %d", hostNumClients);
 
-	msgLen = recvPDU(mainServerSocket, inputBuf, MAXBUF);
-
+	msgLen = verifyRecv(mainServerSocket, inputBuf, MAXBUF);
 
 	flag = *inputBuf++;
 	while(flag != 13) {
@@ -347,18 +378,16 @@ void listClients(int mainServerSocket, uint16_t msgLen, uint8_t *inputBuf) {
 		memcpy(handle, inputBuf+1, handleLen);
 		handle[handleLen] = '\0';
 		printf("\n\t%s", handle);
-		msgLen = recvPDU(mainServerSocket, inputBuf, MAXBUF);
+		msgLen = verifyRecv(mainServerSocket, inputBuf, MAXBUF);
 		flag = *inputBuf++;
 	}
 
 }
 
-void verifyRecv() {
-
-}
-
-void unpackPacket(int mainServerSocket) {
-	uint8_t dataBuffer[MAXBUF];
+/*
+* checks to see if the server has terminated
+*/
+int verifyRecv(int mainServerSocket, uint8_t *dataBuffer, int bufferSize) {
 	uint16_t messageLen = 0;
 	
 	messageLen = recvPDU(mainServerSocket, dataBuffer, MAXBUF);
@@ -369,17 +398,27 @@ void unpackPacket(int mainServerSocket) {
 	}
 
 	if (messageLen > 0) {		// Got a Packet from the server
-		processServerPacket(mainServerSocket, messageLen, dataBuffer);
+		return messageLen;
 		
 	}
 	else {						// Server has closed
 		closeClient(mainServerSocket);
-		
+		return 0;
 	}
+
+}
+
+void unpackPacket(int mainServerSocket) {
+	uint8_t dataBuffer[MAXBUF];
+	uint16_t messageLen = 0;
+
+	messageLen = verifyRecv(mainServerSocket, dataBuffer, MAXBUF);
+	processServerPacket(mainServerSocket, messageLen, dataBuffer);
+	
 }
 
 void closeClient(int mainServerSocket) {
-	printf("Connection closed by server\n");
+	printf("\nServer Terminated\n");
 	removeFromPollSet(mainServerSocket);
 	removeFromPollSet(STDIN_FILENO);
 	close(mainServerSocket);

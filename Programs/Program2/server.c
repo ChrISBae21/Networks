@@ -229,11 +229,6 @@ void unpackMessagePacket(int srcClientSocket, uint8_t inputBufLen, uint8_t *inpu
 }
 
 
-
-
-
-
-
 void recvFromClient(int clientSocket) {
 	uint8_t dataBuffer[MAXBUF];
 	int messageLen = 0;
@@ -250,6 +245,7 @@ void recvFromClient(int clientSocket) {
 	}
 	else {
 		printf("Connection closed by client socket %d\n", clientSocket);
+		removeHandle(clientSocket);
 		removeFromPollSet(clientSocket);
 		close(clientSocket);
 	}
