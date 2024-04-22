@@ -7,10 +7,6 @@
 *
 *****************************************************************************/
 
-/* Somehow on the server doing
-%m h1 hello
-%c 3 h
-causes the client to seg fault */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -69,7 +65,7 @@ void recvInitialPacket(int mainServerSocket, uint8_t *handleName) {
 
 	verifyRecv(mainServerSocket, &flag, 1);
 
-	// recvPDU(mainServerSocket, &flag, 1);
+	
 	if(flag == 2) {
 		printf("Handle name \"%s\" has been accepted by the server!\n", handleName);
 	}
@@ -134,9 +130,14 @@ void packPacket(int mainServerSocket, uint8_t *handleName, uint8_t handleLen) {
 uint8_t getHandleName(uint8_t *inputData, uint8_t *destHandle) {
 
 	uint8_t len = 0;
-	while(!isspace(inputData[len]) && (inputData[len] != '\0')) {	// '\0' means no message entered 
+	while(!isspace(inputData[len]) && (inputData[len] != '\0')) {	
 		destHandle[len] = inputData[len];
 		len++;
+	}
+
+	// indicates the end of the stdin buffer: only matters for multicast, not enough handle names inputted
+	if( (len == 0) && (inputData[len] == '\0')) {
+		return 0;
 	}
 	destHandle[len] = '\0';
 	return len;
@@ -153,18 +154,21 @@ uint16_t getDestHandles(uint8_t *handleBuf, uint8_t *stdinBuf, uint8_t numHandle
 
 	
 	for(uint8_t i = 0; i < numHandles; i++) {
-		destHandleLen = getHandleName(stdinBuf, destHandle);	// grabs the Handle name
-		if(destHandleLen == 0) {
+		if(*(stdinBuf-1) == '\0') {
 			printf("Not enough handles listed\n");
 			return 0;
 		}
+		
+
+		destHandleLen = getHandleName(stdinBuf, destHandle);	// grabs the Handle name
+		
 		memcpy(handleBuf, &destHandleLen, 1);					// add handle length
 		memcpy(handleBuf+1, destHandle, destHandleLen);			// add handle name
 		
 
 		handleBuf += (destHandleLen + 1);						// increments output data pointer with len + handle name
 		totLen += (destHandleLen + 1);							// increments total length	
-		stdinBuf += (destHandleLen + 1);						// increments stdin buffer with handle len + space
+		stdinBuf += (destHandleLen+1);						// increments stdin buffer with handle len + space
 	}
 
 	return totLen;
