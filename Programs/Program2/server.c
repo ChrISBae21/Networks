@@ -38,6 +38,8 @@ void processClient(int clientSocket, uint8_t msgLen, uint8_t *dataBuf);
 void serverControl(int mainServerSocket);
 void unpackMessagePacket(int srcClientSocket, uint8_t inputBufLen, uint8_t *inputBuf);
 void sendClientList(int clientSocket, uint8_t *sendBuf);
+void sendBroadcast(int clientSocket, uint8_t sendLen, uint8_t *sendBuf);
+
 
 int main(int argc, char *argv[])
 {
@@ -115,6 +117,7 @@ void processClient(int clientSocket, uint8_t inputBufLen, uint8_t *inputBuf) {
 			}
 			break;
 		case 4:
+			sendBroadcast(clientSocket, inputBufLen, inputBuf);
 			break;
 			//
 		case 5:
@@ -167,6 +170,29 @@ void sendClientList(int clientSocket, uint8_t *sendBuf) {
 }
 
 
+void sendBroadcast(int clientSocket, uint8_t sendLen, uint8_t *sendBuf) {
+	uint32_t hostNumClients;
+	uint32_t i = 0;
+	uint8_t handleLen;
+	uint8_t handleName[MAX_HANDLE];
+
+
+	hostNumClients = getNumClients() - 1;
+	while(hostNumClients != 0) {
+
+		if(i != clientSocket) {
+			handleLen = getSocketToHandle(i, handleName);
+			if(handleLen > 0) {
+				sendPDU(i, sendBuf, sendLen);
+				hostNumClients--;
+			}
+		}
+		i++;
+	}
+
+}
+
+
 
 // returns the number of valid handles
 // outHandles is organized as: one byte handle len, handle name,...
@@ -201,6 +227,8 @@ void unpackMessagePacket(int srcClientSocket, uint8_t inputBufLen, uint8_t *inpu
 	
 
 }
+
+
 
 
 

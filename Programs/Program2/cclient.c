@@ -46,10 +46,10 @@ uint16_t getDestHandles(uint8_t *handleBuf, uint8_t *stdinBuf, uint8_t numHandle
 void processServerPacket(int mainServerSocket, uint16_t msgLen, uint8_t *inputBuf);
 void closeClient(int mainServerSocket);
 void packPacket(int mainServerSocket, uint8_t *handleName, uint8_t handleLen);
-uint16_t packMessagePacket(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t numDestHandles, uint8_t srcHandleLen, uint8_t *srcHandleName, uint8_t flag, uint8_t socket);
+uint16_t packMessagePacket(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t numDestHandles, uint8_t srcHandleLen, uint8_t *srcHandleName, uint8_t flag, uint8_t socket, uint8_t broadcast);
 void fragmentMsg(uint16_t msgLen, uint8_t *msg, uint8_t *pckMsg, uint8_t *payload, uint16_t payloadLen, int8_t socket);
 void listClients(int mainServerSocket, uint16_t msgLen, uint8_t *inputBuf);
-
+void unpackMessagePacket(uint8_t *inputBuf, uint8_t broadcast);
 
 int main(int argc, char * argv[]) {
 	int socketNum = 0;         //socket descriptor
@@ -178,6 +178,7 @@ uint16_t processStdin(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t srcHandleLen
 	uint16_t pckDataLen = 0;
 	uint8_t numDestHandles = 1;
 	uint8_t flag;
+	uint8_t broadcastFlag = 0;
 
 	// ERROR CHECK A PERCENT SIGN
 	// foregoes the % sign in the STDIN buffer
@@ -186,12 +187,17 @@ uint16_t processStdin(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t srcHandleLen
 
 	switch(tolower(command)) {
 
+		case 'b':
 		case 'c':
 		case 'm':
 			// foregoes the command and space in STDIN buffer
 			stdinBuf += 2;
 			stdinLen -= 2;
-			
+			if(command == 'b') {
+				flag = 4;
+				numDestHandles = 0;
+				broadcastFlag = 1;
+			}
 			if(command == 'c') {
 				flag = 6;
 				numDestHandles = stdinBuf[0] - '0'; 
@@ -207,9 +213,8 @@ uint16_t processStdin(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t srcHandleLen
 				flag = 5;
 				numDestHandles = 1;
 			}
-			pckDataLen = packMessagePacket(stdinBuf, stdinLen, numDestHandles, srcHandleLen, srcHandleName, flag, socket);
-			break;
-		case 'b':
+
+			pckDataLen = packMessagePacket(stdinBuf, stdinLen, numDestHandles, srcHandleLen, srcHandleName, flag, socket, broadcastFlag);
 			break;
 		case 'l':
 			flag = 10;
@@ -227,7 +232,7 @@ uint16_t processStdin(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t srcHandleLen
 	
 }
 
-uint16_t packMessagePacket(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t numDestHandles, uint8_t srcHandleLen, uint8_t *srcHandleName, uint8_t flag, uint8_t socket) {
+uint16_t packMessagePacket(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t numDestHandles, uint8_t srcHandleLen, uint8_t *srcHandleName, uint8_t flag, uint8_t socket, uint8_t broadcast) {
 	uint16_t destHandleLen;
 	uint16_t pckDataLen = 0;
 
@@ -238,12 +243,13 @@ uint16_t packMessagePacket(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t numDest
 	pckDataLen += packFlagAndHandle(payloadPtr, srcHandleLen, srcHandleName, flag);	// Append Source Handle data and flag
 
 	payloadPtr += pckDataLen;
-	destHandleLen = getDestHandles(payloadPtr, stdinBuf, numDestHandles);
-	payloadPtr += destHandleLen;
-	pckDataLen += destHandleLen;			// keep track of total packet length	
-	stdinLen -= destHandleLen -1;				// remaining length is data length
-	stdinBuf += destHandleLen - 1;
-	
+	if(!broadcast) {
+		destHandleLen = getDestHandles(payloadPtr, stdinBuf, numDestHandles);
+		payloadPtr += destHandleLen;
+		pckDataLen += destHandleLen;			// keep track of total packet length	
+		stdinLen -= destHandleLen -1;				// remaining length is data length
+		stdinBuf += destHandleLen - 1;
+	}
 	fragmentMsg(stdinLen, stdinBuf, payloadPtr, payload, pckDataLen, socket);
 
 	return pckDataLen;
@@ -265,27 +271,24 @@ void fragmentMsg(uint16_t msgLen, uint8_t *msg, uint8_t *pckMsg, uint8_t *payloa
 	
 }
 
-void unpackMessagePacket(uint8_t *inputBuf) {
+void unpackMessagePacket(uint8_t *inputBuf, uint8_t broadcast) {
 	uint8_t srcHandleLen;
 	uint8_t srcHandle[MAX_HANDLE];
 	uint8_t destHandleLen;
 	uint8_t numDestHandle = 1;
 
-	srcHandleLen = *inputBuf++;					// Length of Source Handle Name
-	memcpy(srcHandle, inputBuf, srcHandleLen);	// Get the Source Handle Name
-	srcHandle[srcHandleLen] = '\0';				// NULL terminate
-
-	
+	srcHandleLen = unpackPacketHandle(inputBuf++, srcHandle);
 
 	inputBuf += srcHandleLen;					// increment input pointer
-	numDestHandle = *inputBuf++;				// get the number of destination clients
 
-	
-	// loop through all the destination clients
-	while(numDestHandle != 0) {
-		memcpy(&destHandleLen, inputBuf, 1);	// length of destination client
-		inputBuf += 1 + destHandleLen;			// increment input pointer (length byte + handle length)
-		numDestHandle -= 1;						// decrement number of handles
+	if(!broadcast) {
+		numDestHandle = *inputBuf++;				// get the number of destination clients
+		// loop through all the destination clients
+		while(numDestHandle != 0) {
+			memcpy(&destHandleLen, inputBuf, 1);	// length of destination client
+			inputBuf += 1 + destHandleLen;			// increment input pointer (length byte + handle length)
+			numDestHandle -= 1;						// decrement number of handles
+		}
 	}
 	
 	printf("%s: %s", srcHandle, inputBuf);	// print the message from the source client!
@@ -295,20 +298,17 @@ void unpackMessagePacket(uint8_t *inputBuf) {
 void processServerPacket(int mainServerSocket, uint16_t msgLen, uint8_t *inputBuf) {
 	uint8_t flag = inputBuf[0];
 	uint8_t destHandle[MAX_HANDLE];
+	uint8_t broadcastFlag = 0;
 	
 	printf("\n");
 	switch(flag) {
-		case 4:
-			break;
-		
-		case 5:
-		case 6:
-			
-			unpackMessagePacket(++inputBuf);
-			
+		case 4:	// broadcast		
+		case 5:	// message
+		case 6:	// multicast
+			if(flag == 4) broadcastFlag = 1;
+			unpackMessagePacket(++inputBuf, broadcastFlag);
 			break;
 		case 7:
-
 			unpackPacketHandle(&inputBuf[1], destHandle);
 			printf("Client with handle %s does not exist", destHandle);
 			break;
@@ -332,15 +332,14 @@ void listClients(int mainServerSocket, uint16_t msgLen, uint8_t *inputBuf) {
 	uint8_t handleLen;
 	uint8_t flag = *inputBuf++;
 	
-	
-	
-
 	memcpy(&netNumClients, inputBuf, 4);
 	inputBuf+=4;
 	hostNumClients = ntohl(netNumClients);
 	printf("Number of clients: %d", hostNumClients);
 
 	msgLen = recvPDU(mainServerSocket, inputBuf, MAXBUF);
+
+
 	flag = *inputBuf++;
 	while(flag != 13) {
 		
@@ -352,7 +351,9 @@ void listClients(int mainServerSocket, uint16_t msgLen, uint8_t *inputBuf) {
 		flag = *inputBuf++;
 	}
 
-	
+}
+
+void verifyRecv() {
 
 }
 
