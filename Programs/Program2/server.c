@@ -104,6 +104,9 @@ void processClient(int clientSocket, uint8_t inputBufLen, uint8_t *inputBuf) {
 				inputBuf[0] = 3;
 				
 				sendPDU(clientSocket, inputBuf, 1);
+				removeFromPollSet(clientSocket);
+				close(clientSocket);
+
 			}
 			else {
 				inputBuf[0] = 2;
@@ -111,6 +114,7 @@ void processClient(int clientSocket, uint8_t inputBufLen, uint8_t *inputBuf) {
 			}
 			break;
 		case 4:
+			break;
 			//
 		case 5:
 
@@ -118,12 +122,25 @@ void processClient(int clientSocket, uint8_t inputBufLen, uint8_t *inputBuf) {
 		case 6:
 			unpackMessagePacket(clientSocket, inputBufLen, inputBuf);
 			break;
+		case 8:
+			removeHandle(clientSocket);
+			inputBuf[0] = 9;
+			sendPDU(clientSocket, inputBuf, 1);
+			break;
+
+		case 10:
+
+			break;
 
 
 	}
 		
 }
 
+
+void sendClientList(int clientSocket) {
+
+}
 
 // returns the number of valid handles
 // outHandles is organized as: one byte handle len, handle name,...
@@ -180,7 +197,6 @@ void recvFromClient(int clientSocket) {
 	else {
 		printf("Connection closed by client socket %d\n", clientSocket);
 		removeFromPollSet(clientSocket);
-		removeHandle(clientSocket);
 		close(clientSocket);
 	}
 }

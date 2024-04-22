@@ -41,9 +41,9 @@ void checkArgs(int argc, char * argv[]);
 void clientControl(int mainServerSocket, uint8_t *handleName, uint8_t handleLen);
 void unpackPacket(int mainServerSocket);
 void initialPacket(int mainServerSocket, uint8_t *handleName);
-uint16_t processStdin(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t *flag, uint8_t srcHandleLen, uint8_t *srcHandleName, uint8_t socket);
+uint16_t processStdin(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t srcHandleLen, uint8_t *srcHandleName, uint8_t socket);
 uint16_t getDestHandles(uint8_t *handleBuf, uint8_t *stdinBuf, uint8_t numHandles);
-void processServerPacket(int clientSocket, uint16_t msgLen, uint8_t *inputBuf);
+void processServerPacket(int mainServerSocket, uint16_t msgLen, uint8_t *inputBuf);
 void closeClient(int mainServerSocket);
 void packPacket(int mainServerSocket, uint8_t *handleName, uint8_t handleLen);
 uint16_t packMessagePacket(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t numDestHandles, uint8_t srcHandleLen, uint8_t *srcHandleName, uint8_t flag, uint8_t socket);
@@ -74,7 +74,7 @@ void recvInitialPacket(int mainServerSocket, uint8_t *handleName) {
 	}
 	else if(flag == 3) {
 		printf("Handle name \"%s\" has already been taken. Please try again with a different handle name\n", handleName);
-		kill(getpid(), 2);
+		exit(-1);
 	}
 }
 
@@ -124,19 +124,11 @@ void clientControl(int mainServerSocket, uint8_t *handleName, uint8_t handleLen)
 * Creates a Payload from STDIN data
 */
 void packPacket(int mainServerSocket, uint8_t *handleName, uint8_t handleLen) {
-	uint8_t flag;
 	uint16_t stdinLen;
-	uint8_t payload[MAXBUF], stdinBuf[MAX_STDIN], noSrcBuf[MAXBUF];
+	uint8_t stdinBuf[MAX_STDIN];
 
 	stdinLen = readFromStdin(stdinBuf);										// read from STDIN
-	processStdin(stdinBuf, stdinLen, &flag, handleLen, handleName, mainServerSocket);			// Process STDIN data
-
-
-	// srcHandleLen = packFlagAndHandle(payload, handleLen, handleName, flag);	// Append Source Handle data and flag
-	// memcpy(payload+srcHandleLen, noSrcBuf, noSrcLen);						// Create the payload
-	// payloadLen = noSrcLen + srcHandleLen;									// Total Payload Length
-	
-	// sendPDU(mainServerSocket, payload, payloadLen);							// Send a PDU!
+	processStdin(stdinBuf, stdinLen, handleLen, handleName, mainServerSocket);			// Process STDIN data
 }
 
 
@@ -179,10 +171,11 @@ uint16_t getDestHandles(uint8_t *handleBuf, uint8_t *stdinBuf, uint8_t numHandle
 
 
 
-uint16_t processStdin(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t *flag, uint8_t srcHandleLen, uint8_t *srcHandleName, uint8_t socket) {
+uint16_t processStdin(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t srcHandleLen, uint8_t *srcHandleName, uint8_t socket) {
 	char command;
 	uint16_t pckDataLen = 0;
 	uint8_t numDestHandles = 1;
+	uint8_t flag;
 
 	// ERROR CHECK A PERCENT SIGN
 	// foregoes the % sign in the STDIN buffer
@@ -198,23 +191,30 @@ uint16_t processStdin(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t *flag, uint8
 			stdinLen -= 2;
 			
 			if(command == 'c') {
-				*flag = 6;
-				numDestHandles = stdinBuf[0] - '0';
+				flag = 6;
+				numDestHandles = stdinBuf[0] - '0'; 
+				if((numDestHandles < 2) || (numDestHandles > 9)) {
+					printf("The number of destination handles for %%C must be between 2 and 9\n");
+					return 1;
+				}
 				stdinBuf+=2;
 				stdinLen-=2;
 			}
 
 			if(command == 'm')  {
-				*flag = 5;
+				flag = 5;
 				numDestHandles = 1;
 			}
-			pckDataLen = packMessagePacket(stdinBuf, stdinLen, numDestHandles, srcHandleLen, srcHandleName, *flag, socket);
+			pckDataLen = packMessagePacket(stdinBuf, stdinLen, numDestHandles, srcHandleLen, srcHandleName, flag, socket);
 			break;
 		case 'b':
 			break;
 		case 'l':
 			break;
 		case 'e':
+
+			flag = 8;
+			sendPDU(socket, &flag, 1);
 			break;
 		
 	}
@@ -225,17 +225,13 @@ uint16_t processStdin(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t *flag, uint8
 
 uint16_t packMessagePacket(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t numDestHandles, uint8_t srcHandleLen, uint8_t *srcHandleName, uint8_t flag, uint8_t socket) {
 	uint16_t destHandleLen;
-	uint8_t destHandles[9*MAX_HANDLE];		// max of 9 destination handles (100 bytes) + 9 length bytes
 	uint16_t pckDataLen = 0;
 
-	uint8_t message[MAX_TEXT];
 	uint8_t payload[MAXBUF];
 	uint8_t *payloadPtr = payload;
 	
 
 	pckDataLen += packFlagAndHandle(payloadPtr, srcHandleLen, srcHandleName, flag);	// Append Source Handle data and flag
-	// memcpy(payload+srcHandleLen, noSrcBuf, noSrcLen);						// Create the payload
-	// payloadLen = noSrcLen + srcHandleLen;									// Total Payload Length
 
 	payloadPtr += pckDataLen;
 	destHandleLen = getDestHandles(payloadPtr, stdinBuf, numDestHandles);
@@ -244,17 +240,7 @@ uint16_t packMessagePacket(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t numDest
 	stdinLen -= destHandleLen -1;				// remaining length is data length
 	stdinBuf += destHandleLen - 1;
 	
-	
-
 	fragmentMsg(stdinLen, stdinBuf, payloadPtr, payload, pckDataLen, socket);
-	// if(stdinLen > 200) {
-
-	// }
-
-	// memcpy(pckDataBuf, stdinBuf, stdinLen);
-	// pckDataLen += stdinLen;					// keep track of total packet length
-
-
 
 	return pckDataLen;
 }
@@ -298,14 +284,11 @@ void unpackMessagePacket(uint8_t *inputBuf) {
 		numDestHandle -= 1;						// decrement number of handles
 	}
 	
-	// printf("%s: %s", srcHandle, inputBuf);	// print the message from the source client!
-
-	
 	printf("%s: %s", srcHandle, inputBuf);	// print the message from the source client!
-	// fflush(stdout);
+	
 }
 
-void processServerPacket(int clientSocket, uint16_t msgLen, uint8_t *inputBuf) {
+void processServerPacket(int mainServerSocket, uint16_t msgLen, uint8_t *inputBuf) {
 	uint8_t flag = inputBuf[0];
 	uint8_t destHandle[MAX_HANDLE];
 	
@@ -326,6 +309,10 @@ void processServerPacket(int clientSocket, uint16_t msgLen, uint8_t *inputBuf) {
 			printf("Client with handle %s does not exist", destHandle);
 			break;
 		case 9:
+			removeFromPollSet(mainServerSocket);
+			removeFromPollSet(STDIN_FILENO);
+			exit(-1);
+			break;
 
 		case 11:
 
@@ -334,8 +321,6 @@ void processServerPacket(int clientSocket, uint16_t msgLen, uint8_t *inputBuf) {
 		case 13:
 	}	
 
-	// printf("\n$: ");
-	// fflush(stdout);
 	
 }
 

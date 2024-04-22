@@ -28,10 +28,12 @@ typedef struct __attribute__((packed)) HND_TBL {
 static HND_TBL *handleTable;
 static uint32_t max = 64;
 static uint32_t serverSocket = 4;   // keeps track of the server's socket
+static uint32_t numClients;
 
 void setupHandleTable(uint32_t mainSocket) {
     handleTable = (HND_TBL*) sCalloc(max, sizeof(HND_TBL));   
     serverSocket = mainSocket;
+    numClients = 0;
 }
 
 
@@ -67,6 +69,7 @@ uint8_t addHandle(uint8_t *handle, uint8_t handleLength, uint8_t socketNo) {
     }
     (&handleTable[socketNo])->valid = 1;
     memcpy((&handleTable[socketNo])->handle, handle, handleLength+1);
+    numClients++;
     return 0;
 
 }
@@ -82,6 +85,7 @@ uint8_t removeHandle(uint8_t socket) {
     }
 
     (&handleTable[socket])->valid = 0; 
+    numClients--;
     return 1;
 }
 
@@ -90,7 +94,9 @@ void teardownHandleTable() {
 }
 
 
-
+uint32_t getNumClients() {
+    return numClients;
+}
 /*
 * getSocketToHandle
 * returns a pointer to the handle name if found
