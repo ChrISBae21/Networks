@@ -79,7 +79,7 @@ uint8_t addHandle(uint8_t *handle, uint8_t handleLength, uint8_t socketNo) {
 * removes the handle based on socket number
 * returns 1 on success, 0 if the handle/socket doesn't exist
 */
-uint8_t removeHandle(uint8_t socket) {
+uint8_t removeHandle(uint32_t socket) {
     if((&handleTable[socket])->valid == 0) {
         return 0;
     }
@@ -102,12 +102,15 @@ uint32_t getNumClients() {
 * returns a pointer to the handle name if found
 * else returns NULL if it does not exist
 */
-uint8_t* getSocketToHandle(uint8_t socketNo) {
+uint8_t getSocketToHandle(uint32_t socketNo, uint8_t *handle) {
     
+    uint8_t len = 0;
     if(handleTable[socketNo].valid) {
-        return (&handleTable[socketNo])->handle;
+        len = strlen((char*) (&handleTable[socketNo])->handle);
+        memcpy(handle, (&handleTable[socketNo])->handle, len);
+        return len;
     }
-    return NULL;
+    return 0;
 }
 
 
@@ -141,6 +144,10 @@ void listHandleTable() {
         }
     }
 }
+
+
+
+
 
 // int main() {
 //     setupHandleTable(4);

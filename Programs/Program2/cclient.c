@@ -48,6 +48,8 @@ void closeClient(int mainServerSocket);
 void packPacket(int mainServerSocket, uint8_t *handleName, uint8_t handleLen);
 uint16_t packMessagePacket(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t numDestHandles, uint8_t srcHandleLen, uint8_t *srcHandleName, uint8_t flag, uint8_t socket);
 void fragmentMsg(uint16_t msgLen, uint8_t *msg, uint8_t *pckMsg, uint8_t *payload, uint16_t payloadLen, int8_t socket);
+void listClients(int mainServerSocket, uint16_t msgLen, uint8_t *inputBuf);
+
 
 int main(int argc, char * argv[]) {
 	int socketNum = 0;         //socket descriptor
@@ -210,6 +212,8 @@ uint16_t processStdin(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t srcHandleLen
 		case 'b':
 			break;
 		case 'l':
+			flag = 10;
+			sendPDU(socket, &flag, 1);
 			break;
 		case 'e':
 
@@ -315,16 +319,42 @@ void processServerPacket(int mainServerSocket, uint16_t msgLen, uint8_t *inputBu
 			break;
 
 		case 11:
-
-		case 12:
-
-		case 13:
+			listClients(mainServerSocket, msgLen, inputBuf);
+			break;
 	}	
 
 	
 }
 
+void listClients(int mainServerSocket, uint16_t msgLen, uint8_t *inputBuf) {
+	uint32_t hostNumClients, netNumClients;
+	uint8_t handle[MAX_HANDLE];
+	uint8_t handleLen;
+	uint8_t flag = *inputBuf++;
+	
+	
+	
 
+	memcpy(&netNumClients, inputBuf, 4);
+	inputBuf+=4;
+	hostNumClients = ntohl(netNumClients);
+	printf("Number of clients: %d", hostNumClients);
+
+	msgLen = recvPDU(mainServerSocket, inputBuf, MAXBUF);
+	flag = *inputBuf++;
+	while(flag != 13) {
+		
+		handleLen = *inputBuf;
+		memcpy(handle, inputBuf+1, handleLen);
+		handle[handleLen] = '\0';
+		printf("\n\t%s", handle);
+		msgLen = recvPDU(mainServerSocket, inputBuf, MAXBUF);
+		flag = *inputBuf++;
+	}
+
+	
+
+}
 
 void unpackPacket(int mainServerSocket) {
 	uint8_t dataBuffer[MAXBUF];
