@@ -7,7 +7,10 @@
 *
 *****************************************************************************/
 
-
+/* Somehow on the server doing
+%m h1 hello
+%c 3 h
+causes the client to seg fault */
 
 #include <stdio.h>
 #include <stdlib.h>
