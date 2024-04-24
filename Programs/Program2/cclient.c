@@ -123,7 +123,11 @@ void packPacket(int mainServerSocket, uint8_t *handleName, uint8_t handleLen) {
 	uint16_t stdinLen;
 	uint8_t stdinBuf[MAX_STDIN];
 
-	stdinLen = readFromStdin(stdinBuf);										// read from STDIN
+	stdinLen = readFromStdin(stdinBuf);									// read from STDIN
+	if(stdinLen > 1400) {
+		printf("Total number of input characters cannot exceed 1400!\n");
+		return;
+	}
 	processStdin(stdinBuf, stdinLen, handleLen, handleName, mainServerSocket);			// Process STDIN data
 }
 
@@ -168,7 +172,7 @@ uint16_t getDestHandles(uint8_t *handleBuf, uint8_t *stdinBuf, uint8_t numHandle
 
 		handleBuf += (destHandleLen + 1);						// increments output data pointer with len + handle name
 		totLen += (destHandleLen + 1);							// increments total length	
-		stdinBuf += (destHandleLen+1);						// increments stdin buffer with handle len + space
+		stdinBuf += (destHandleLen+1);							// increments stdin buffer with handle len + space
 	}
 
 	return totLen;
@@ -180,23 +184,30 @@ uint16_t processStdin(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t srcHandleLen
 	uint8_t numDestHandles = 1;
 	uint8_t flag;
 	uint8_t broadcastFlag = 0;
+	uint8_t spaceCount = 0;
 
 	// foregoes the % sign in the STDIN buffer
-	if(*stdinBuf != '%') {
+	if(*stdinBuf++ != '%') {
 		printf("Invalid command format\n");
 		return 0;
 	}
-	command = *++stdinBuf;
 	stdinLen--;
+	command = *stdinBuf++;
+	
 
+	while(*stdinBuf == ' ') {
+		stdinBuf++;
+		stdinLen -= 1;
+	}
+	// stdinLen -= spaceCount;
 	switch(tolower(command)) {
 
 		case 'b':
 		case 'c':
 		case 'm':
 			// foregoes the command and space in STDIN buffer
-			stdinBuf += 2;
-			stdinLen -= 2;
+			// stdinBuf += 2;
+			// stdinLen -= 2;
 			if(command == 'b') {
 				flag = 4;
 				numDestHandles = 0;
