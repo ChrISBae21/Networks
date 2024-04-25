@@ -184,7 +184,7 @@ uint16_t processStdin(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t srcHandleLen
 	uint8_t numDestHandles = 1;
 	uint8_t flag;
 	uint8_t broadcastFlag = 0;
-	uint8_t spaceCount = 0;
+	// uint8_t spaceCount = 0;
 
 	// foregoes the % sign in the STDIN buffer
 	if(*stdinBuf++ != '%') {

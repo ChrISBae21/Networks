@@ -26,14 +26,16 @@ typedef struct __attribute__((packed)) HND_TBL {
 
 // Handle Table Public Variables
 static HND_TBL *handleTable;
-static uint32_t max = 64;
+static uint32_t max;
 static uint32_t serverSocket = 4;   // keeps track of the server's socket
 static uint32_t numClients;
 
 void setupHandleTable(uint32_t mainSocket) {
+    max = 8;
     handleTable = (HND_TBL*) sCalloc(max, sizeof(HND_TBL));   
     serverSocket = mainSocket;
     numClients = 0;
+    
 }
 
 
@@ -44,7 +46,8 @@ void setupHandleTable(uint32_t mainSocket) {
 */
 uint8_t addHandle(uint8_t *handle, uint8_t handleLength, uint8_t socketNo) {
     uint32_t newMax = max;
-    uint32_t temp;
+    
+
 
     handle[handleLength] = '\0';
 
@@ -53,18 +56,18 @@ uint8_t addHandle(uint8_t *handle, uint8_t handleLength, uint8_t socketNo) {
         while(newMax <= socketNo) {
             newMax *= 2;
         }
-        newMax+=serverSocket;
-        handleTable = srealloc(handleTable, newMax);
+        // newMax+=serverSocket;
+        handleTable = (HND_TBL *) realloc((void*)handleTable, newMax * sizeof(HND_TBL));
         // Initializes the new memory allocation valid bits to 0
+        
         for(uint32_t i = max; i < newMax; i++) {
             (&handleTable[i])->valid = 0;
         }
-        
         max = newMax;
     }
     
     // if the handle name exists, return 1
-    if( (temp = getHandleToSocket(handle, handleLength)) > 0 ) {
+    if( getHandleToSocket(handle, handleLength) > 0 ) {
         return 1;
     }
     (&handleTable[socketNo])->valid = 1;
@@ -121,7 +124,7 @@ uint8_t getSocketToHandle(uint32_t socketNo, uint8_t *handle) {
 * ASSUMED HANDLES ARE NULL TERMINATED
 */
 uint32_t getHandleToSocket(uint8_t* handle, uint8_t handleLen) {
-    uint32_t compare;       // temp variable to compare handles
+    uint32_t compare = 0;       // temp variable to compare handles
     uint32_t socket = 3;    // Sockets 0, 1, and 2 occupied by STDIN/OUT/ERR
 
     while(socket < max) {

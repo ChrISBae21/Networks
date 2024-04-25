@@ -39,10 +39,10 @@ int main(int argc, char *argv[]) {
 	int clientSocket = 0;   //socket descriptor for the client socket
 	int portNumber = 0;
 	portNumber = checkArgs(argc, argv);
-	//create the server socket
-	mainServerSocket = tcpServerSetup(portNumber);
 	//initializes the handle table
 	setupHandleTable(mainServerSocket);
+	//create the server socket
+	mainServerSocket = tcpServerSetup(portNumber);
 	//start doing server things
 	serverControl(mainServerSocket);
 	/* close the sockets */
