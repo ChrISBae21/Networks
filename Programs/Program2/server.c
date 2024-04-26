@@ -116,6 +116,7 @@ void processClient(int clientSocket, uint8_t inputBufLen, uint8_t *inputBuf) {
 			removeHandle(clientSocket);
 			inputBuf[0] = 9;
 			sendPDU(clientSocket, inputBuf, 1);
+			// shouldn't remove from poll set yet. When the client exits, it will send a length of 0 on a recv later
 			break;
 
 		case 10:
@@ -199,9 +200,7 @@ void unpackMessagePacket(int srcClientSocket, uint8_t inputBufLen, uint8_t *inpu
 
 		// is a valid handle
 		if((destSocket = getHandleToSocket(destHandle, destHandleLen)) > 0) {
-
 			sendPDU(destSocket, inputBuf, inputBufLen);
-			printf("Input size: %d", inputBufLen);
 		}
 
 		// destination handle doesn't exist

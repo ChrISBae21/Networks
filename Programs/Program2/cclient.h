@@ -27,7 +27,7 @@ void clientControl(int mainServerSocket, uint8_t *handleName, uint8_t handleLen)
 void unpackPacket(int mainServerSocket);
 void initialPacket(int mainServerSocket, uint8_t *handleName);
 uint16_t processStdin(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t srcHandleLen, uint8_t *srcHandleName, uint8_t socket);
-uint16_t getDestHandles(uint8_t *handleBuf, uint8_t *stdinBuf, uint8_t numHandles);
+uint16_t getDestHandles(uint8_t *handleBuf, uint8_t **stdinBuf, uint8_t numHandles, uint16_t *stdinLen);
 void processServerPacket(int mainServerSocket, uint16_t msgLen, uint8_t *inputBuf);
 void closeClient(int mainServerSocket);
 void packPacket(int mainServerSocket, uint8_t *handleName, uint8_t handleLen);

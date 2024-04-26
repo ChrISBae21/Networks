@@ -1,0 +1,8 @@
+Chris Bae
+Noon Lab
+
+Usage: make creates two executables:
+
+./server <port>
+
+./cclient <handle name> <IP> <server port>
