@@ -29,7 +29,7 @@
 #include "safeUtil.h"
 #include "pdu.h"
 #include "pollLib.h"
-#include "signal.h"
+
 
 
 
@@ -216,7 +216,7 @@ uint16_t processStdin(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t srcHandleLen
 			if(command == 'c') {
 				flag = 6;
 				numDestHandles = stdinBuf[0] - '0'; 
-				if((numDestHandles < 2) || (numDestHandles > 9)) {
+				if((numDestHandles < 2) || (numDestHandles > 9) || (stdinBuf[1] != ' ')) {
 					printf("The number of destination handles for %%C must be between 2 and 9\n");
 					return 1;
 				}
@@ -275,6 +275,7 @@ uint16_t packMessagePacket(uint8_t *stdinBuf, uint16_t stdinLen, uint8_t numDest
 }
 
 void fragmentMsg(uint16_t msgLen, uint8_t *msg, uint8_t *pckMsg, uint8_t *payload, uint16_t payloadLen, int8_t socket) {
+	
 	while(msgLen > 200) {
 		memcpy(pckMsg, msg, MAX_TEXT - 1);
 		pckMsg[MAX_TEXT-1] = '\0';
@@ -286,10 +287,7 @@ void fragmentMsg(uint16_t msgLen, uint8_t *msg, uint8_t *pckMsg, uint8_t *payloa
 	
 	
 	memcpy(pckMsg, msg, msgLen);
-	pckMsg[msgLen] = '\0';
-	if(msgLen == 0) {
-		msgLen++;
-	}
+	if(msgLen == 1)  pckMsg[0] = '\0';
 	sendPDU(socket, payload, payloadLen + msgLen);
 	
 }
@@ -322,6 +320,7 @@ void processServerPacket(int mainServerSocket, uint16_t msgLen, uint8_t *inputBu
 	uint8_t flag = inputBuf[0];
 	uint8_t destHandle[MAX_HANDLE];
 	uint8_t broadcastFlag = 0;
+
 	
 	printf("\n");
 	switch(flag) {
@@ -336,9 +335,8 @@ void processServerPacket(int mainServerSocket, uint16_t msgLen, uint8_t *inputBu
 			printf("Client with handle %s does not exist", destHandle);
 			break;
 		case 9:
-			removeFromPollSet(mainServerSocket);
-			removeFromPollSet(STDIN_FILENO);
-			exit(-1);
+			closeClient(mainServerSocket);
+
 			break;
 
 		case 11:
@@ -393,6 +391,7 @@ int verifyRecv(int mainServerSocket, uint8_t *dataBuffer, int bufferSize) {
 		
 	}
 	else {						// Server has closed
+		printf("\nServer Terminated\n");
 		closeClient(mainServerSocket);
 		return 0;
 	}
@@ -409,11 +408,11 @@ void unpackPacket(int mainServerSocket) {
 }
 
 void closeClient(int mainServerSocket) {
-	printf("\nServer Terminated\n");
+	// printf("\nServer Terminated\n");
 	removeFromPollSet(mainServerSocket);
 	removeFromPollSet(STDIN_FILENO);
 	close(mainServerSocket);
-	exit(-1);
+	exit(0);
 }
 
 void sendToServer(int socketNum, uint8_t *sendBuf, uint8_t sendLen) {
@@ -451,6 +450,8 @@ uint16_t readFromStdin(uint8_t * buffer)
 	// Null terminate the string
 	buffer[inputLen] = '\0';
 	inputLen++;
+
+	
 	
 	return inputLen;
 }

@@ -108,7 +108,6 @@ void processClient(int clientSocket, uint8_t inputBufLen, uint8_t *inputBuf) {
 			break;
 			//
 		case 5:
-
 			
 		case 6:
 			unpackMessagePacket(clientSocket, inputBufLen, inputBuf);
@@ -202,6 +201,7 @@ void unpackMessagePacket(int srcClientSocket, uint8_t inputBufLen, uint8_t *inpu
 		if((destSocket = getHandleToSocket(destHandle, destHandleLen)) > 0) {
 
 			sendPDU(destSocket, inputBuf, inputBufLen);
+			printf("Input size: %d", inputBufLen);
 		}
 
 		// destination handle doesn't exist
