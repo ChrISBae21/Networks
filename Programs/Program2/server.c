@@ -28,25 +28,17 @@
 #include "pdu.h"
 #include "pollLib.h"
 #include "handleTable.h"
-
-
 #define DEBUG_FLAG 1
 
-
-
 int main(int argc, char *argv[]) {
-	uint32_t mainServerSocket = 0;   //socket descriptor for the server socket
-	int clientSocket = 0;   //socket descriptor for the client socket
+	uint32_t mainServerSocket = 0;   				//socket descriptor for the server socket
+	int clientSocket = 0;   						//socket descriptor for the client socket
 	int portNumber = 0;
 	portNumber = checkArgs(argc, argv);
-	//initializes the handle table
-	setupHandleTable(mainServerSocket);
-	//create the server socket
-	mainServerSocket = tcpServerSetup(portNumber);
-	//start doing server things
-	serverControl(mainServerSocket);
-	/* close the sockets */
-	close(clientSocket);
+	setupHandleTable(mainServerSocket); 			//initializes the handle table
+	mainServerSocket = tcpServerSetup(portNumber); 	//create the server socket
+	serverControl(mainServerSocket);				//start doing server things
+	close(clientSocket);		// close the socket
 	close(mainServerSocket);
 	return 0;
 }
@@ -82,7 +74,6 @@ void addNewSocket(int mainServerSocket) {
 
 void processClient(int clientSocket, uint8_t inputBufLen, uint8_t *inputBuf) {
 	uint8_t srcHandle[MAX_HANDLE];
-	
 	uint8_t flag = inputBuf[0];
 	uint8_t srcHandleLen = inputBuf[1];
 
@@ -106,7 +97,6 @@ void processClient(int clientSocket, uint8_t inputBufLen, uint8_t *inputBuf) {
 		case 4:
 			sendBroadcast(clientSocket, inputBufLen, inputBuf);
 			break;
-			//
 		case 5:
 			
 		case 6:
@@ -122,18 +112,14 @@ void processClient(int clientSocket, uint8_t inputBufLen, uint8_t *inputBuf) {
 		case 10:
 			sendClientList(clientSocket, inputBuf);
 			break;
-
-
 	}
-		
 }
 
 
 void sendClientList(int clientSocket, uint8_t *sendBuf) {
 	uint32_t hostNumClients, netNumClients;
 	uint32_t i = 0;
-	uint8_t handleLen;
-	uint8_t handleName[MAX_HANDLE];
+	uint8_t handleLen, handleName[MAX_HANDLE];
 	uint16_t totLen;
 
 	hostNumClients = getNumClients();
@@ -153,20 +139,14 @@ void sendClientList(int clientSocket, uint8_t *sendBuf) {
 	}
 	sendBuf[0] = 13;
 	sendPDU(clientSocket, sendBuf, 1);
-
 }
 
 
 void sendBroadcast(int clientSocket, uint8_t sendLen, uint8_t *sendBuf) {
-	uint32_t hostNumClients;
-	uint32_t i = 0;
-	uint8_t handleLen;
-	uint8_t handleName[MAX_HANDLE];
-
-
+	uint32_t hostNumClients, i = 0;
+	uint8_t handleLen, handleName[MAX_HANDLE];;
 	hostNumClients = getNumClients() - 1;
 	while(hostNumClients != 0) {
-
 		if(i != clientSocket) {
 			handleLen = getSocketToHandle(i, handleName);
 			if(handleLen > 0) {
@@ -176,10 +156,7 @@ void sendBroadcast(int clientSocket, uint8_t sendLen, uint8_t *sendBuf) {
 		}
 		i++;
 	}
-
 }
-
-
 
 // returns the number of valid handles
 // outHandles is organized as: one byte handle len, handle name,...
@@ -202,7 +179,6 @@ void unpackMessagePacket(int srcClientSocket, uint8_t inputBufLen, uint8_t *inpu
 		if((destSocket = getHandleToSocket(destHandle, destHandleLen)) > 0) {
 			sendPDU(destSocket, inputBuf, inputBufLen);
 		}
-
 		// destination handle doesn't exist
 		else {
 			packFlagAndHandle(sendBuf, destHandleLen, destHandle, 7);
@@ -210,8 +186,6 @@ void unpackMessagePacket(int srcClientSocket, uint8_t inputBufLen, uint8_t *inpu
 		}
 		packetHandleBuf += 1 + destHandleLen;
 	}
-	
-
 }
 
 
@@ -224,7 +198,6 @@ void recvFromClient(int clientSocket) {
 		perror("recv call");
 		exit(-1);
 	}
-
 	if (messageLen > 0) {
 		processClient(clientSocket, messageLen, dataBuffer);
 
@@ -237,8 +210,7 @@ void recvFromClient(int clientSocket) {
 	}
 }
 
-int checkArgs(int argc, char *argv[])
-{
+int checkArgs(int argc, char *argv[]) {
 	// Checks args and returns port number
 	int portNumber = 0;
 
