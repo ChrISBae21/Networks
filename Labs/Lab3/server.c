@@ -26,7 +26,7 @@
 void processClient(int socketNum, float err);
 int checkArgs(int argc, char *argv[]);
 
-int main ( int argc, char *argv[]  )
+int main (int argc, char *argv[])
 { 
 	int socketNum = 0;				
 	int portNumber = 0;
@@ -40,6 +40,7 @@ int main ( int argc, char *argv[]  )
 	processClient(socketNum, err);
 
 	close(socketNum);
+	
 	
 	return 0;
 }
@@ -67,7 +68,7 @@ void processClient(int socketNum, float err) {
 		// sprintf(buffer, "bytes: %d", dataLen);
 		
 		safeSendto(socketNum, buffer, strlen(buffer)+1, 0, (struct sockaddr *) & client, clientAddrLen);
-
+		
 	}
 }
 
