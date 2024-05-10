@@ -15,6 +15,7 @@
 #include "safeUtil.h"
 #include "pdu.h"
 #include "cpe464.h"
+#include <errno.h>
 
 // #define DROP_ON 1
 // #define FLIP_ON 1
@@ -34,14 +35,11 @@ int main (int argc, char *argv[])
 
 	portNumber = checkArgs(argc, argv);
 	err = atof(argv[1]);
-	sendErr_init(err, DROP_ON, FLIP_ON, DEBUG_ON, RSEED_OFF);
+	sendErr_init(err, DROP_OFF, FLIP_ON, DEBUG_ON, RSEED_OFF);
 	socketNum = udpServerSetup(portNumber);
-
 	processClient(socketNum, err);
-
 	close(socketNum);
-	
-	
+
 	return 0;
 }
 
@@ -54,9 +52,9 @@ void processClient(int socketNum, float err) {
 	buffer[0] = '\0';
 	while (buffer[0] != '.') {
 
-
+		
 		dataLen = safeRecvfrom(socketNum, buffer, MAXBUF, 0, (struct sockaddr *) &client, &clientAddrLen);
-	
+		printf("back to main\n");
 		printf("Received message from client with ");
 		printIPInfo(&client);
 		// printf(" Len: %d \'%s\'\n", dataLen, buffer);

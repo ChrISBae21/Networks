@@ -40,7 +40,7 @@ int main (int argc, char *argv[]) {
 	float err = 0;
 	portNumber = checkArgs(argc, argv);
 	err = atof(argv[1]);
-	sendErr_init(err, DROP_ON, FLIP_ON, DEBUG_ON, RSEED_OFF);
+	sendErr_init(err, DROP_OFF, FLIP_ON, DEBUG_ON, RSEED_OFF);
 	socketNum = setupUdpClientToServer(&server, argv[2], portNumber);
 	
 	talkToServer(socketNum, &server);
@@ -60,7 +60,7 @@ void talkToServer(int socketNum, struct sockaddr_in6 * server) {
 	buffer[0] = '\0';
 	while (buffer[0] != '.') {
 		dataLen = readFromStdin(payload);
-		dataLen = createPDU((uint8_t *)buffer, 1, 2, (uint8_t *)payload, dataLen);
+		dataLen = createPDU((uint8_t *)buffer, 1, 1, (uint8_t *)payload, dataLen);
 		printf("Sending: \n---------------------------------------\n");
 		printPDU((uint8_t *)buffer, dataLen);
 		printf("---------------------------------------\n");
