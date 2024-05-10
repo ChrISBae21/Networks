@@ -69,6 +69,7 @@ void talkToServer(int socketNum, struct sockaddr_in6 * server) {
 	
 		safeSendto(socketNum, buffer, dataLen, 0, (struct sockaddr *) server, serverAddrLen);
 		
+		
 
 		safeRecvfrom(socketNum, buffer, MAXBUF, 0, (struct sockaddr *) server, &serverAddrLen);
 		
