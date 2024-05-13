@@ -45,9 +45,4 @@ void printPDU(uint8_t * aPDU, int pduLength) {
     printf("Payload: %s\n", aPDU+7);
     printf("Payload Length: %d\n", pduLength - 7);
 
-
-
-
-
-
 }
