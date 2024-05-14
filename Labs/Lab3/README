@@ -1,0 +1,6 @@
+Chris Bae
+Lab 12pm
+
+Usage:
+    ./server [error rate] [port number]
+    ./rcopy [error rate] [server] [server port number]

@@ -40,7 +40,7 @@ int main (int argc, char *argv[]) {
 	float err = 0;
 	portNumber = checkArgs(argc, argv);
 	err = atof(argv[1]);
-	sendErr_init(err, DROP_OFF, FLIP_ON, DEBUG_ON, RSEED_OFF);
+	sendErr_init(err, DROP_ON, FLIP_ON, DEBUG_ON, RSEED_OFF);
 	socketNum = setupUdpClientToServer(&server, argv[2], portNumber);
 	
 	talkToServer(socketNum, &server);
