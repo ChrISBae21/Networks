@@ -52,7 +52,6 @@ int main (int argc, char *argv[]) {
 
 void talkToServer(int socketNum, struct sockaddr_in6 * server) {
 	int serverAddrLen = sizeof(struct sockaddr_in6);
-	char * ipString = NULL;
 	int dataLen = 0; 
 	char buffer[MAXBUF+1];
 	char payload[MAXBUF+1];
@@ -68,17 +67,6 @@ void talkToServer(int socketNum, struct sockaddr_in6 * server) {
 		// printf("Sending: %s with len: %d\n", buffer,dataLen);
 	
 		safeSendto(socketNum, buffer, dataLen, 0, (struct sockaddr *) server, serverAddrLen);
-		
-	
-		safeRecvfrom(socketNum, buffer, MAXBUF, 0, (struct sockaddr *) server, &serverAddrLen);
-		
-		// print out bytes received
-		ipString = ipAddressToString(server);
-		printf("Got Back from Server IP: %s and port %d: \n---------------------------------------\n", ipString, ntohs(server->sin6_port));
-		// printf("Server with ip: %s and port %d said it received %s\n", ipString, ntohs(server->sin6_port), buffer);
-		printPDU((uint8_t *)buffer, dataLen);
-		printf("---------------------------------------\n");
-		printf("\n");
 	      
 	}
 }
