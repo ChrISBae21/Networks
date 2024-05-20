@@ -21,12 +21,11 @@
 #include "pdu.h"
 #include "cpe464.h"
 
-// #define DROP_ON 1
-// #define FLIP_ON 1
-// #define DEBUG_ON 1
-// #define RSEED_OFF 1
 
 #define MAXBUF 80
+
+static uint32_t sequenceNumber = 0;
+
 
 void talkToServer(int socketNum, struct sockaddr_in6 * server);
 int readFromStdin(char * buffer);
@@ -39,15 +38,22 @@ int main (int argc, char *argv[]) {
 	int portNumber = 0;
 	float err = 0;
 	portNumber = checkArgs(argc, argv);
-	err = atof(argv[1]);
+	err = atof(argv[5]);
 	sendErr_init(err, DROP_ON, FLIP_ON, DEBUG_ON, RSEED_OFF);
-	socketNum = setupUdpClientToServer(&server, argv[2], portNumber);
+
+	rcopyInit(&socketNum, &server)
+	// socketNum = setupUdpClientToServer(&server, argv[2], portNumber);
 	
 	talkToServer(socketNum, &server);
 	
 	close(socketNum);
 
 	return 0;
+}
+
+int rcopyInit(char* fName, int *socketNum, struct sockaddr_in6 *server, char* hostName, int portNumber) {
+	*socketNum = setupUdpClientToServer(&server, hostName, portNumber);
+
 }
 
 void talkToServer(int socketNum, struct sockaddr_in6 * server) {
@@ -94,17 +100,14 @@ int readFromStdin(char * buffer) {
 }
 
 int checkArgs(int argc, char * argv[]) {
-
-        int portNumber = 0;
+    int portNumber = 0;
 	
-        /* check command line arguments  */
-	if (argc != 4) {
+    /* check command line arguments  */
+	if (argc != 7) {
 		printf("usage: %s host-name port-number \n", argv[0]);
 		exit(1);
 	}
-	
-	portNumber = atoi(argv[3]);
-		
+	portNumber = atoi(argv[7]);	
 	return portNumber;
 }
 

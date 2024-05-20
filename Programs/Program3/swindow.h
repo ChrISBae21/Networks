@@ -12,6 +12,10 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
+#define PDU_HEADER 7
+#define MAX_PAYLOAD 1400
+#define MAX_PDU (MAX_PAYLOAD + PDU_HEADER)
+
 typedef struct window {
     uint32_t lower;
     uint32_t upper;
@@ -19,6 +23,14 @@ typedef struct window {
     uint32_t windowSize;
 } Window;
 
+typedef struct bufferItem {
+    uint32_t seq;
+    uint32_t buffSize;
+    uint32_t pduLen;
+    uint8_t valid;
+    uint8_t pdu[MAX_PDU]
+
+} BufferItem;
 
 
 #endif
