@@ -17,12 +17,19 @@
 #include "cpe464.h"
 #include <errno.h>
 
-// #define DROP_ON 1
-// #define FLIP_ON 1
-// #define DEBUG_ON 1
-// #define RSEED_OFF 1
+typedef enum {
+	FILENAME, 
+	FILENAME_ACK,
+	INORDER, 
+	BUFFER, 
+	FLUSH, 
+	DONE
+} STATE;
 
-#define MAXBUF 80
+
+#define MAXBUF 1400
+#define TIMEOUT -1
+#define ONE_SEC 1000
 
 void processClient(int socketNum, float err);
 int checkArgs(int argc, char *argv[]);
@@ -36,12 +43,21 @@ int main (int argc, char *argv[]) {
 	err = atof(argv[1]);
 	sendErr_init(err, DROP_ON, FLIP_ON, DEBUG_ON, RSEED_OFF);
 	socketNum = udpServerSetup(portNumber);
+	serverFSM(argv, );
+
 	processClient(socketNum, err);
 	close(socketNum);
 
 	return 0;
 }
 
+
+
+void serverFSM(char* argv[], int portNumber) {
+	struct sockaddr_in6 client;		
+	int clientAddrLen = sizeof(client);	
+
+}
 void processClient(int socketNum, float err) {
 	int dataLen = 0; 
 	char buffer[MAXBUF + 1];	  

@@ -43,7 +43,7 @@ int readFromStdin(char * buffer);
 int checkArgs(int argc, char * argv[]);
 void downloadFSM(char* argv[], int portNumber);
 void cleanSocket(int socket);
-STATE filenameAck(pduPacket *pduBuffer, uint32_t *expected, struct sockaddr_in6 *server, int *socketNum, uint8_t *fnameRetry, uint32_t *serverSeqNum, uint32_t *rcopySeqNum);
+STATE filenameAck(char* argv[], pduPacket *pduBuffer, uint32_t *expected, struct sockaddr_in6 *server, int *socketNum, uint8_t *fnameRetry, int fd, uint32_t *rcopySeqNum);
 STATE filename(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, int portNumber, uint16_t bufferSize, uint32_t windowSize, int *socketNum, uint8_t *fnameRetry, uint32_t *rcopySeqNum);
 
 
@@ -99,8 +99,9 @@ STATE filename(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, 
 
 }
 
-STATE filenameAck(pduPacket *pduBuffer, uint32_t *expected, struct sockaddr_in6 *server, int *socketNum, uint8_t *fnameRetry, uint32_t *serverSeqNum, uint32_t *rcopySeqNum) {
+STATE filenameAck(char* argv[], pduPacket *pduBuffer, uint32_t *expected, struct sockaddr_in6 *server, int *socketNum, uint8_t *fnameRetry, int fd, uint32_t *rcopySeqNum) {
 	int pduLen;
+	uint32_t serverSeqNum;
 	int serverAddrLen = sizeof(struct sockaddr_in6);
 
 	pduLen = safeRecvfrom(*socketNum, pduBuffer, MAX_PDU, 0, (struct sockaddr *) server, &serverAddrLen);
@@ -110,13 +111,19 @@ STATE filenameAck(pduPacket *pduBuffer, uint32_t *expected, struct sockaddr_in6 
 		(*fnameRetry)++;
 		return FILENAME;
 	}
-	*serverSeqNum = getHSeqNum((uint8_t *)pduBuffer);
+
+	/* try to open the file to write to */
+	if((*fd = open(argv[2], "wb")) == -1) {
+		printf("Error opening file to write to\n");
+		return DONE;
+	}
+	serverSeqNum = getHSeqNum((uint8_t *)pduBuffer);
 
 	/* got a packet, but it was a packet greater than seq 1 */
-	if(*serverSeqNum > 1) return BUFFER;
+	if(serverSeqNum > 1) return BUFFER;
 
 	/* got first data packet */
-	if(*serverSeqNum == 1) {
+	if(serverSeqNum == 1) {
 		(*expected)++;
 		return INORDER;
 	}
@@ -134,7 +141,7 @@ void downloadFSM(char* argv[], int portNumber) {
 	struct sockaddr_in6 server 	= {0};		// Supports 4 and 6 but requires IPv6 struct
 	uint16_t bufferSize 	= atoi(argv[4]);
 	uint32_t windowSize 	= atoi(argv[3]);
-	int socketNum 			= 0;
+	int socketNum, fd
 	uint8_t fnameRetry		= 0;
 	uint32_t rcopySeqNum, serverSeqNum;
 	uint32_t expected = 1;
@@ -147,7 +154,7 @@ void downloadFSM(char* argv[], int portNumber) {
 			state = filename(argv, &pduBuffer, &server, portNumber, bufferSize, windowSize, &socketNum, &fnameRetry, &rcopySeqNum);
 			break;
 			case FILENAME_ACK:
-			state = filenameAck(&pduBuffer, &expected, &server, &socketNum, &fnameRetry, &serverSeqNum, &rcopySeqNum);
+			state = filenameAck(argv, &pduBuffer, &expected, &server, &socketNum, &fnameRetry, &fd, &rcopySeqNum);
 			break;
 			case INORDER:
 			// state = inorder();
@@ -162,6 +169,7 @@ void downloadFSM(char* argv[], int portNumber) {
 			break;
 		}
 	}
+	cleanSocket(socketNum);
 
 }
 
