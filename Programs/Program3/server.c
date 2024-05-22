@@ -36,7 +36,7 @@ void processClient(int socketNum, float err);
 int checkArgs(int argc, char *argv[]);
 void serverFSM(char* argv[], int mainServerSocket);
 STATE mainserver(pduPacket *pduBuffer, int *pduLen, int mainServerSocket, struct sockaddr_in6 *client);
-STATE filename(pduPacket *pduBuffer, int *pduLen, int mainServerSocket, struct sockaddr_in6 *client, FILE **fd);
+STATE filename(pduPacket *pduBuffer, int *pduLen, int mainServerSocket, struct sockaddr_in6 *client, FILE **fd, uint32_t *serverSeqNum);
 
 int main (int argc, char *argv[]) { 
 	int socketNum = 0;				
@@ -75,7 +75,7 @@ STATE mainserver(pduPacket *pduBuffer, int *pduLen, int mainServerSocket, struct
 
 }
 
-STATE filename(pduPacket *pduBuffer, int *pduLen, int mainServerSocket, struct sockaddr_in6 *client, FILE **fd) {
+STATE filename(pduPacket *pduBuffer, int *pduLen, int mainServerSocket, struct sockaddr_in6 *client, FILE **fd, uint32_t *serverSeqNum) {
 	char fileName[101];
 	uint8_t fnameAckPayload[1] = {1};
 	uint16_t fileNameLen;
@@ -83,7 +83,7 @@ STATE filename(pduPacket *pduBuffer, int *pduLen, int mainServerSocket, struct s
 	fileNameLen = *pduLen - (PDU_HEADER_LEN + 6);
 	memcpy(fileName, pduBuffer->payload+6, fileNameLen);
 	if((*fd = fopen(fileName, "wb")) == NULL) {
-		createPDU()
+		createPDU(pduBuffer, );
 		return DONE;
 	}
 
@@ -95,7 +95,8 @@ STATE filename(pduPacket *pduBuffer, int *pduLen, int mainServerSocket, struct s
 
 void serverFSM(char* argv[], int mainServerSocket) {
 	STATE state = MAINSERVER;
-	struct sockaddr_in6 client;		
+	struct sockaddr_in6 client;
+	uint32_t serverSeqNum = 0;		
 	pduPacket pduBuffer;
 	int pduLen;
 	FILE *fd;
@@ -108,7 +109,7 @@ void serverFSM(char* argv[], int mainServerSocket) {
 			state = mainserver(&pduBuffer, &pduLen, mainServerSocket, &client);
 			break;
 			case FILENAME:
-			state = filename(&pduBuffer, &pduLen, mainServerSocket, &client, &fd);
+			state = filename(&pduBuffer, &pduLen, mainServerSocket, &client, &fd, &serverSeqNum);
 			
 			break;
 			case OPEN:
