@@ -43,7 +43,7 @@ int readFromStdin(char * buffer);
 int checkArgs(int argc, char * argv[]);
 void downloadFSM(char* argv[], int portNumber);
 void cleanSocket(int socket);
-STATE filenameAck(char* argv[], pduPacket *pduBuffer, uint32_t *expected, struct sockaddr_in6 *server, int *socketNum, uint8_t *fnameRetry, int fd, uint32_t *rcopySeqNum);
+STATE filenameAck(char* argv[], pduPacket *pduBuffer, uint32_t *expected, struct sockaddr_in6 *server, int *socketNum, uint8_t *fnameRetry, FILE **fd, uint32_t *rcopySeqNum);
 STATE filename(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, int portNumber, uint16_t bufferSize, uint32_t windowSize, int *socketNum, uint8_t *fnameRetry, uint32_t *rcopySeqNum);
 
 
@@ -99,7 +99,7 @@ STATE filename(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, 
 
 }
 
-STATE filenameAck(char* argv[], pduPacket *pduBuffer, uint32_t *expected, struct sockaddr_in6 *server, int *socketNum, uint8_t *fnameRetry, int fd, uint32_t *rcopySeqNum) {
+STATE filenameAck(char* argv[], pduPacket *pduBuffer, uint32_t *expected, struct sockaddr_in6 *server, int *socketNum, uint8_t *fnameRetry, FILE **fd, uint32_t *rcopySeqNum) {
 	int pduLen;
 	uint32_t serverSeqNum;
 	int serverAddrLen = sizeof(struct sockaddr_in6);
@@ -112,11 +112,13 @@ STATE filenameAck(char* argv[], pduPacket *pduBuffer, uint32_t *expected, struct
 		return FILENAME;
 	}
 
-	/* try to open the file to write to */
-	if((*fd = open(argv[2], "wb")) == -1) {
+	// /* try to open the file to write to */
+	// *fd = fopen(argv[2], "wb");
+	if((*fd = fopen(argv[2], "wb")) == NULL) {
 		printf("Error opening file to write to\n");
 		return DONE;
 	}
+	
 	serverSeqNum = getHSeqNum((uint8_t *)pduBuffer);
 
 	/* got a packet, but it was a packet greater than seq 1 */
@@ -141,9 +143,11 @@ void downloadFSM(char* argv[], int portNumber) {
 	struct sockaddr_in6 server 	= {0};		// Supports 4 and 6 but requires IPv6 struct
 	uint16_t bufferSize 	= atoi(argv[4]);
 	uint32_t windowSize 	= atoi(argv[3]);
-	int socketNum, fd
+	int socketNum;
+	FILE *fd;
 	uint8_t fnameRetry		= 0;
-	uint32_t rcopySeqNum, serverSeqNum;
+	// uint32_t rcopySeqNum, serverSeqNum;
+	uint32_t rcopySeqNum;
 	uint32_t expected = 1;
 	pduPacket pduBuffer;
 	STATE state 			= FILENAME;

@@ -11,6 +11,7 @@
 #include <arpa/inet.h>
 
 #include "gethostbyname.h"
+#include "pollLib.h"
 #include "networks.h"
 #include "safeUtil.h"
 #include "pdu.h"
@@ -18,11 +19,11 @@
 #include <errno.h>
 
 typedef enum {
-	FILENAME, 
-	FILENAME_ACK,
-	INORDER, 
-	BUFFER, 
-	FLUSH, 
+	MAINSERVER,
+	FILENAME,
+	OPEN, 
+	CLOSED,
+	TEARDOWN,
 	DONE
 } STATE;
 
@@ -33,6 +34,9 @@ typedef enum {
 
 void processClient(int socketNum, float err);
 int checkArgs(int argc, char *argv[]);
+void serverFSM(char* argv[], int mainServerSocket);
+STATE mainserver(pduPacket *pduBuffer, int *pduLen, int mainServerSocket, struct sockaddr_in6 *client);
+STATE filename(pduPacket *pduBuffer, int *pduLen, int mainServerSocket, struct sockaddr_in6 *client, FILE **fd);
 
 int main (int argc, char *argv[]) { 
 	int socketNum = 0;				
@@ -43,19 +47,83 @@ int main (int argc, char *argv[]) {
 	err = atof(argv[1]);
 	sendErr_init(err, DROP_ON, FLIP_ON, DEBUG_ON, RSEED_OFF);
 	socketNum = udpServerSetup(portNumber);
-	serverFSM(argv, );
 
-	processClient(socketNum, err);
+	serverFSM(argv, socketNum);
+
+	// processClient(socketNum, err);
 	close(socketNum);
 
 	return 0;
 }
 
 
-
-void serverFSM(char* argv[], int portNumber) {
-	struct sockaddr_in6 client;		
+STATE mainserver(pduPacket *pduBuffer, int *pduLen, int mainServerSocket, struct sockaddr_in6 *client) {
 	int clientAddrLen = sizeof(client);	
+	STATE nextState = MAINSERVER;
+	int pid;
+
+	pollCall(-1);
+	*pduLen = safeRecvfrom(mainServerSocket, pduBuffer, MAX_PDU, 0, (struct sockaddr *) client, &clientAddrLen);
+
+	pid = fork();
+	if(pid == -1) {
+		printf("Error when forking\n");
+	}
+	/* child process */
+	if(pid == 0) nextState = FILENAME;
+	return nextState;
+
+}
+
+STATE filename(pduPacket *pduBuffer, int *pduLen, int mainServerSocket, struct sockaddr_in6 *client, FILE **fd) {
+	char fileName[101];
+	uint8_t fnameAckPayload[1] = {1};
+	uint16_t fileNameLen;
+
+	fileNameLen = *pduLen - (PDU_HEADER_LEN + 6);
+	memcpy(fileName, pduBuffer->payload+6, fileNameLen);
+	if((*fd = fopen(fileName, "wb")) == NULL) {
+		createPDU()
+		return DONE;
+	}
+
+
+
+	return MAINSERVER;
+
+}
+
+void serverFSM(char* argv[], int mainServerSocket) {
+	STATE state = MAINSERVER;
+	struct sockaddr_in6 client;		
+	pduPacket pduBuffer;
+	int pduLen;
+	FILE *fd;
+
+	addToPollSet(mainServerSocket);
+
+		while(state != DONE) {
+		switch(state) {
+			case MAINSERVER:
+			state = mainserver(&pduBuffer, &pduLen, mainServerSocket, &client);
+			break;
+			case FILENAME:
+			state = filename(&pduBuffer, &pduLen, mainServerSocket, &client, &fd);
+			
+			break;
+			case OPEN:
+			// state = inorder();
+			break;
+			case CLOSED:
+			// state = buffer();
+			break;
+			case TEARDOWN:
+			// state = flush();
+			break;
+			case DONE:
+			break;
+		}
+	}
 
 }
 void processClient(int socketNum, float err) {
