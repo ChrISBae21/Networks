@@ -16,6 +16,18 @@
 #include "cpe464.h"
 #endif
 
+
+
+
+int safeSocket() {
+	int socketNum;
+	if ((socketNum = socket(AF_INET6,SOCK_DGRAM,0)) < 0) {
+			perror("socket() call error");
+			exit(-1);
+	}
+	return socketNum;
+}
+
 int safeRecvfrom(int socketNum, void * buf, int len, int flags, struct sockaddr *srcAddr, int * addrLen) {
 	int returnValue = 0;
 	if ((returnValue = recvfrom(socketNum, buf, (size_t) len, flags, srcAddr, (socklen_t *) addrLen)) < 0) {

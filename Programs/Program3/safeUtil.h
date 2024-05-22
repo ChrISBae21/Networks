@@ -7,7 +7,7 @@
 #define __SAFEUTIL_H__
 
 struct sockaddr;
-
+int safeSocket();
 int safeRecvfrom(int socketNum, void * buf, int len, int flags, struct sockaddr *srcAddr, int * addrLen);
 int safeSendto(int socketNum, void * buf, int len, int flags, struct sockaddr *srcAddr, int addrLen);
 int safeRecv(int socketNum, void * buf, int len, int flags);

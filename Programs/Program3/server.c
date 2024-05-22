@@ -36,7 +36,7 @@ void processClient(int socketNum, float err);
 int checkArgs(int argc, char *argv[]);
 void serverFSM(char* argv[], int mainServerSocket);
 STATE mainserver(pduPacket *pduBuffer, int *pduLen, int mainServerSocket, struct sockaddr_in6 *client);
-STATE filename(pduPacket *pduBuffer, int *pduLen, int mainServerSocket, struct sockaddr_in6 *client, FILE **fd, uint32_t *serverSeqNum);
+STATE filename(int *childSocket, pduPacket *pduBuffer, int *pduLen, int mainServerSocket, struct sockaddr_in6 *client, FILE **fd, uint32_t *serverSeqNum);
 
 int main (int argc, char *argv[]) { 
 	int socketNum = 0;				
@@ -52,7 +52,7 @@ int main (int argc, char *argv[]) {
 
 	// processClient(socketNum, err);
 	close(socketNum);
-
+	// waitpid(-1)
 	return 0;
 }
 
@@ -66,6 +66,10 @@ STATE mainserver(pduPacket *pduBuffer, int *pduLen, int mainServerSocket, struct
 	*pduLen = safeRecvfrom(mainServerSocket, pduBuffer, MAX_PDU, 0, (struct sockaddr *) client, &clientAddrLen);
 
 	pid = fork();
+
+	/* debug */
+	printf("forked\n");
+
 	if(pid == -1) {
 		printf("Error when forking\n");
 	}
@@ -75,26 +79,36 @@ STATE mainserver(pduPacket *pduBuffer, int *pduLen, int mainServerSocket, struct
 
 }
 
-STATE filename(pduPacket *pduBuffer, int *pduLen, int mainServerSocket, struct sockaddr_in6 *client, FILE **fd, uint32_t *serverSeqNum) {
+STATE filename(int *childSocket, pduPacket *pduBuffer, int *pduLen, int mainServerSocket, struct sockaddr_in6 *client, FILE **fd, uint32_t *serverSeqNum) {
 	char fileName[101];
 	uint8_t fnameAckPayload[1] = {1};
 	uint16_t fileNameLen;
 
 	fileNameLen = *pduLen - (PDU_HEADER_LEN + 6);
 	memcpy(fileName, pduBuffer->payload+6, fileNameLen);
-	if((*fd = fopen(fileName, "wb")) == NULL) {
-		createPDU(pduBuffer, );
+	*pduLen = createPDU((uint8_t *)pduBuffer, *serverSeqNum, FLAG_FILENAME_ACK, fnameAckPayload, 1);
+	/* debug */
+	printf("\tpduLen: %d\n", *pduLen);
+
+	if((*fd = fopen(fileName, "rb")) == NULL) {
+		/* debug */
+		printf("file didn't exist\n");
+
+		pduBuffer->payload[0] = 0;
+		safeSendto(mainServerSocket, pduBuffer, *pduLen, 0, (struct sockaddr *) client, sizeof(struct sockaddr_in6));
 		return DONE;
 	}
-
-
-
-	return MAINSERVER;
+	*childSocket = safeSocket();
+	safeSendto(*childSocket, pduBuffer, *pduLen, 0, (struct sockaddr *) client, sizeof(struct sockaddr_in6));
+	/* debug */
+	printf("sent filename ack to rcopy\n");
+	return OPEN;
 
 }
 
 void serverFSM(char* argv[], int mainServerSocket) {
 	STATE state = MAINSERVER;
+	int childSocket;
 	struct sockaddr_in6 client;
 	uint32_t serverSeqNum = 0;		
 	pduPacket pduBuffer;
@@ -106,25 +120,35 @@ void serverFSM(char* argv[], int mainServerSocket) {
 		while(state != DONE) {
 		switch(state) {
 			case MAINSERVER:
+			/* debug */
+			printf("MAINSERVER\n");
 			state = mainserver(&pduBuffer, &pduLen, mainServerSocket, &client);
 			break;
 			case FILENAME:
-			state = filename(&pduBuffer, &pduLen, mainServerSocket, &client, &fd, &serverSeqNum);
-			
+			/* debug */
+			printf("FILENAME\n");
+			state = filename(&childSocket, &pduBuffer, &pduLen, mainServerSocket, &client, &fd, &serverSeqNum);
 			break;
 			case OPEN:
+			state = DONE;
 			// state = inorder();
 			break;
 			case CLOSED:
+			state = DONE;
 			// state = buffer();
 			break;
 			case TEARDOWN:
+			state = DONE;
 			// state = flush();
 			break;
 			case DONE:
 			break;
 		}
 	}
+
+	/* debug */
+	printf("done\n");
+	removeFromPollSet(mainServerSocket);
 
 }
 void processClient(int socketNum, float err) {
