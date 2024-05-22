@@ -21,29 +21,28 @@ static BufferItem *buffer;
 
 /* creates a buffer of length bufferLen */
 void initBuffer(uint32_t bufferLen) {
-    uint32_t index;
     buffer = sCalloc(bufferLen, sizeof(BufferItem));
 }
 
 /* adds to the buffer */
-void addToBuffer(uint8_t *pdu, uint8_t pduLen, uint32_t sequenceNumber) {
+void addToBuffer(pduPacket *pdu, uint8_t pduLen, uint32_t sequenceNumber) {
     uint32_t index = sequenceNumber % buffer->buffSize;
     buffer[index].seq = sequenceNumber;
     buffer[index].valid = 1;
     buffer[index].pduLen = pduLen;
-    memcpy(buffer[index].pdu, pdu, pduLen);
+    memcpy(&(buffer[index].pduPacket), pdu, pduLen);
 }
 
 /* removes from the buffer */
 void removeFromBuffer(uint32_t sequenceNumber) {
-    uint32_t index = sequenceNumber % buffer->bufferSize;
+    uint32_t index = sequenceNumber % buffer->buffSize;
     buffer[index].valid = 0;
 }
 
 /* gets the pdu from the buffer */
-uint32_t getPDUFromBuffer(uint8_t *pdu, uint32_t sequenceNumber) {
+uint32_t getPDUFromBuffer(pduPacket *pdu, uint32_t sequenceNumber) {
     uint32_t index = sequenceNumber % buffer->buffSize;
-    memcpy(pdu, buffer[index].pdu, buffer[index].pduLen);
+    memcpy(pdu, &(buffer[index].pduPacket), buffer[index].pduLen);
     return buffer[index].pduLen;
 }
 
@@ -70,7 +69,7 @@ void initWindow(uint32_t windowLen) {
 }
 
 /* adds a PDU in the window */
-void storePDUWindow(uint8_t *pdu, uint32_t pduLen, uint32_t sequenceNumber) {
+void storePDUWindow(pduPacket *pdu, uint32_t pduLen, uint32_t sequenceNumber) {
     if(sequenceNumber != sWindow->current) {
         printf("ERROR IN storePDUWindow()\n");
         exit(-1);
@@ -80,12 +79,12 @@ void storePDUWindow(uint8_t *pdu, uint32_t pduLen, uint32_t sequenceNumber) {
 }
 
 /* gets the PDU within the window */
-uint32_t getPDUWindow(uint8_t *pdu, uint32_t sequenceNumber) {
+uint32_t getPDUWindow(pduPacket *pdu, uint32_t sequenceNumber) {
     if(sequenceNumber < sWindow->lower) {
         printf("ERROR IN getPDUWindow\n");
         exit(-1);
     }
-    getPDUFromBuffer(pdu, sequenceNumber);
+    return getPDUFromBuffer(pdu, sequenceNumber);
 }
 
 /* returns the incremented value of current */

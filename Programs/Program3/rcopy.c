@@ -15,6 +15,7 @@
 #include <netinet/in.h>
 #include <netdb.h>
 
+#include "pollLib.h"
 #include "gethostbyname.h"
 #include "networks.h"
 #include "safeUtil.h"
@@ -22,39 +23,148 @@
 #include "cpe464.h"
 
 
-#define MAXBUF 80
 
-static uint32_t sequenceNumber = 0;
+#define MAXBUF 1400
+#define TIMEOUT -1
+#define ONE_SEC 1000
+
+typedef enum {
+	FILENAME, 
+	FILENAME_ACK,
+	INORDER, 
+	BUFFER, 
+	FLUSH, 
+	DONE
+} STATE;
 
 
 void talkToServer(int socketNum, struct sockaddr_in6 * server);
 int readFromStdin(char * buffer);
 int checkArgs(int argc, char * argv[]);
+void downloadFSM(char* argv[], int portNumber);
+void cleanSocket(int socket);
+STATE filenameAck(pduPacket *pduBuffer, uint32_t *expected, struct sockaddr_in6 *server, int *socketNum, uint8_t *fnameRetry, uint32_t *serverSeqNum, uint32_t *rcopySeqNum);
+STATE filename(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, int portNumber, uint16_t bufferSize, uint32_t windowSize, int *socketNum, uint8_t *fnameRetry, uint32_t *rcopySeqNum);
 
+
+// <from-filename> <to-filename> <window-size> <buffer-size> <error-rate> <IP> <port #>
 
 int main (int argc, char *argv[]) {
-	int socketNum = 0;				
-	struct sockaddr_in6 server;		// Supports 4 and 6 but requires IPv6 struct
 	int portNumber = 0;
-	float err = 0;
-	portNumber = checkArgs(argc, argv);
-	err = atof(argv[5]);
-	sendErr_init(err, DROP_ON, FLIP_ON, DEBUG_ON, RSEED_OFF);
 
-	rcopyInit(&socketNum, &server)
+	portNumber = checkArgs(argc, argv);
+	
+	sendErr_init(atof(argv[5]), DROP_ON, FLIP_ON, DEBUG_ON, RSEED_OFF);
+	setupPollSet();
+	downloadFSM(argv, portNumber);
 	// socketNum = setupUdpClientToServer(&server, argv[2], portNumber);
 	
-	talkToServer(socketNum, &server);
+	// talkToServer(socketNum, &server);
 	
-	close(socketNum);
+	// close(socketNum);
 
 	return 0;
 }
 
-int rcopyInit(char* fName, int *socketNum, struct sockaddr_in6 *server, char* hostName, int portNumber) {
-	*socketNum = setupUdpClientToServer(&server, hostName, portNumber);
+
+STATE filename(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, int portNumber, uint16_t bufferSize, uint32_t windowSize, int *socketNum, uint8_t *fnameRetry, uint32_t *rcopySeqNum) {
+	int pduLen, payloadLen;
+
+	if(*fnameRetry > 9) return DONE;
+
+	/* open the socket */
+	*socketNum = setupUdpClientToServer(server, argv[6], portNumber);
+	addToPollSet(*socketNum);
+
+	/* create the filename payload */
+	memcpy(pduBuffer->payload, &bufferSize, 2);
+	memcpy(pduBuffer->payload + 2, &windowSize, 4);
+	memcpy(pduBuffer->payload + 6, argv[1], strlen(argv[1]));
+	payloadLen = 6 + strlen(argv[1]);
+
+	/* create the PDU */
+	pduLen = createPDU((uint8_t*)pduBuffer, *rcopySeqNum, FLAG_FILENAME, pduBuffer->payload, payloadLen);
+	/* send the PDU */
+	safeSendto(*socketNum, pduBuffer, pduLen, 0, (struct sockaddr *) server, sizeof(struct sockaddr_in6));
+
+	/* timed out */
+	if(pollCall(ONE_SEC) == TIMEOUT) {
+		cleanSocket(*socketNum);
+		(*fnameRetry)++;
+		return FILENAME;
+	}
+
+	/* Received something */
+	return FILENAME_ACK;
 
 }
+
+STATE filenameAck(pduPacket *pduBuffer, uint32_t *expected, struct sockaddr_in6 *server, int *socketNum, uint8_t *fnameRetry, uint32_t *serverSeqNum, uint32_t *rcopySeqNum) {
+	int pduLen;
+	int serverAddrLen = sizeof(struct sockaddr_in6);
+
+	pduLen = safeRecvfrom(*socketNum, pduBuffer, MAX_PDU, 0, (struct sockaddr *) server, &serverAddrLen);
+	/* corrupted packet */
+	if(in_cksum((unsigned short*)pduBuffer, pduLen))  {
+		cleanSocket(*socketNum);
+		(*fnameRetry)++;
+		return FILENAME;
+	}
+	*serverSeqNum = getHSeqNum((uint8_t *)pduBuffer);
+
+	/* got a packet, but it was a packet greater than seq 1 */
+	if(*serverSeqNum > 1) return BUFFER;
+
+	/* got first data packet */
+	if(*serverSeqNum == 1) {
+		(*expected)++;
+		return INORDER;
+	}
+	/* got the filename ack */
+	if(pduBuffer->payload[0] && (pduBuffer->flag == FLAG_FILENAME_ACK)) return INORDER;
+	return DONE;
+}
+
+void cleanSocket(int socket) {
+	close(socket);
+	removeFromPollSet(socket);
+}
+
+void downloadFSM(char* argv[], int portNumber) {
+	struct sockaddr_in6 server 	= {0};		// Supports 4 and 6 but requires IPv6 struct
+	uint16_t bufferSize 	= atoi(argv[4]);
+	uint32_t windowSize 	= atoi(argv[3]);
+	int socketNum 			= 0;
+	uint8_t fnameRetry		= 0;
+	uint32_t rcopySeqNum, serverSeqNum;
+	uint32_t expected = 1;
+	pduPacket pduBuffer;
+	STATE state 			= FILENAME;
+
+	while(state != DONE) {
+		switch(state) {
+			case FILENAME:
+			state = filename(argv, &pduBuffer, &server, portNumber, bufferSize, windowSize, &socketNum, &fnameRetry, &rcopySeqNum);
+			break;
+			case FILENAME_ACK:
+			state = filenameAck(&pduBuffer, &expected, &server, &socketNum, &fnameRetry, &serverSeqNum, &rcopySeqNum);
+			break;
+			case INORDER:
+			// state = inorder();
+			break;
+			case BUFFER:
+			// state = buffer();
+			break;
+			case FLUSH:
+			// state = flush();
+			break;
+			case DONE:
+			break;
+		}
+	}
+
+}
+
 
 void talkToServer(int socketNum, struct sockaddr_in6 * server) {
 	int serverAddrLen = sizeof(struct sockaddr_in6);
@@ -64,7 +174,7 @@ void talkToServer(int socketNum, struct sockaddr_in6 * server) {
 	
 	buffer[0] = '\0';
 	while (buffer[0] != '.') {
-		dataLen = readFromStdin(payload);
+		// dataLen = readFromStdin(payload);
 		dataLen = createPDU((uint8_t *)buffer, 1, 1, (uint8_t *)payload, dataLen);
 		printf("Sending: \n---------------------------------------\n");
 		printPDU((uint8_t *)buffer, dataLen);
@@ -77,27 +187,6 @@ void talkToServer(int socketNum, struct sockaddr_in6 * server) {
 	}
 }
 
-int readFromStdin(char * buffer) {
-	char aChar = 0;
-	int inputLen = 0;        
-	
-	// Important you don't input more characters than you have space 
-	buffer[0] = '\0';
-	printf("Enter data: ");
-	while (inputLen < (MAXBUF - 1) && aChar != '\n') {
-		aChar = getchar();
-		if (aChar != '\n') {
-			buffer[inputLen] = aChar;
-			inputLen++;
-		}
-	}
-	
-	// Null terminate the string
-	buffer[inputLen] = '\0';
-	inputLen++;
-	
-	return inputLen;
-}
 
 int checkArgs(int argc, char * argv[]) {
     int portNumber = 0;

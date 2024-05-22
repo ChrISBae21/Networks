@@ -46,3 +46,13 @@ void printPDU(uint8_t * aPDU, int pduLength) {
     printf("Payload Length: %d\n", pduLength - 7);
 
 }
+
+uint32_t getHSeqNum(uint8_t *pduBuffer) {
+	uint32_t nSeqNum;
+    memcpy(&nSeqNum, pduBuffer, 4);
+    return ntohl(nSeqNum);
+}
+
+uint8_t getFlag(uint8_t *pduBuffer) {
+    return pduBuffer[6];
+}
