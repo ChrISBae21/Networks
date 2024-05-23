@@ -43,7 +43,7 @@ int readFromStdin(char * buffer);
 int checkArgs(int argc, char * argv[]);
 void downloadFSM(char* argv[], int portNumber);
 void cleanSocket(int socket);
-STATE filenameAck(char* argv[], pduPacket *pduBuffer, uint32_t *expected, struct sockaddr_in6 *server, int *socketNum, uint8_t *fnameRetry, FILE **fd, uint32_t *rcopySeqNum);
+STATE filenameAck(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, int *socketNum, uint8_t *fnameRetry, FILE **fd, uint32_t *rcopySeqNum);
 STATE filename(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, int portNumber, uint16_t bufferSize, uint32_t windowSize, int *socketNum, uint8_t *fnameRetry, uint32_t *rcopySeqNum);
 
 
@@ -99,9 +99,8 @@ STATE filename(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, 
 
 }
 
-STATE filenameAck(char* argv[], pduPacket *pduBuffer, uint32_t *expected, struct sockaddr_in6 *server, int *socketNum, uint8_t *fnameRetry, FILE **fd, uint32_t *rcopySeqNum) {
+STATE filenameAck(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, int *socketNum, uint8_t *fnameRetry, FILE **fd, uint32_t *rcopySeqNum) {
 	int pduLen;
-	uint32_t serverSeqNum;
 	int serverAddrLen = sizeof(struct sockaddr_in6);
 
 	pduLen = safeRecvfrom(*socketNum, pduBuffer, MAX_PDU, 0, (struct sockaddr *) server, &serverAddrLen);
@@ -113,35 +112,22 @@ STATE filenameAck(char* argv[], pduPacket *pduBuffer, uint32_t *expected, struct
 		return FILENAME;
 	}
 
-	// /* try to open the file to write to */
-	// *fd = fopen(argv[2], "wb");
-	if((*fd = fopen(argv[2], "wb")) == NULL) {
+	/* try to open the file to write to */
+	if((*fd = fopen(argv[2], "r")) == NULL) {
+		cleanSocket(*socketNum);
 		printf("Error opening file to write to\n");
 		return DONE;
 	}
+	fclose(*fd);
+	*fd = fopen(argv[2], "w");
 	
-	serverSeqNum = getHSeqNum((uint8_t *)pduBuffer);
 
-	// /* got a packet, but it was a packet greater than seq 1 */
-	// if(serverSeqNum > 1) {
-	// 	/* debug */
-	// 	printf("Seq Greater than 1\n");
-	// 	return BUFFER;
-	// }
-	// /* got first data packet */
-	// if(serverSeqNum == 1) {
-	// 	/* debug */
-	// 	printf("Seq Equals 1\n");
-	// 	(*expected)++;
-	// 	return INORDER;
-	// }
-	
-	/* got the filename ack */
-	if(!pduBuffer->payload[0] && (pduBuffer->flag == FLAG_FILENAME_ACK)) {
+	/* Filename Ack is bad */
+	if(!pduBuffer->payload[0] && (pduBuffer->flag == FLAG_FILENAME_ACK))  {
+		printf("File on server doesn't exist\n");
+		cleanSocket(*socketNum);
 		return DONE;
 	}
-	/* debug */
-	printf("Got Bad Filename Ack\n");
 	return INORDER;
 }
 
@@ -157,8 +143,7 @@ void downloadFSM(char* argv[], int portNumber) {
 	int socketNum;
 	FILE *fd;
 	uint8_t fnameRetry		= 0;
-	// uint32_t rcopySeqNum, serverSeqNum;
-	uint32_t rcopySeqNum;
+	uint32_t rcopySeqNum = 0;
 	uint32_t expected = 1;
 	pduPacket pduBuffer;
 	STATE state 			= FILENAME;
@@ -166,14 +151,10 @@ void downloadFSM(char* argv[], int portNumber) {
 	while(state != DONE) {
 		switch(state) {
 			case FILENAME:
-			/* debug */
-			printf("FILENAME\n");
 			state = filename(argv, &pduBuffer, &server, portNumber, bufferSize, windowSize, &socketNum, &fnameRetry, &rcopySeqNum);
 			break;
 			case FILENAME_ACK:
-			/* debug */
-			printf("FILENAME ACK\n");
-			state = filenameAck(argv, &pduBuffer, &expected, &server, &socketNum, &fnameRetry, &fd, &rcopySeqNum);
+			state = filenameAck(argv, &pduBuffer, &server, &socketNum, &fnameRetry, &fd, &rcopySeqNum);
 			break;
 			case INORDER:
 			state = DONE;

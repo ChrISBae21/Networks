@@ -17,6 +17,8 @@
 #include "pdu.h"
 #include "cpe464.h"
 #include <errno.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 typedef enum {
 	MAINSERVER,
@@ -34,9 +36,9 @@ typedef enum {
 
 void processClient(int socketNum, float err);
 int checkArgs(int argc, char *argv[]);
-void serverFSM(char* argv[], int mainServerSocket);
+void serverFSM(char* argv[], int mainServerSocket, float err);
 STATE mainserver(pduPacket *pduBuffer, int *pduLen, int mainServerSocket, struct sockaddr_in6 *client);
-STATE filename(int *childSocket, pduPacket *pduBuffer, int *pduLen, int mainServerSocket, struct sockaddr_in6 *client, FILE **fd, uint32_t *serverSeqNum);
+STATE filename(int *childSocket, pduPacket *pduBuffer, int *pduLen, int mainServerSocket, struct sockaddr_in6 *client, FILE **fd, uint32_t *serverSeqNum, float err);
 
 int main (int argc, char *argv[]) { 
 	int socketNum = 0;				
@@ -48,11 +50,11 @@ int main (int argc, char *argv[]) {
 	sendErr_init(err, DROP_ON, FLIP_ON, DEBUG_ON, RSEED_OFF);
 	socketNum = udpServerSetup(portNumber);
 
-	serverFSM(argv, socketNum);
+	serverFSM(argv, socketNum, err);
 
 	// processClient(socketNum, err);
 	close(socketNum);
-	// waitpid(-1)
+		
 	return 0;
 }
 
@@ -61,7 +63,9 @@ STATE mainserver(pduPacket *pduBuffer, int *pduLen, int mainServerSocket, struct
 	STATE nextState = MAINSERVER;
 	int pid;
 	int clientAddrLen = sizeof(*client);	
-	
+	int status;
+
+	waitpid(-1, &status, WNOHANG);
 	pollCall(-1);
 	*pduLen = safeRecvfrom(mainServerSocket, pduBuffer, MAX_PDU, 0, (struct sockaddr *) client, &clientAddrLen);
 
@@ -77,26 +81,36 @@ STATE mainserver(pduPacket *pduBuffer, int *pduLen, int mainServerSocket, struct
 
 }
 
-STATE filename(int *childSocket, pduPacket *pduBuffer, int *pduLen, int mainServerSocket, struct sockaddr_in6 *client, FILE **fd, uint32_t *serverSeqNum) {
+STATE filename(int *childSocket, pduPacket *pduBuffer, int *pduLen, int mainServerSocket, struct sockaddr_in6 *client, FILE **fd, uint32_t *serverSeqNum, float err) {
 	char fileName[101];
 	uint8_t fnameAckPayload[1] = {0};
 
+	
+	removeFromPollSet(mainServerSocket);
+	close(mainServerSocket);		
+	sendErr_init(err, DROP_ON, FLIP_ON, DEBUG_ON, RSEED_OFF);
+
+	if(in_cksum((unsigned short*)pduBuffer, *pduLen))  {
+		return DONE;
+	}
 	/* grab the file name */
 
 	getFromFileName(pduBuffer, *pduLen, fileName);
+	
+	/* create a new socket */
+	*childSocket = safeSocket();
 
 	/* check if the file exists */
 	if((*fd = fopen(fileName, "rb")) == NULL) {
 
 		*pduLen = createPDU((uint8_t *)pduBuffer, *serverSeqNum, FLAG_FILENAME_ACK, fnameAckPayload, 1);
-		safeSendto(mainServerSocket, pduBuffer, *pduLen, 0, (struct sockaddr *) client, sizeof(*client));
+		safeSendto(*childSocket, pduBuffer, *pduLen, 0, (struct sockaddr *) client, sizeof(*client));
 		return DONE;
 	}
 
+
 	fnameAckPayload[0] = 1;
 	*pduLen = createPDU((uint8_t *)pduBuffer, *serverSeqNum, FLAG_FILENAME_ACK, fnameAckPayload, 1);
-	/* create a new socket */
-	*childSocket = safeSocket();
 	/* sends a good file name packet */
 	safeSendto(*childSocket, pduBuffer, *pduLen, 0, (struct sockaddr *) client, sizeof(*client));
 
@@ -104,7 +118,7 @@ STATE filename(int *childSocket, pduPacket *pduBuffer, int *pduLen, int mainServ
 
 }
 
-void serverFSM(char* argv[], int mainServerSocket) {
+void serverFSM(char* argv[], int mainServerSocket, float err) {
 	STATE state = MAINSERVER;
 	int childSocket;
 	struct sockaddr_in6 client;
@@ -121,7 +135,7 @@ void serverFSM(char* argv[], int mainServerSocket) {
 				state = mainserver(&pduBuffer, &pduLen, mainServerSocket, &client);
 				break;
 				case FILENAME:
-				state = filename(&childSocket, &pduBuffer, &pduLen, mainServerSocket, &client, &fd, &serverSeqNum);
+				state = filename(&childSocket, &pduBuffer, &pduLen, mainServerSocket, &client, &fd, &serverSeqNum, err);
 				break;
 				case OPEN:
 				state = DONE;
