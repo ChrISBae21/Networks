@@ -56,3 +56,10 @@ uint32_t getHSeqNum(uint8_t *pduBuffer) {
 uint8_t getFlag(uint8_t *pduBuffer) {
     return pduBuffer[6];
 }
+
+void getFromFileName(pduPacket *pduBuffer, int pduLen, char *fileName) {
+    uint16_t fileNameLen;
+    fileNameLen = pduLen - (PDU_HEADER_LEN + 6);
+	memcpy(fileName, pduBuffer->payload+6, fileNameLen);
+	fileName[fileNameLen] = '\0';
+}

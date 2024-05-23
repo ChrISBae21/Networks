@@ -70,6 +70,7 @@ int main (int argc, char *argv[]) {
 STATE filename(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, int portNumber, uint16_t bufferSize, uint32_t windowSize, int *socketNum, uint8_t *fnameRetry, uint32_t *rcopySeqNum) {
 	int pduLen, payloadLen;
 
+	printf("Count: %d\n", *fnameRetry);
 	if(*fnameRetry > 9) return DONE;
 
 	/* open the socket */
@@ -89,15 +90,10 @@ STATE filename(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, 
 
 	/* timed out */
 	if(pollCall(ONE_SEC) == TIMEOUT) {
-		/* debug */
-		printf("Timeout\n");
 		cleanSocket(*socketNum);
 		(*fnameRetry)++;
 		return FILENAME;
 	}
-
-	/* debug */
-	printf("Got a Packet\n");
 	/* Received something */
 	return FILENAME_ACK;
 
@@ -109,10 +105,9 @@ STATE filenameAck(char* argv[], pduPacket *pduBuffer, uint32_t *expected, struct
 	int serverAddrLen = sizeof(struct sockaddr_in6);
 
 	pduLen = safeRecvfrom(*socketNum, pduBuffer, MAX_PDU, 0, (struct sockaddr *) server, &serverAddrLen);
+	
 	/* corrupted packet */
 	if(in_cksum((unsigned short*)pduBuffer, pduLen))  {
-		/* debug */
-		printf("Corrupted Packet\n");
 		cleanSocket(*socketNum);
 		(*fnameRetry)++;
 		return FILENAME;
@@ -127,28 +122,27 @@ STATE filenameAck(char* argv[], pduPacket *pduBuffer, uint32_t *expected, struct
 	
 	serverSeqNum = getHSeqNum((uint8_t *)pduBuffer);
 
-	/* got a packet, but it was a packet greater than seq 1 */
-	if(serverSeqNum > 1) {
-		/* debug */
-		printf("Seq Greater than 1\n");
-		return BUFFER;
-	}
-	/* got first data packet */
-	if(serverSeqNum == 1) {
-		/* debug */
-		printf("Seq Equals 1\n");
-		(*expected)++;
-		return INORDER;
-	}
+	// /* got a packet, but it was a packet greater than seq 1 */
+	// if(serverSeqNum > 1) {
+	// 	/* debug */
+	// 	printf("Seq Greater than 1\n");
+	// 	return BUFFER;
+	// }
+	// /* got first data packet */
+	// if(serverSeqNum == 1) {
+	// 	/* debug */
+	// 	printf("Seq Equals 1\n");
+	// 	(*expected)++;
+	// 	return INORDER;
+	// }
+	
 	/* got the filename ack */
-	if(pduBuffer->payload[0] && (pduBuffer->flag == FLAG_FILENAME_ACK)) {
-		/* debug */
-		printf("Got Good Filename Ack\n");
-		return INORDER;
+	if(!pduBuffer->payload[0] && (pduBuffer->flag == FLAG_FILENAME_ACK)) {
+		return DONE;
 	}
 	/* debug */
 	printf("Got Bad Filename Ack\n");
-	return DONE;
+	return INORDER;
 }
 
 void cleanSocket(int socket) {
