@@ -87,7 +87,7 @@ void mainserver(int mainServerSocket, float err) {
 
 STATE filename(int *childSocket, pduPacket *pduBuffer, int *pduLen, struct sockaddr_in6 *client, FILE **fd, uint32_t *serverSeqNum) {
 	char fileName[101];
-	uint8_t fnameAckPayload[1] = {0};
+	uint8_t fnameAckPayload = 0;
 
 
 	if(in_cksum((unsigned short*)pduBuffer, *pduLen))  {
@@ -103,16 +103,25 @@ STATE filename(int *childSocket, pduPacket *pduBuffer, int *pduLen, struct socka
 	/* check if the file exists */
 	if((*fd = fopen(fileName, "rb")) == NULL) {
 
-		*pduLen = createPDU((uint8_t *)pduBuffer, *serverSeqNum, FLAG_FILENAME_ACK, fnameAckPayload, 1);
+		*pduLen = createPDU((uint8_t *)pduBuffer, *serverSeqNum, FLAG_FILENAME_ACK, &fnameAckPayload, 1);
 		safeSendto(*childSocket, pduBuffer, *pduLen, 0, (struct sockaddr *) client, sizeof(*client));
 		return DONE;
 	}
 
-	fnameAckPayload[0] = 1;
-	*pduLen = createPDU((uint8_t *)pduBuffer, *serverSeqNum, FLAG_FILENAME_ACK, fnameAckPayload, 1);
+	fnameAckPayload = 1;
+	*pduLen = createPDU((uint8_t *)pduBuffer, (*serverSeqNum)++, FLAG_FILENAME_ACK, &fnameAckPayload, 1);
+	
+	/* DEBUG */
+	// *pduLen = createPDU((uint8_t *)pduBuffer, 0, FLAG_FILENAME_ACK, &fnameAckPayload, 1);
+	// safeSendto(*childSocket, pduBuffer, *pduLen, 0, (struct sockaddr *) client, sizeof(*client));
+
+	// *pduLen = createPDU((uint8_t *)pduBuffer, 1, FLAG_DATA, &fnameAckPayload, 1);
+	// safeSendto(*childSocket, pduBuffer, *pduLen, 0, (struct sockaddr *) client, sizeof(*client));
+
+	// *pduLen = createPDU((uint8_t *)pduBuffer, 2, FLAG_DATA, &fnameAckPayload, 1);
+	
 	/* sends a good file name packet */
 	safeSendto(*childSocket, pduBuffer, *pduLen, 0, (struct sockaddr *) client, sizeof(*client));
-
 	return OPEN;
 
 }
@@ -171,3 +180,4 @@ void handleZombies(int sig) {
 	int stat = 0;
 	while(waitpid(-1, &stat, WNOHANG) > 0);
 }
+	

@@ -16,7 +16,7 @@
 #define MAX_PDU (MAX_PAYLOAD + PDU_HEADER_LEN)
 
 typedef struct packet {
-    uint32_t seqNo;
+    uint32_t nSeqNo;
     uint16_t checksum;
     uint8_t flag;
     uint8_t payload[MAX_PAYLOAD];

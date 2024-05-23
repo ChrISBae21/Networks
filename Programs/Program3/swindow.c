@@ -19,6 +19,7 @@ static Window *sWindow;
 static BufferItem *buffer;
 uint32_t buffSize;
 
+/* The Buffer Struct contains host-order sequence number. PDU struct contains network-order sequence number*/
 
 /* creates a buffer of length bufferLen */
 void initBuffer(uint32_t bufferLen) {
@@ -27,9 +28,10 @@ void initBuffer(uint32_t bufferLen) {
 }
 
 /* adds to the buffer */
-void addToBuffer(pduPacket *pdu, uint8_t pduLen, uint32_t sequenceNumber) {
-    uint32_t index = sequenceNumber % buffSize;
-    buffer[index].seq = sequenceNumber;
+void addToBuffer(pduPacket *pdu, uint16_t pduLen, uint32_t sequenceNumber) {
+    uint32_t hseqNo = ntohl(sequenceNumber);
+    uint32_t index = hseqNo % buffSize;
+    buffer[index].hSeq = hseqNo;
     buffer[index].valid = 1;
     buffer[index].pduLen = pduLen;
     memcpy(&(buffer[index].pduPacket), pdu, pduLen);
