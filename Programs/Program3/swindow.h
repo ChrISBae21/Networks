@@ -13,6 +13,8 @@
 #include <netdb.h>
 #include "pdu.h"
 
+void initBuffer(uint32_t bufferLen);
+
 typedef struct window {
     uint32_t lower;
     uint32_t upper;
@@ -24,7 +26,6 @@ typedef struct bufferItem {
     uint8_t valid;
     uint32_t seq;
     uint32_t pduLen;
-    uint32_t buffSize;
     pduPacket pduPacket;
 
 } BufferItem;

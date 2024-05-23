@@ -122,7 +122,7 @@ void childFSM(pduPacket *pduBuffer, int *pduLen, struct sockaddr_in6 *client) {
 	int childSocket;
 	uint32_t serverSeqNum = 0;
 	FILE *fd;
-	
+
 		while(state != DONE) {
 			switch(state) {
 				case START:

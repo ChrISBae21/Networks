@@ -21,12 +21,18 @@
 #include "safeUtil.h"
 #include "pdu.h"
 #include "cpe464.h"
+#include "swindow.h"
 
 
 
 #define MAXBUF 1400
 #define TIMEOUT -1
 #define ONE_SEC 1000
+typedef struct bookKeep {
+	uint32_t highest;
+	uint32_t expected;
+	uint32_t rcopySeqNum;
+} BookKeep;
 
 typedef enum {
 	FILENAME, 
@@ -37,14 +43,17 @@ typedef enum {
 	DONE
 } STATE;
 
+BookKeep Book = {1, 1, 0};
+
+
 
 void talkToServer(int socketNum, struct sockaddr_in6 * server);
 int readFromStdin(char * buffer);
 int checkArgs(int argc, char * argv[]);
 void downloadFSM(char* argv[], int portNumber);
 void cleanSocket(int socket);
-STATE filenameAck(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, int *socketNum, uint8_t *fnameRetry, FILE **fd, uint32_t *rcopySeqNum);
-STATE filename(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, int portNumber, uint16_t bufferSize, uint32_t windowSize, int *socketNum, uint8_t *fnameRetry, uint32_t *rcopySeqNum);
+STATE filenameAck(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, uint32_t windowSize, int *socketNum, uint8_t *fnameRetry, FILE **fd);
+STATE filename(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, int portNumber, uint16_t bufferSize, uint32_t windowSize, int *socketNum, uint8_t *fnameRetry);
 
 
 // <from-filename> <to-filename> <window-size> <buffer-size> <error-rate> <IP> <port #>
@@ -67,7 +76,7 @@ int main (int argc, char *argv[]) {
 }
 
 
-STATE filename(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, int portNumber, uint16_t bufferSize, uint32_t windowSize, int *socketNum, uint8_t *fnameRetry, uint32_t *rcopySeqNum) {
+STATE filename(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, int portNumber, uint16_t bufferSize, uint32_t windowSize, int *socketNum, uint8_t *fnameRetry) {
 	int pduLen, payloadLen;
 
 	printf("Count: %d\n", *fnameRetry);
@@ -84,7 +93,7 @@ STATE filename(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, 
 	payloadLen = 6 + strlen(argv[1]);
 
 	/* create the PDU */
-	pduLen = createPDU((uint8_t*)pduBuffer, *rcopySeqNum, FLAG_FILENAME, pduBuffer->payload, payloadLen);
+	pduLen = createPDU((uint8_t*)pduBuffer, Book.rcopySeqNum, FLAG_FILENAME, pduBuffer->payload, payloadLen);
 	/* send the PDU */
 	safeSendto(*socketNum, pduBuffer, pduLen, 0, (struct sockaddr *) server, sizeof(struct sockaddr_in6));
 
@@ -99,7 +108,7 @@ STATE filename(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, 
 
 }
 
-STATE filenameAck(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, int *socketNum, uint8_t *fnameRetry, FILE **fd, uint32_t *rcopySeqNum) {
+STATE filenameAck(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, uint32_t windowSize, int *socketNum, uint8_t *fnameRetry, FILE **fd) {
 	int pduLen;
 	int serverAddrLen = sizeof(struct sockaddr_in6);
 
@@ -121,15 +130,37 @@ STATE filenameAck(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *serve
 	fclose(*fd);
 	*fd = fopen(argv[2], "w");
 	
-
 	/* Filename Ack is bad */
 	if(!pduBuffer->payload[0] && (pduBuffer->flag == FLAG_FILENAME_ACK))  {
 		printf("File on server doesn't exist\n");
 		cleanSocket(*socketNum);
 		return DONE;
 	}
-	return INORDER;
+
+	// initBuffer();
+
+	switch(pduBuffer->flag) {
+		/* packet is the filename ack */
+		case FLAG_FILENAME_ACK:
+		/* good file name */
+		if(pduBuffer->payload[0]) return INORDER;
+		return DONE;
+		break;
+		case FLAG_DATA:
+		if(pduBuffer->seqNo > 1)  {
+			Book.highest = pduBuffer->seqNo;	
+			return BUFFER;
+		}
+		Book.expected++;
+		return INORDER;
+		break;
+	}
+	return FILENAME_ACK;
 }
+
+// STATE inorder(FILE *fd, int socketNum, uint32_t *expected, ) {
+
+// }
 
 void cleanSocket(int socket) {
 	close(socket);
@@ -142,19 +173,20 @@ void downloadFSM(char* argv[], int portNumber) {
 	uint32_t windowSize 	= atoi(argv[3]);
 	int socketNum;
 	FILE *fd;
-	uint8_t fnameRetry		= 0;
-	uint32_t rcopySeqNum = 0;
-	uint32_t expected = 1;
+
+	uint8_t fnameRetry	= 0;
+	// uint32_t rcopySeqNum = 0;
+
 	pduPacket pduBuffer;
-	STATE state 			= FILENAME;
+	STATE state = FILENAME;
 
 	while(state != DONE) {
 		switch(state) {
 			case FILENAME:
-			state = filename(argv, &pduBuffer, &server, portNumber, bufferSize, windowSize, &socketNum, &fnameRetry, &rcopySeqNum);
+			state = filename(argv, &pduBuffer, &server, portNumber, bufferSize, windowSize, &socketNum, &fnameRetry);
 			break;
 			case FILENAME_ACK:
-			state = filenameAck(argv, &pduBuffer, &server, &socketNum, &fnameRetry, &fd, &rcopySeqNum);
+			state = filenameAck(argv, &pduBuffer, &server, windowSize, &socketNum, &fnameRetry, &fd);
 			break;
 			case INORDER:
 			state = DONE;

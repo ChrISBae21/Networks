@@ -17,16 +17,18 @@
 
 static Window *sWindow;
 static BufferItem *buffer;
+uint32_t buffSize;
 
 
 /* creates a buffer of length bufferLen */
 void initBuffer(uint32_t bufferLen) {
+    buffSize = bufferLen;
     buffer = sCalloc(bufferLen, sizeof(BufferItem));
 }
 
 /* adds to the buffer */
 void addToBuffer(pduPacket *pdu, uint8_t pduLen, uint32_t sequenceNumber) {
-    uint32_t index = sequenceNumber % buffer->buffSize;
+    uint32_t index = sequenceNumber % buffSize;
     buffer[index].seq = sequenceNumber;
     buffer[index].valid = 1;
     buffer[index].pduLen = pduLen;
@@ -35,20 +37,20 @@ void addToBuffer(pduPacket *pdu, uint8_t pduLen, uint32_t sequenceNumber) {
 
 /* removes from the buffer */
 void removeFromBuffer(uint32_t sequenceNumber) {
-    uint32_t index = sequenceNumber % buffer->buffSize;
+    uint32_t index = sequenceNumber % buffSize;
     buffer[index].valid = 0;
 }
 
 /* gets the pdu from the buffer */
 uint32_t getPDUFromBuffer(pduPacket *pdu, uint32_t sequenceNumber) {
-    uint32_t index = sequenceNumber % buffer->buffSize;
+    uint32_t index = sequenceNumber % buffSize;
     memcpy(pdu, &(buffer[index].pduPacket), buffer[index].pduLen);
     return buffer[index].pduLen;
 }
 
 /* checks if the pdu is valid */
 uint8_t checkValidPDU(uint32_t sequenceNumber) {
-    uint32_t index = sequenceNumber % buffer->buffSize;
+    uint32_t index = sequenceNumber % buffSize;
     return buffer[index].valid;
 }
 
