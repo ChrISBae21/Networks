@@ -74,14 +74,21 @@ void setFlag(pduPacket *pduBuffer, int pduLen, uint8_t flag) {
 
 
 
-uint16_t getWindowSizeFromPDU(pduPacket *pduBuffer) {
-    uint16_t bufferSize;
-    memcpy(&bufferSize, pduBuffer->payload, 2);
-    return bufferSize;
-}
-
-uint32_t getPayloadSizeFromPDU(pduPacket *pduBuffer) {
+uint32_t getWindowSizeFromPDU(pduPacket *pduBuffer) {
     uint32_t windowSize;
     memcpy(&windowSize, pduBuffer->payload+2, 4);
+    /* debug */
+	// printf("\nWindow Size: %d\n", windowSize);
     return windowSize;
+}
+
+uint16_t getPayloadSizeFromPDU(pduPacket *pduBuffer) {
+    uint16_t payloadSize;
+    /* debug */
+	// printf("\nBefore Payload Size\n");
+
+    memcpy(&payloadSize, pduBuffer->payload, 2);
+    /* debug */
+	// printf("\nPayload Size: %d\n", payloadSize);
+    return payloadSize;
 }

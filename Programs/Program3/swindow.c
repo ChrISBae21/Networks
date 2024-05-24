@@ -31,9 +31,14 @@ void initBuffer(uint32_t bufferLen, uint16_t packetLen) {
 
 /* adds to the buffer sequenceNumber is in host-order */
 void addToBuffer(pduPacket *pdu, uint16_t pduLen, uint32_t sequenceNumber) {
-    uint32_t hseqNo = ntohl(sequenceNumber);
-    uint32_t index = hseqNo % buffSize;
-    buffer[index].hSeq = hseqNo;
+    // uint32_t hseqNo = ntohl(sequenceNumber);
+    // uint32_t index = hseqNo % buffSize;
+    uint32_t index = sequenceNumber % buffSize;
+/* debug */
+	printf("\nIndex: %d\nCurrent: %d\n", index, sWindow->current);
+
+    // buffer[index].hSeq = hseqNo;
+    buffer[index].hSeq = sequenceNumber;
     buffer[index].valid = 1;
     buffer[index].pduLen = pduLen;
     memcpy(&(buffer[index].pduPacket), pdu, pduLen);
@@ -75,14 +80,19 @@ void teardownBuffer() {
 /* initializes a the window with size windowLen */
 void initWindow(uint32_t windowLen, uint16_t packetLen) {
     sWindow = sCalloc(1, sizeof(Window));
-    sWindow->upper = windowLen;
+    sWindow->current = 1;
+    sWindow->lower = 1;
+    sWindow->upper = windowLen + 1;
     sWindow->windowSize = windowLen;
 
     initBuffer(windowLen, packetLen);
 }
 
 /* adds a PDU in the window, sequencenumber is in host-order */
-void storePDUWindow(pduPacket *pdu, uint32_t pduLen, uint32_t sequenceNumber) {
+void storePDUWindow(pduPacket *pdu, uint16_t pduLen, uint32_t sequenceNumber) {
+    /* debug */
+	// printf("\nSeq Num: %d\nCurrent: %d\n", sequenceNumber, sWindow->current);
+
     if(sequenceNumber != sWindow->current) {
         printf("ERROR IN storePDUWindow()\n");
         exit(-1);
@@ -93,6 +103,7 @@ void storePDUWindow(pduPacket *pdu, uint32_t pduLen, uint32_t sequenceNumber) {
 
 /* gets the PDU within the window */
 uint32_t getPDUWindow(pduPacket *pdu, uint32_t sequenceNumber) {
+    
     if(sequenceNumber < sWindow->lower) {
         printf("ERROR IN getPDUWindow\n");
         exit(-1);
@@ -113,6 +124,8 @@ void slideWindow(uint32_t low) {
 }
 
 int getLowest(pduPacket *pduBuffer) {
+    /* debug */
+
     return getPDUFromBuffer(pduBuffer, sWindow->lower);
 }
 

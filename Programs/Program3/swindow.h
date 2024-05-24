@@ -38,7 +38,7 @@ uint8_t getWindowStatus();
 uint32_t getPDUWindow(pduPacket *pdu, uint32_t sequenceNumber);
 uint32_t getBufferSize();
 uint16_t getPayloadSize();
-void storePDUWindow(pduPacket *pdu, uint32_t pduLen, uint32_t sequenceNumber);
+void storePDUWindow(pduPacket *pdu, uint16_t pduLen, uint32_t sequenceNumber);
 void slideWindow(uint32_t low);
 int getLowest(pduPacket *pduBuffer);
 
