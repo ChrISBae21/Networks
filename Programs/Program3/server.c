@@ -24,6 +24,7 @@
 
 typedef struct bookKeep {
 	uint32_t serverSeqNum;
+	uint32_t eofSeqNo;
 } BookKeep;
 
 BookKeep serverBook = {0};
@@ -51,7 +52,7 @@ void mainserver(int mainServerSocket, float err);
 STATE filename(int *childSocket, pduPacket *pduBuffer, int *pduLen, struct sockaddr_in6 *client, FILE **fd);
 void handleZombies(int sig);
 void processSREJ(pduPacket *pduBuffer, int *pduLen, int childSocket, struct sockaddr_in6 *client);
-void processRR(pduPacket *pduBuffer);
+uint32_t processRR(pduPacket *pduBuffer);
 
 int main (int argc, char *argv[]) { 
 	int socketNum = 0;				
@@ -145,21 +146,23 @@ STATE filename(int *childSocket, pduPacket *pduBuffer, int *pduLen, struct socka
 STATE use(pduPacket *pduBuffer, int *pduLen, FILE **fd, int childSocket, struct sockaddr_in6 *client) {
 	uint8_t EOF_READY = 0;
 	uint8_t retryCount = 0;
+	uint8_t flag = FLAG_DATA;
 	size_t bytesRead = 0;
 	uint8_t fileData[MAX_PAYLOAD];
 
 	while(!EOF_READY) {
-		retryCount = 0;
 		/* window open */
 		while(getWindowStatus() && !EOF_READY) {
 			if( (bytesRead = fread(fileData, sizeof(uint8_t), getPayloadSize(), *fd)) < getPayloadSize() ) {
 				EOF_READY = 1;
+				serverBook.eofSeqNo = serverBook.serverSeqNum;
 			}
 			// CREATE PDU
-			*pduLen = createPDU(pduBuffer, serverBook.serverSeqNum++, FLAG_DATA, fileData, bytesRead);
+			*pduLen = createPDU(pduBuffer, serverBook.serverSeqNum++, flag, fileData, bytesRead);
 			// STORE PDU IN WINDOW
 			storePDUWindow(pduBuffer, *pduLen, ntohl(pduBuffer->nSeqNo));
 			// SEND DATA
+			// if(!EOF_READY)
 			safeSendto(childSocket, pduBuffer, *pduLen, 0, (struct sockaddr *) client, sizeof(*client));
 
 			while(pollCall(ZERO_SEC) != TIMEOUT) {
@@ -178,6 +181,7 @@ STATE use(pduPacket *pduBuffer, int *pduLen, FILE **fd, int childSocket, struct 
 		while(!getWindowStatus() && !EOF_READY) {
 			if(retryCount > 9) return DONE;
 			if(pollCall(ONE_SEC) != TIMEOUT) {
+				retryCount = 0;
 				switch(pduBuffer->flag) {
 				case FLAG_RR:
 				processRR(pduBuffer);
@@ -196,15 +200,18 @@ STATE use(pduPacket *pduBuffer, int *pduLen, FILE **fd, int childSocket, struct 
 			}
 		}
 	}
-
 	return TEARDOWN;
 }
 
-void processRR(pduPacket *pduBuffer) {
+
+/* returns the seq no RR'ed */
+uint32_t processRR(pduPacket *pduBuffer) {
 	uint32_t nRR;
 	memcpy(&nRR, pduBuffer->payload, 4);
 	slideWindow(ntohl(nRR));
+	return ntohl(nRR);
 }
+
 
 void processSREJ(pduPacket *pduBuffer, int *pduLen, int childSocket, struct sockaddr_in6 *client) {
 	uint32_t nSREJ;
@@ -216,11 +223,15 @@ void processSREJ(pduPacket *pduBuffer, int *pduLen, int childSocket, struct sock
 
 
 STATE teardown(pduPacket *pduBuffer, int *pduLen, int childSocket, struct sockaddr_in6 *client, FILE **fd) {
-	while() {
+	uint8_t done = 0;
+	uint8_t retryCount = 0;
+	while(!done) {
+		if(retryCount > 9) return DONE;
 		if(pollCall(ONE_SEC) != TIMEOUT) {
+			retryCount = 0;
 			switch(pduBuffer->flag) {
 			case FLAG_RR:
-			processRR(pduBuffer);
+			if(processRR(pduBuffer) == serverBook.serverSeqNum) done = 1;
 			break;
 			case FLAG_SREJ:
 			processSREJ(pduBuffer, pduLen, childSocket, client);
@@ -235,6 +246,24 @@ STATE teardown(pduPacket *pduBuffer, int *pduLen, int childSocket, struct sockad
 			// SEND LOWEST PACKET
 		}
 	}
+	retryCount = 0;
+	while(retryCount < 9) {
+		if(pollCall(ONE_SEC) != TIMEOUT) return DONE;
+		else {
+
+			retryCount++;
+		}
+	}
+	
+}
+
+void sendEOF(int childSocket, struct sockaddr_in6 *client, FILE **fd) {
+	pduPacket pduBuffer;
+	int pduLen;
+	pduLen = createPDU();
+	safeSendto(childSocket, &pduBuffer, *pduLen, 0, (struct sockaddr *) client, sizeof(*client));
+
+
 }
 
 void childFSM(pduPacket *pduBuffer, int *pduLen, struct sockaddr_in6 *client) {

@@ -10,6 +10,7 @@
 #define FLAG_DATA           16
 #define FLAG_SREJ_DATA      17
 #define FLAG_TIMEOUT_DATA   18
+#define FLAG_EOF_ACK        32
 
 #define MAX_PAYLOAD 1400
 #define PDU_HEADER_LEN 7

@@ -30,10 +30,13 @@
 #define TIMEOUT -1
 #define ONE_SEC 1000
 #define TEN_SEC 10000
+
+
 typedef struct bookKeep {
 	uint32_t highest;
 	uint32_t expected;
 	uint32_t rcopySeqNum;
+	uint8_t eof_flag;
 } BookKeep;
 
 typedef enum {
@@ -47,7 +50,7 @@ typedef enum {
 	DONE
 } STATE;
 
-BookKeep Book = {1, 1, 0};
+BookKeep Book = {1, 1, 0, 0};
 
 
 
@@ -60,6 +63,8 @@ STATE filenameAck(char* argv[], pduPacket *pduBuffer, int *pduLen, struct sockad
 STATE filename(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, int portNumber, uint16_t bufferSize, uint32_t windowSize, int *socketNum, uint8_t *fnameRetry);
 STATE filenameOk(pduPacket *pduBuffer, uint32_t windowSize, uint16_t packetSize, int *pduLen, int* socketNum, struct sockaddr_in6 *server, FILE **fd);
 STATE inorder(pduPacket *pduBuffer, int *pduLen, FILE **fd, int *socketNum, struct sockaddr_in6 *server);
+STATE teardown(pduPacket *pduBuffer, int *pduLen, FILE **fd, int *socketNum, struct sockaddr_in6 *server);
+
 int RR_SREJ(pduPacket *pduBuffer, int flag, uint32_t *nrr_srej);
 
 // <from-filename> <to-filename> <window-size> <buffer-size> <error-rate> <IP> <port #>
@@ -178,11 +183,6 @@ STATE filenameOk(pduPacket *pduBuffer, uint32_t windowSize, uint16_t packetSize,
 	return FILENAME_ACK;
 }
 
-
-
-
-
-
 STATE inorder(pduPacket *pduBuffer, int *pduLen, FILE **fd, int *socketNum, struct sockaddr_in6 *server) {
 	STATE returnValue = INORDER;
 	int serverAddrLen = sizeof(struct sockaddr_in6);
@@ -194,7 +194,8 @@ STATE inorder(pduPacket *pduBuffer, int *pduLen, FILE **fd, int *socketNum, stru
 	*pduLen = safeRecvfrom(*socketNum, pduBuffer, MAX_PDU, 0, (struct sockaddr *) server, &serverAddrLen);
 	hSeqNo = ntohl(pduBuffer->nSeqNo);
 
-	if(pduBuffer->flag == FLAG_EOF) return TEARDOWN;
+	if(Book.eof_flag) return TEARDOWN;
+	if(pduBuffer->flag == FLAG_EOF) Book.eof_flag = 1;
 
 	if(hSeqNo == Book.expected) {
 		// fwrite(pduBuffer->payload, sizeof(uint8_t), (size_t)(pduLen - PDU_HEADER_LEN), *fd);
@@ -218,12 +219,14 @@ STATE inorder(pduPacket *pduBuffer, int *pduLen, FILE **fd, int *socketNum, stru
 		safeSendto(*socketNum, pduBuffer, *pduLen, 0, (struct sockaddr *) server, sizeof(struct sockaddr_in6));
 		returnValue = INORDER;
 	}
-
 	return returnValue;
-
 }
 
-
+STATE teardown(pduPacket *pduBuffer, int *pduLen, FILE **fd, int *socketNum, struct sockaddr_in6 *server) {
+	*pduLen = createPDU(pduBuffer, Book.rcopySeqNum, FLAG_EOF_ACK, pduBuffer->payload, 0);
+	safeSendto(*socketNum, pduBuffer, PDU_HEADER_LEN, 0, (struct sockaddr *) server, sizeof(struct sockaddr_in6));
+	return DONE;
+}
 
 void downloadFSM(char* argv[], int portNumber) {
 	struct sockaddr_in6 server 	= {0};		// Supports 4 and 6 but requires IPv6 struct
@@ -261,13 +264,16 @@ void downloadFSM(char* argv[], int portNumber) {
 			state = DONE;
 			// state = flush();
 			break;
+			case TEARDOWN:
+			state = teardown(&pduBuffer, &pduLen, &fd, &socketNum, &server);
+			
 			case DONE:
 			break;
 		}
 	}
 	cleanSocket(socketNum);
-
 }
+
 
 int checkArgs(int argc, char * argv[]) {
     int portNumber = 0;
