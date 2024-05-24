@@ -176,6 +176,7 @@ STATE use(pduPacket *pduBuffer, int *pduLen, FILE **fd, int childSocket, struct 
 		}
 		/* window closed */
 		while(!getWindowStatus() && !EOF_READY) {
+			if(retryCount > 9) return DONE;
 			if(pollCall(ONE_SEC) != TIMEOUT) {
 				switch(pduBuffer->flag) {
 				case FLAG_RR:
@@ -214,7 +215,27 @@ void processSREJ(pduPacket *pduBuffer, int *pduLen, int childSocket, struct sock
 }
 
 
-
+STATE teardown(pduPacket *pduBuffer, int *pduLen, int childSocket, struct sockaddr_in6 *client, FILE **fd) {
+	while() {
+		if(pollCall(ONE_SEC) != TIMEOUT) {
+			switch(pduBuffer->flag) {
+			case FLAG_RR:
+			processRR(pduBuffer);
+			break;
+			case FLAG_SREJ:
+			processSREJ(pduBuffer, pduLen, childSocket, client);
+			break;
+			}
+		}
+		else {
+			retryCount++;
+			*pduLen = getLowest(pduBuffer);
+			setFlag(pduBuffer, *pduLen, FLAG_TIMEOUT_DATA);
+			safeSendto(childSocket, pduBuffer, *pduLen, 0, (struct sockaddr *) client, sizeof(*client));
+			// SEND LOWEST PACKET
+		}
+	}
+}
 
 void childFSM(pduPacket *pduBuffer, int *pduLen, struct sockaddr_in6 *client) {
 	STATE state = START;
@@ -230,13 +251,10 @@ void childFSM(pduPacket *pduBuffer, int *pduLen, struct sockaddr_in6 *client) {
 				state = filename(&childSocket, pduBuffer, pduLen, client, &fd);
 				break;
 				case USE:
-				// state = DONE;
-				// state = inorder();
-				break;
-				// state = buffer();
+				state = use(pduBuffer, pduLen, &fd childSocket, client);
 				break;
 				case TEARDOWN:
-				state = DONE;
+				state = teardown();
 				// state = flush();
 				break;
 				case DONE:

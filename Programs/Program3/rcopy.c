@@ -43,6 +43,7 @@ typedef enum {
 	INORDER, 
 	BUFFER, 
 	FLUSH, 
+	TEARDOWN,
 	DONE
 } STATE;
 
@@ -192,6 +193,8 @@ STATE inorder(pduPacket *pduBuffer, int *pduLen, FILE **fd, int *socketNum, stru
 	}
 	*pduLen = safeRecvfrom(*socketNum, pduBuffer, MAX_PDU, 0, (struct sockaddr *) server, &serverAddrLen);
 	hSeqNo = ntohl(pduBuffer->nSeqNo);
+
+	if(pduBuffer->flag == FLAG_EOF) return TEARDOWN;
 
 	if(hSeqNo == Book.expected) {
 		// fwrite(pduBuffer->payload, sizeof(uint8_t), (size_t)(pduLen - PDU_HEADER_LEN), *fd);
