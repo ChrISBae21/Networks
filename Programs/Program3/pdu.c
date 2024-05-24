@@ -14,22 +14,22 @@
 #include "pdu.h"
 
 
-int createPDU(uint8_t *pduBuffer, uint32_t sequenceNumber, uint8_t flag, uint8_t *payload, int payloadLen) {
+int createPDU(pduPacket *pduBuffer, uint32_t sequenceNumber, uint8_t flag, uint8_t *payload, int payloadLen) {
     unsigned short checksum;
     int pduLength = 7;
-    uint32_t nSequenceNumber = htonl(sequenceNumber);   // network order sequence number
-    memcpy(pduBuffer, &nSequenceNumber, 4);
-    pduBuffer[4] = pduBuffer[5] = 0;                    // clear checksum field
-    pduBuffer[6] = flag;                                // flag
-    memcpy(pduBuffer+7, payload, payloadLen);           // add the payload
-    pduLength += payloadLen;                            // length of the pduBuffer
-    checksum = in_cksum((unsigned short *)pduBuffer, pduLength);          // calculate checksum
-    memcpy(pduBuffer+4, &checksum, 2);
+    uint32_t nSequenceNumber = htonl(sequenceNumber);               // network order sequence number
+    pduBuffer->nSeqNo = nSequenceNumber;
+    pduBuffer->checksum = 0;
+    pduBuffer->flag = flag;
+    memcpy(pduBuffer->payload, payload, payloadLen);                // add the payload
+    pduLength += payloadLen;                                        // length of the pduBuffer
+    checksum = in_cksum((unsigned short *)pduBuffer, pduLength);    // calculate checksum
+    pduBuffer->checksum = checksum;
     return pduLength;
 }
 
 
-void printPDU(uint8_t * aPDU, int pduLength) {
+void printPDU(pduPacket *aPDU, int pduLength) {
     uint32_t nSequenceNumber, hSequenceNumber;
     uint8_t flag;
     if(in_cksum((unsigned short *)aPDU, pduLength) != 0) {
@@ -39,22 +39,20 @@ void printPDU(uint8_t * aPDU, int pduLength) {
 
     memcpy(&nSequenceNumber, aPDU, 4);
     hSequenceNumber = ntohl(nSequenceNumber);
-    flag = aPDU[6];
+    flag = aPDU->flag;
     printf("Sequence Number: %d\n", hSequenceNumber);
     printf("Flag: %d\n", flag);
-    printf("Payload: %s\n", aPDU+7);
+    printf("Payload: %s\n", aPDU->payload);
     printf("Payload Length: %d\n", pduLength - 7);
 
 }
 
-uint32_t getHSeqNum(uint8_t *pduBuffer) {
-	uint32_t nSeqNum;
-    memcpy(&nSeqNum, pduBuffer, 4);
-    return ntohl(nSeqNum);
+uint32_t getHSeqNum(pduPacket *pduBuffer) {
+    return ntohl(pduBuffer->nSeqNo);
 }
 
-uint8_t getFlag(uint8_t *pduBuffer) {
-    return pduBuffer[6];
+uint8_t getFlag(pduPacket *pduBuffer) {
+    return pduBuffer->flag;
 }
 
 void getFromFileName(pduPacket *pduBuffer, int pduLen, char *fileName) {
@@ -62,4 +60,28 @@ void getFromFileName(pduPacket *pduBuffer, int pduLen, char *fileName) {
     fileNameLen = pduLen - (PDU_HEADER_LEN + 6);
 	memcpy(fileName, pduBuffer->payload+6, fileNameLen);
 	fileName[fileNameLen] = '\0';
+}
+
+void setFlag(pduPacket *pduBuffer, int pduLen, uint8_t flag) {
+    unsigned short checksum;
+
+    pduBuffer->flag = flag;
+    pduBuffer->checksum = 0;
+    checksum = in_cksum((unsigned short *)pduBuffer, pduLen);          // calculate checksum
+    pduBuffer->checksum = checksum;
+
+}
+
+
+
+uint16_t getWindowSizeFromPDU(pduPacket *pduBuffer) {
+    uint16_t bufferSize;
+    memcpy(&bufferSize, pduBuffer->payload, 2);
+    return bufferSize;
+}
+
+uint32_t getPayloadSizeFromPDU(pduPacket *pduBuffer) {
+    uint32_t windowSize;
+    memcpy(&windowSize, pduBuffer->payload+2, 4);
+    return windowSize;
 }

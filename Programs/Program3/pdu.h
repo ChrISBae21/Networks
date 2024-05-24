@@ -22,13 +22,14 @@ typedef struct packet {
     uint8_t payload[MAX_PAYLOAD];
 } pduPacket;
 
-int createPDU(uint8_t *pduBuffer, uint32_t sequenceNumber, uint8_t flag, uint8_t *payload, int payloadLen);
-void printPDU(uint8_t * aPDU, int pduLength); 
-uint32_t getHSeqNum(uint8_t *pduBuffer);
-uint8_t getFlag(uint8_t *pduBuffer);
+int createPDU(pduPacket *pduBuffer, uint32_t sequenceNumber, uint8_t flag, uint8_t *payload, int payloadLen);
+void printPDU(pduPacket *aPDU, int pduLength);
+uint32_t getHSeqNum(pduPacket *pduBuffer);
+uint8_t getFlag(pduPacket *pduBuffer);
 void getFromFileName(pduPacket *pduBuffer, int pduLen, char *fileName);
-
-
+void setFlag(pduPacket *pduBuffer, int pduLen, uint8_t flag);
+uint16_t getWindowSizeFromPDU(pduPacket *pduBuffer);
+uint32_t getPayloadSizeFromPDU(pduPacket *pduBuffer);
 
 
 

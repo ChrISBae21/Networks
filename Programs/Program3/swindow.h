@@ -32,8 +32,16 @@ typedef struct bufferItem {
 } BufferItem;
 
 
-
+void initWindow(uint32_t windowLen, uint16_t packetLen);
 uint32_t moveWindowCurrent();
-void initBuffer(uint32_t bufferLen);
+uint8_t getWindowStatus();
+uint32_t getPDUWindow(pduPacket *pdu, uint32_t sequenceNumber);
+uint32_t getBufferSize();
+uint16_t getPayloadSize();
+void storePDUWindow(pduPacket *pdu, uint32_t pduLen, uint32_t sequenceNumber);
+void slideWindow(uint32_t low);
+
+
+void initBuffer(uint32_t bufferLen, uint16_t packetLen);
 void addToBuffer(pduPacket *pdu, uint16_t pduLen, uint32_t sequenceNumber);
 #endif

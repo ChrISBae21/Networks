@@ -57,7 +57,7 @@ void downloadFSM(char* argv[], int portNumber);
 void cleanSocket(int socket);
 STATE filenameAck(char* argv[], pduPacket *pduBuffer, int *pduLen, struct sockaddr_in6 *server, int *socketNum, uint8_t *fnameRetry, FILE **fd);
 STATE filename(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, int portNumber, uint16_t bufferSize, uint32_t windowSize, int *socketNum, uint8_t *fnameRetry);
-STATE filenameOk(pduPacket *pduBuffer, uint32_t windowSize, int *pduLen, int* socketNum, struct sockaddr_in6 *server, FILE **fd);
+STATE filenameOk(pduPacket *pduBuffer, uint32_t windowSize, uint16_t packetSize, int *pduLen, int* socketNum, struct sockaddr_in6 *server, FILE **fd);
 STATE inorder(pduPacket *pduBuffer, int *pduLen, FILE **fd, int *socketNum, struct sockaddr_in6 *server);
 int RR_SREJ(pduPacket *pduBuffer, int flag, uint32_t *nrr_srej);
 
@@ -97,7 +97,7 @@ STATE filename(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, 
 	payloadLen = 6 + strlen(argv[1]);
 
 	/* create the PDU */
-	pduLen = createPDU((uint8_t*)pduBuffer, Book.rcopySeqNum, FLAG_FILENAME, pduBuffer->payload, payloadLen);
+	pduLen = createPDU(pduBuffer, Book.rcopySeqNum, FLAG_FILENAME, pduBuffer->payload, payloadLen);
 	/* send the PDU */
 	safeSendto(*socketNum, pduBuffer, pduLen, 0, (struct sockaddr *) server, sizeof(struct sockaddr_in6));
 
@@ -141,9 +141,9 @@ STATE filenameAck(char* argv[], pduPacket *pduBuffer, int *pduLen, struct sockad
 	return FILENAME_OK;
 }
 
-STATE filenameOk(pduPacket *pduBuffer, uint32_t windowSize, int *pduLen, int* socketNum, struct sockaddr_in6 *server, FILE **fd) {
+STATE filenameOk(pduPacket *pduBuffer, uint32_t windowSize, uint16_t packetSize, int *pduLen, int* socketNum, struct sockaddr_in6 *server, FILE **fd) {
 	
-	initBuffer(windowSize);
+	initBuffer(windowSize, packetSize);
 
 	Book.rcopySeqNum++;
 	switch(pduBuffer->flag) {
@@ -200,7 +200,7 @@ STATE inorder(pduPacket *pduBuffer, int *pduLen, FILE **fd, int *socketNum, stru
 		*pduLen = RR_SREJ(pduBuffer, FLAG_RR, &(Book.expected));
 		safeSendto(*socketNum, pduBuffer, *pduLen, 0, (struct sockaddr *) server, sizeof(struct sockaddr_in6));
 		returnValue = INORDER;
-		printf("Got expected\n");
+		// printf("Got expected\n");
 	}
 
 	else if(hSeqNo > Book.expected) {
@@ -224,7 +224,7 @@ STATE inorder(pduPacket *pduBuffer, int *pduLen, FILE **fd, int *socketNum, stru
 
 void downloadFSM(char* argv[], int portNumber) {
 	struct sockaddr_in6 server 	= {0};		// Supports 4 and 6 but requires IPv6 struct
-	uint16_t bufferSize 	= atoi(argv[4]);
+	uint16_t packetSize 	= atoi(argv[4]);
 	uint32_t windowSize 	= atoi(argv[3]);
 	int socketNum;
 	FILE *fd;
@@ -238,13 +238,13 @@ void downloadFSM(char* argv[], int portNumber) {
 	while(state != DONE) {
 		switch(state) {
 			case FILENAME:
-			state = filename(argv, &pduBuffer, &server, portNumber, bufferSize, windowSize, &socketNum, &fnameRetry);
+			state = filename(argv, &pduBuffer, &server, portNumber, packetSize, windowSize, &socketNum, &fnameRetry);
 			break;
 			case FILENAME_ACK:
 			state = filenameAck(argv, &pduBuffer, &pduLen, &server, &socketNum, &fnameRetry, &fd);
 			break;
 			case FILENAME_OK:
-			state = filenameOk(&pduBuffer, windowSize, &pduLen, &socketNum, &server, &fd);
+			state = filenameOk(&pduBuffer, windowSize, packetSize, &pduLen, &socketNum, &server, &fd);
 			case INORDER:
 			state = inorder(&pduBuffer, &pduLen, &fd, &socketNum, &server);
 			
@@ -287,5 +287,5 @@ void cleanSocket(int socket) {
 
 int RR_SREJ(pduPacket *pduBuffer, int flag, uint32_t *hrr_srej) {
 	uint32_t nrr_srej = htonl(*hrr_srej);
-	return createPDU((uint8_t *) pduBuffer, Book.rcopySeqNum++, flag, (uint8_t*) &nrr_srej, RR_PAYLOAD_LEN);
+	return createPDU(pduBuffer, Book.rcopySeqNum++, flag, (uint8_t*) &nrr_srej, RR_PAYLOAD_LEN);
 }

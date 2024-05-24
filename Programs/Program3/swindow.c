@@ -18,16 +18,18 @@
 static Window *sWindow;
 static BufferItem *buffer;
 uint32_t buffSize;
+uint16_t packetSize;
 
 /* The Buffer Struct contains host-order sequence number. PDU struct contains network-order sequence number*/
 
 /* creates a buffer of length bufferLen */
-void initBuffer(uint32_t bufferLen) {
+void initBuffer(uint32_t bufferLen, uint16_t packetLen) {
     buffSize = bufferLen;
+    packetSize = packetLen;
     buffer = sCalloc(bufferLen, sizeof(BufferItem));
 }
 
-/* adds to the buffer */
+/* adds to the buffer sequenceNumber is in host-order */
 void addToBuffer(pduPacket *pdu, uint16_t pduLen, uint32_t sequenceNumber) {
     uint32_t hseqNo = ntohl(sequenceNumber);
     uint32_t index = hseqNo % buffSize;
@@ -50,6 +52,13 @@ uint32_t getPDUFromBuffer(pduPacket *pdu, uint32_t sequenceNumber) {
     return buffer[index].pduLen;
 }
 
+uint32_t getBufferSize() {
+    return buffSize;
+}
+uint16_t getPayloadSize() {
+    return packetSize;
+}
+
 /* checks if the pdu is valid */
 uint8_t checkValidPDU(uint32_t sequenceNumber) {
     uint32_t index = sequenceNumber % buffSize;
@@ -64,15 +73,15 @@ void teardownBuffer() {
 
 
 /* initializes a the window with size windowLen */
-void initWindow(uint32_t windowLen) {
+void initWindow(uint32_t windowLen, uint16_t packetLen) {
     sWindow = sCalloc(1, sizeof(Window));
     sWindow->upper = windowLen;
     sWindow->windowSize = windowLen;
 
-    initBuffer(windowLen);
+    initBuffer(windowLen, packetLen);
 }
 
-/* adds a PDU in the window */
+/* adds a PDU in the window, sequencenumber is in host-order */
 void storePDUWindow(pduPacket *pdu, uint32_t pduLen, uint32_t sequenceNumber) {
     if(sequenceNumber != sWindow->current) {
         printf("ERROR IN storePDUWindow()\n");
@@ -101,6 +110,11 @@ void slideWindow(uint32_t low) {
     // maybe check if current < new low
     sWindow->lower = low;
     sWindow->upper = low + sWindow->windowSize;
+}
+
+int getLowest(pduPacket *pduBuffer) {
+    return getPDUFromBuffer(pduBuffer, sWindow->lower);
+
 }
 
 /* checks if the window is open (1) or closed (0) */
