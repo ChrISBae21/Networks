@@ -150,6 +150,7 @@ STATE use(pduPacket *pduBuffer, int *pduLen, FILE **fd, int childSocket, struct 
 
 	while(!EOF_READY) {
 		retryCount = 0;
+		/* window open */
 		while(getWindowStatus() && !EOF_READY) {
 			if( (bytesRead = fread(fileData, sizeof(uint8_t), getPayloadSize(), *fd)) < getPayloadSize() ) {
 				EOF_READY = 1;
@@ -173,6 +174,7 @@ STATE use(pduPacket *pduBuffer, int *pduLen, FILE **fd, int childSocket, struct 
 			}
 
 		}
+		/* window closed */
 		while(!getWindowStatus() && !EOF_READY) {
 			if(pollCall(ONE_SEC) != TIMEOUT) {
 				switch(pduBuffer->flag) {
@@ -187,6 +189,8 @@ STATE use(pduPacket *pduBuffer, int *pduLen, FILE **fd, int childSocket, struct 
 			else {
 				retryCount++;
 				*pduLen = getLowest(pduBuffer);
+				setFlag(pduBuffer, *pduLen, FLAG_TIMEOUT_DATA);
+				safeSendto(childSocket, pduBuffer, *pduLen, 0, (struct sockaddr *) client, sizeof(*client));
 				// SEND LOWEST PACKET
 			}
 		}
@@ -203,11 +207,9 @@ void processRR(pduPacket *pduBuffer) {
 
 void processSREJ(pduPacket *pduBuffer, int *pduLen, int childSocket, struct sockaddr_in6 *client) {
 	uint32_t nSREJ;
-	memcpy(&nSREJ, pduBuffer, 4);
+	memcpy(&nSREJ, pduBuffer->payload, 4);
 	*pduLen = getPDUWindow(pduBuffer, ntohl(nSREJ));
-
-	//maybe bug here where payload address is the same
-	*pduLen = createPDU(pduBuffer, serverBook.serverSeqNum++, FLAG_SREJ_DATA, pduBuffer->payload, *pduLen);
+	setFlag(pduBuffer, *pduLen, FLAG_SREJ_DATA);
 	safeSendto(childSocket, pduBuffer, *pduLen, 0, (struct sockaddr *) client, sizeof(*client));
 }
 

@@ -114,7 +114,6 @@ void slideWindow(uint32_t low) {
 
 int getLowest(pduPacket *pduBuffer) {
     return getPDUFromBuffer(pduBuffer, sWindow->lower);
-
 }
 
 /* checks if the window is open (1) or closed (0) */
