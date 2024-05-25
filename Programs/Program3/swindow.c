@@ -51,11 +51,12 @@ void removeFromBuffer(uint32_t sequenceNumber) {
 }
 
 /* gets the pdu from the buffer */
-uint32_t getPDUFromBuffer(pduPacket *pdu, uint32_t sequenceNumber) {
+uint16_t getPDUFromBuffer(pduPacket *pdu, uint32_t sequenceNumber) {
     uint32_t index = sequenceNumber % buffSize;
     memcpy(pdu, &(buffer[index].pduPacket), buffer[index].pduLen);
     return buffer[index].pduLen;
 }
+
 
 uint32_t getBufferSize() {
     return buffSize;
@@ -64,7 +65,7 @@ uint16_t getPayloadSize() {
     return packetSize;
 }
 
-/* checks if the pdu is valid */
+/* checks if the pdu is valid: Takes Host-Order sequence number */
 uint8_t checkValidPDU(uint32_t sequenceNumber) {
     uint32_t index = sequenceNumber % buffSize;
     return buffer[index].valid;
@@ -129,7 +130,7 @@ void slideWindow(uint32_t low) {
 
 }
 
-int getLowest(pduPacket *pduBuffer) {
+uint16_t getLowest(pduPacket *pduBuffer) {
     /* debug */
 
     return getPDUFromBuffer(pduBuffer, sWindow->lower);

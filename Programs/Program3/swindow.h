@@ -41,8 +41,11 @@ uint32_t getBufferSize();
 uint16_t getPayloadSize();
 void storePDUWindow(pduPacket *pdu, uint16_t pduLen, uint32_t sequenceNumber);
 void slideWindow(uint32_t low);
-int getLowest(pduPacket *pduBuffer);
-
+uint16_t getLowest(pduPacket *pduBuffer);
+uint8_t checkValidPDU(uint32_t sequenceNumber);
+uint16_t getPDUFromBuffer(pduPacket *pdu, uint32_t sequenceNumber);
+void removeFromBuffer(uint32_t sequenceNumber);
+void teardownBuffer();
 
 
 void initBuffer(uint32_t bufferLen, uint16_t packetLen);
