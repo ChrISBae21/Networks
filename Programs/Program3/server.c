@@ -1,6 +1,3 @@
-/* Server side - UDP Code				    */
-/* By Hugh Smith	4/1/2017	*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -37,9 +34,6 @@ typedef enum {
 	DONE
 } STATE;
 
-
-
-
 #define MAXBUF 1400
 #define TIMEOUT -1
 #define ONE_SEC 1000
@@ -64,7 +58,6 @@ int main (int argc, char *argv[]) {
 	sendErr_init(err, DROP_ON, FLIP_ON, DEBUG_OFF, RSEED_OFF);
 	socketNum = udpServerSetup(portNumber);
 	mainserver(socketNum, err);	
-
 	close(socketNum);
 		
 	return 0;
@@ -77,23 +70,21 @@ void mainserver(int mainServerSocket, float err) {
 	struct sockaddr_in6 client;
 	int clientAddrLen = sizeof(client);	
 
-	handleZombies(SIGCHLD);
-	// signal(SIGCHLD, handleZombies);
-	addToPollSet(mainServerSocket);
+	signal(SIGCHLD, handleZombies);
 
 	while(1) {
-		pollCall(-1);
 		pduLen = safeRecvfrom(mainServerSocket, &pduBuffer, MAX_PDU, 0, (struct sockaddr *) &client, &clientAddrLen);
-		if((pid = fork()) < 0) {
-			perror("fork");
-			exit(-1);
-		}
-		if(pid == 0) {
-			close(mainServerSocket);
-			removeFromPollSet(mainServerSocket);
-			sendErr_init(err, DROP_ON, FLIP_ON, DEBUG_ON, RSEED_OFF);
-			childFSM(&pduBuffer, &pduLen, &client);
-			exit(0);
+		if(!in_cksum((unsigned short*)&pduBuffer, pduLen))  {
+			if((pid = fork()) < 0) {
+				perror("fork");
+				exit(-1);
+			}
+			if(pid == 0) {
+				close(mainServerSocket);
+				sendErr_init(err, DROP_ON, FLIP_ON, DEBUG_OFF, RSEED_OFF);
+				childFSM(&pduBuffer, &pduLen, &client);
+				exit(0);
+			}
 		}
 	}
 }
@@ -104,17 +95,12 @@ STATE filename(int *childSocket, pduPacket *pduBuffer, int *pduLen, struct socka
 	uint32_t windowSize;
 	uint16_t payloadSize;
 
-	/* debug */
-	printf("\nSTATE: FILENAME\n");
-
 	if(in_cksum((unsigned short*)pduBuffer, *pduLen))  {
 		return DONE;
 	}
 	/* grab the file name */
 	getFromFileName(pduBuffer, *pduLen, fileName);
 	windowSize = getWindowSizeFromPDU(pduBuffer);
-	/* debug */
-	// printf("\nOutside Function Call\n");
 	payloadSize = getPayloadSizeFromPDU(pduBuffer);
 
 	/* create a new socket */
@@ -125,24 +111,15 @@ STATE filename(int *childSocket, pduPacket *pduBuffer, int *pduLen, struct socka
 
 		*pduLen = createPDU(pduBuffer, serverBook.serverSeqNum, FLAG_FILENAME_ACK, &fnameAckPayload, 1);
 		safeSendto(*childSocket, pduBuffer, *pduLen, 0, (struct sockaddr *) client, sizeof(*client));
+		close(*childSocket);
 		return DONE;
 	}
-
-
 
 	fnameAckPayload = 1;
 	*pduLen = createPDU(pduBuffer, serverBook.serverSeqNum++, FLAG_FILENAME_ACK, &fnameAckPayload, 1);
 	
-	/* DEBUG */
-	// *pduLen = createPDU(pduBuffer, 0, FLAG_FILENAME_ACK, &fnameAckPayload, 1);
-	// safeSendto(*childSocket, pduBuffer, *pduLen, 0, (struct sockaddr *) client, sizeof(*client));
-
-	// *pduLen = createPDU(pduBuffer, 1, FLAG_DATA, &fnameAckPayload, 1);
-	// safeSendto(*childSocket, pduBuffer, *pduLen, 0, (struct sockaddr *) client, sizeof(*client));
-
-	// *pduLen = createPDU(pduBuffer, 2, FLAG_DATA, &fnameAckPayload, 1);
-	
 	/* sends a good file name packet */
+	addToPollSet(*childSocket);
 	safeSendto(*childSocket, pduBuffer, *pduLen, 0, (struct sockaddr *) client, sizeof(*client));
 	initWindow(windowSize, payloadSize);
 	return USE;
@@ -154,72 +131,68 @@ STATE use(pduPacket *pduBuffer, int *pduLen, FILE **fd, int childSocket, struct 
 	uint8_t flag = FLAG_DATA;
 	size_t bytesRead = 0;
 	uint8_t fileData[MAX_PAYLOAD];
-
-
-	/* debug */
-	printf("\nSTATE: USE\n");
+	int clientAddrLen = sizeof(*client);	
 	
 	while(!EOF_READY) {
 		/* window open */
 		while(getWindowStatus() && !EOF_READY) {
 			if( (bytesRead = fread(fileData, sizeof(uint8_t), getPayloadSize(), *fd)) < getPayloadSize() ) {
-				/* debug */
-				printf("\nBytes Read: %ld\n", bytesRead);
 				EOF_READY = 1;
 				flag = FLAG_EOF;
 				serverBook.eofSeqNo = serverBook.serverSeqNum;
 			}
-			/* debug */
-			// printf("\nBytes Read: %ld\n", bytesRead);
-
 			// CREATE PDU
 			*pduLen = createPDU(pduBuffer, serverBook.serverSeqNum++, flag, fileData, bytesRead);
 			// STORE PDU IN WINDOW
 			storePDUWindow(pduBuffer, *pduLen, ntohl(pduBuffer->nSeqNo));
 			// SEND DATA
-			// if(!EOF_READY)
 			safeSendto(childSocket, pduBuffer, *pduLen, 0, (struct sockaddr *) client, sizeof(*client));
-
 			while((pollCall(ZERO_SEC) != TIMEOUT)  && !EOF_READY) {
-				switch(pduBuffer->flag) {
+				*pduLen = safeRecvfrom(childSocket, pduBuffer, MAX_PDU, 0, (struct sockaddr *) client, &clientAddrLen);
+				if(!in_cksum((unsigned short*)pduBuffer, *pduLen))  {
+					switch(pduBuffer->flag) {
+						case FLAG_RR:
+						processRR(pduBuffer);
+						break;
+						case FLAG_SREJ:
+						processSREJ(pduBuffer, pduLen, childSocket, client);
+						break;
+						default:
+						break;
+					}
+				}
+			}
+		}
+		/* window closed */
+		while(!getWindowStatus() && !EOF_READY) {
+			if(retryCount > 9) return DONE;
+			if(pollCall(ONE_SEC) != TIMEOUT) {
+				*pduLen = safeRecvfrom(childSocket, pduBuffer, MAX_PDU, 0, (struct sockaddr *) client, &clientAddrLen);
+				if(!in_cksum((unsigned short*)pduBuffer, *pduLen))  {
+			
+					retryCount = 0;
+					switch(pduBuffer->flag) {
 					case FLAG_RR:
 					processRR(pduBuffer);
 					break;
 					case FLAG_SREJ:
 					processSREJ(pduBuffer, pduLen, childSocket, client);
 					break;
-				}
-			}
-
-		}
-		/* window closed */
-		while(!getWindowStatus() && !EOF_READY) {
-			if(retryCount > 9) return DONE;
-			if(pollCall(ONE_SEC) != TIMEOUT) {
-				retryCount = 0;
-				switch(pduBuffer->flag) {
-				case FLAG_RR:
-				processRR(pduBuffer);
-				break;
-				case FLAG_SREJ:
-				processSREJ(pduBuffer, pduLen, childSocket, client);
-				break;
+					default:
+					break;
+					}
 				}
 			}
 			else {
 				retryCount++;
 				*pduLen = getLowest(pduBuffer);
-				/* debug */
-				printf("\npduLen: %d\n", *pduLen);
 				setFlag(pduBuffer, *pduLen, FLAG_TIMEOUT_DATA);
 				safeSendto(childSocket, pduBuffer, *pduLen, 0, (struct sockaddr *) client, sizeof(*client));
-				// SEND LOWEST PACKET
 			}
 		}
 	}
 	return TEARDOWN;
 }
-
 
 /* returns the seq no RR'ed */
 uint32_t processRR(pduPacket *pduBuffer) {
@@ -240,84 +213,75 @@ void processSREJ(pduPacket *pduBuffer, int *pduLen, int childSocket, struct sock
 
 
 STATE teardown(pduPacket *pduBuffer, int *pduLen, int childSocket, struct sockaddr_in6 *client, FILE **fd) {
-	// STATE returnState = DONE
-	// uint8_t done = 0;
 	uint8_t retryCount = 0;
 	uint8_t eof_ack_flag = 0;
-
-	/* debug */
-	printf("\nSTATE: TEARDOWN\n");
-
+	int clientAddrLen = sizeof(*client);	
 	while(!eof_ack_flag && (retryCount < 9)) {
-		// if(retryCount > 9) return DONE;
 		if(pollCall(ONE_SEC) != TIMEOUT) {
-			retryCount = 0;
-			switch(pduBuffer->flag) {
-			case FLAG_RR:
-			processRR(pduBuffer);
-			break;
-			case FLAG_SREJ:
-			processSREJ(pduBuffer, pduLen, childSocket, client);
-			break;
-			case FLAG_EOF_ACK:
-			eof_ack_flag = 1;
-			// returnState = DONE;
-			break;
-			default:
-			break;
+			*pduLen = safeRecvfrom(childSocket, pduBuffer, MAX_PDU, 0, (struct sockaddr *) client, &clientAddrLen);
+			
+			if(!in_cksum((unsigned short*)pduBuffer, *pduLen))  {
+				retryCount = 0;
+				switch(pduBuffer->flag) {
+				case FLAG_RR:
+				processRR(pduBuffer);
+				break;
+				case FLAG_SREJ:
+				processSREJ(pduBuffer, pduLen, childSocket, client);
+				break;
+				case FLAG_EOF_ACK:
+				eof_ack_flag = 1;
+				break;
+				default:
+				break;
+				}
 			}
 		}
+		
 		else {
 			retryCount++;
 			*pduLen = getLowest(pduBuffer);
 			setFlag(pduBuffer, *pduLen, FLAG_TIMEOUT_DATA);
 			safeSendto(childSocket, pduBuffer, *pduLen, 0, (struct sockaddr *) client, sizeof(*client));
-			// SEND LOWEST PACKET
 		}
 	}
+	removeFromPollSet(childSocket);
+	teardownWindow();
+	close(childSocket);
+	fclose(*fd);
+	freePollSet();
 	return DONE;
 }
 
-// void sendEOF(int childSocket, struct sockaddr_in6 *client, FILE **fd) {
-// 	pduPacket pduBuffer;
-// 	int pduLen;
-// 	pduLen = createPDU();
-// 	safeSendto(childSocket, &pduBuffer, *pduLen, 0, (struct sockaddr *) client, sizeof(*client));
-
-// }
 
 void childFSM(pduPacket *pduBuffer, int *pduLen, struct sockaddr_in6 *client) {
 	STATE state = START;
 	int childSocket;
 	FILE *fd;
 
-		while(state != DONE) {
-			switch(state) {
-				case START:
-				state = FILENAME;
-				break;
-				case FILENAME:
-				state = filename(&childSocket, pduBuffer, pduLen, client, &fd);
-				break;
-				case USE:
-				state = use(pduBuffer, pduLen, &fd, childSocket, client);
-				break;
-				case TEARDOWN:
-				state = teardown(pduBuffer, pduLen, childSocket, client, &fd);
-				// state = flush();
-				break;
-				case DONE:
-				break;
-			}
+	while(state != DONE) {
+		switch(state) {
+			case START:
+			state = FILENAME;
+			break;
+			case FILENAME:
+			state = filename(&childSocket, pduBuffer, pduLen, client, &fd);
+			break;
+			case USE:
+			state = use(pduBuffer, pduLen, &fd, childSocket, client);
+			break;
+			case TEARDOWN:
+			state = teardown(pduBuffer, pduLen, childSocket, client, &fd);
+			break;
+			case DONE:
+			break;
+		}
 	}
-
-
 }
 
 int checkArgs(int argc, char *argv[]) {
 	// Checks args and returns port number
 	int portNumber = 0;
-
 	if (argc > 3 || argc < 2) {
 		fprintf(stderr, "Usage %s [error rate] [optional port number]\n", argv[0]);
 		exit(-1);
@@ -325,10 +289,8 @@ int checkArgs(int argc, char *argv[]) {
 	if (argc == 3) {
 		portNumber = atoi(argv[2]);
 	}
-	
 	return portNumber;
 }
-
 
 void handleZombies(int sig) {
 	int stat = 0;

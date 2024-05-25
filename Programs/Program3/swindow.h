@@ -35,6 +35,7 @@ typedef struct bufferItem {
 void initWindow(uint32_t windowLen, uint16_t packetLen);
 uint32_t moveWindowCurrent();
 uint8_t getWindowStatus();
+void teardownWindow();
 uint32_t getPDUWindow(pduPacket *pdu, uint32_t sequenceNumber);
 uint32_t getBufferSize();
 uint16_t getPayloadSize();

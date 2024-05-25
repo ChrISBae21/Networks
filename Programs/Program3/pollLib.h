@@ -17,5 +17,7 @@ void setupPollSet();
 void addToPollSet(int socketNumber);
 void removeFromPollSet(int socketNumber);
 int pollCall(int timeInMilliSeconds);
+void freePollSet();
+
 
 #endif

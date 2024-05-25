@@ -74,7 +74,7 @@ int main (int argc, char *argv[]) {
 
 	portNumber = checkArgs(argc, argv);
 	
-	sendErr_init(atof(argv[5]), DROP_ON, FLIP_ON, DEBUG_ON, RSEED_OFF);
+	sendErr_init(atof(argv[5]), DROP_ON, FLIP_ON, DEBUG_OFF, RSEED_OFF);
 	setupPollSet();
 	downloadFSM(argv, portNumber);
 	// socketNum = setupUdpClientToServer(&server, argv[2], portNumber);
@@ -91,7 +91,7 @@ STATE filename(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, 
 	int pduLen, payloadLen;
 
 	/* debug */
-	printf("\nSTATE: FILENAME\n");
+	// printf("\nSTATE: FILENAME\n");
 
 	if(*fnameRetry > 9) return DONE;
 
@@ -108,7 +108,7 @@ STATE filename(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, 
 	/* create the PDU */
 	pduLen = createPDU(pduBuffer, Book.rcopySeqNum, FLAG_FILENAME, pduBuffer->payload, payloadLen);
 	/* send the PDU */
-	safeSendto(*socketNum, pduBuffer, pduLen, 0, (struct sockaddr *) server, sizeof(struct sockaddr_in6));
+	safeSendto(*socketNum, pduBuffer, pduLen, 0, (struct sockaddr *) server, sizeof(*server));
 
 	/* timed out */
 	if(pollCall(ONE_SEC) == TIMEOUT) {
@@ -124,7 +124,7 @@ STATE filename(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, 
 STATE filenameAck(char* argv[], pduPacket *pduBuffer, int *pduLen, struct sockaddr_in6 *server, int *socketNum, uint8_t *fnameRetry, FILE **fd) {
 	// int pduLen;
 	/* debug */
-	printf("\nSTATE: FILENAME ACK\n");
+	// printf("\nSTATE: FILENAME ACK\n");
 
 	int serverAddrLen = sizeof(struct sockaddr_in6);
 
@@ -155,7 +155,7 @@ STATE filenameAck(char* argv[], pduPacket *pduBuffer, int *pduLen, struct sockad
 
 STATE filenameOk(pduPacket *pduBuffer, uint32_t windowSize, uint16_t packetSize, int *pduLen, int* socketNum, struct sockaddr_in6 *server, FILE **fd) {
 	/* debug */
-	printf("\nSTATE: FILENAME OK\n");
+	// printf("\nSTATE: FILENAME OK\n");
 
 	initBuffer(windowSize, packetSize);
 
@@ -175,15 +175,18 @@ STATE filenameOk(pduPacket *pduBuffer, uint32_t windowSize, uint16_t packetSize,
 				*pduLen = RR_SREJ(pduBuffer, FLAG_SREJ, &(Book.expected));
 				addToBuffer(pduBuffer, *pduLen, pduBuffer->nSeqNo);
 				Book.highest = ntohl(pduBuffer->nSeqNo);	
-				safeSendto(*socketNum, pduBuffer, *pduLen, 0, (struct sockaddr *) server, sizeof(struct sockaddr_in6));
+				safeSendto(*socketNum, pduBuffer, *pduLen, 0, (struct sockaddr *) server, sizeof(*server));
 				return BUFFER;
 			}
 			/* first data packet */
+	
+
 			fwrite(pduBuffer->payload, sizeof(uint8_t), (size_t)(*pduLen - PDU_HEADER_LEN), *fd);
+
 			Book.highest = Book.expected;
 			Book.expected++;
 			*pduLen = RR_SREJ(pduBuffer, FLAG_RR, &(Book.expected));
-			safeSendto(*socketNum, pduBuffer, *pduLen, 0, (struct sockaddr *) server, sizeof(struct sockaddr_in6));
+			safeSendto(*socketNum, pduBuffer, *pduLen, 0, (struct sockaddr *) server, sizeof(*server));
 
 			return INORDER;
 		break;
@@ -196,38 +199,41 @@ STATE inorder(pduPacket *pduBuffer, int *pduLen, FILE **fd, int *socketNum, stru
 	int serverAddrLen = sizeof(struct sockaddr_in6);
 	uint32_t hSeqNo;
 
-	/* debug */
-	printf("\nSTATE: INORDER\n");
+	if(Book.eof_flag) return TEARDOWN;
 
 	if(pollCall(TEN_SEC) == TIMEOUT) {
 		return DONE;
 	}
 	*pduLen = safeRecvfrom(*socketNum, pduBuffer, MAX_PDU, 0, (struct sockaddr *) server, &serverAddrLen);
-	hSeqNo = ntohl(pduBuffer->nSeqNo);
 
-	if(Book.eof_flag) return TEARDOWN;
+	if(in_cksum((unsigned short*)pduBuffer, *pduLen))  {
+		return INORDER;
+	}
+	hSeqNo = ntohl(pduBuffer->nSeqNo);
+	
 	if(pduBuffer->flag == FLAG_EOF) Book.eof_flag = 1;
 
 	if(hSeqNo == Book.expected) {
-		fwrite(pduBuffer->payload, sizeof(uint8_t), (size_t)(pduLen - PDU_HEADER_LEN), *fd);
+		fwrite(pduBuffer->payload, sizeof(uint8_t), (size_t)(*pduLen - PDU_HEADER_LEN), *fd);
+
+
 		Book.highest = Book.expected;
 		Book.expected++;
 		*pduLen = RR_SREJ(pduBuffer, FLAG_RR, &(Book.expected));
-		safeSendto(*socketNum, pduBuffer, *pduLen, 0, (struct sockaddr *) server, sizeof(struct sockaddr_in6));
+		safeSendto(*socketNum, pduBuffer, *pduLen, 0, (struct sockaddr *) server, sizeof(*server));
 		returnValue = INORDER;
-		// printf("Got expected\n");
 	}
 
 	else if(hSeqNo > Book.expected) {
 		*pduLen = RR_SREJ(pduBuffer, FLAG_SREJ, &(Book.expected));
 		addToBuffer(pduBuffer, *pduLen, pduBuffer->nSeqNo);
 		Book.highest = hSeqNo;	
-		safeSendto(*socketNum, pduBuffer, *pduLen, 0, (struct sockaddr *) server, sizeof(struct sockaddr_in6));
+		safeSendto(*socketNum, pduBuffer, *pduLen, 0, (struct sockaddr *) server, sizeof(*server));
 		returnValue = BUFFER;
 	}
 	else if(hSeqNo < Book.expected) {
 		*pduLen = RR_SREJ(pduBuffer, FLAG_RR, &(Book.expected));
-		safeSendto(*socketNum, pduBuffer, *pduLen, 0, (struct sockaddr *) server, sizeof(struct sockaddr_in6));
+		safeSendto(*socketNum, pduBuffer, *pduLen, 0, (struct sockaddr *) server, sizeof(*server));
 		returnValue = INORDER;
 	}
 	return returnValue;
@@ -235,10 +241,10 @@ STATE inorder(pduPacket *pduBuffer, int *pduLen, FILE **fd, int *socketNum, stru
 
 STATE teardown(pduPacket *pduBuffer, int *pduLen, FILE **fd, int *socketNum, struct sockaddr_in6 *server) {
 	/* debug */
-	printf("\nSTATE: TEARDOWN\n");
+	// printf("\nSTATE: TEARDOWN\n");
 
 	*pduLen = createPDU(pduBuffer, Book.rcopySeqNum, FLAG_EOF_ACK, pduBuffer->payload, 0);
-	safeSendto(*socketNum, pduBuffer, PDU_HEADER_LEN, 0, (struct sockaddr *) server, sizeof(struct sockaddr_in6));
+	safeSendto(*socketNum, pduBuffer, PDU_HEADER_LEN, 0, (struct sockaddr *) server, sizeof(*server));
 	return DONE;
 }
 

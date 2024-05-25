@@ -26,6 +26,10 @@ static int currentPollSetSize = 0;
 
 static void growPollSet(int newSetSize);
 
+void freePollSet() {
+	free(pollFileDescriptors);
+}
+
 // Poll functions (setup, add, remove, call)
 void setupPollSet()
 {

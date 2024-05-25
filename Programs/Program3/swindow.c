@@ -35,7 +35,7 @@ void addToBuffer(pduPacket *pdu, uint16_t pduLen, uint32_t sequenceNumber) {
     // uint32_t index = hseqNo % buffSize;
     uint32_t index = sequenceNumber % buffSize;
 /* debug */
-	printf("\nIndex: %d\nCurrent: %d\n", index, sWindow->current);
+	// printf("\nIndex: %d\nCurrent: %d\n", index, sWindow->current);
 
     // buffer[index].hSeq = hseqNo;
     buffer[index].hSeq = sequenceNumber;
@@ -119,8 +119,14 @@ uint32_t moveWindowCurrent() {
 /* slides the window as RR's are sent */
 void slideWindow(uint32_t low) {
     // maybe check if current < new low
+
+    /*debug*/
+    // printf("\nRR: %d Low: %d Upper: %d WSize: %d Current: %d", low, sWindow->lower, sWindow->upper, sWindow->windowSize, sWindow->current);
+
     sWindow->lower = low;
     sWindow->upper = low + sWindow->windowSize;
+    
+
 }
 
 int getLowest(pduPacket *pduBuffer) {
@@ -131,10 +137,12 @@ int getLowest(pduPacket *pduBuffer) {
 
 /* checks if the window is open (1) or closed (0) */
 uint8_t getWindowStatus() {
+    // printf("\nCurrent: %d, Upper: %d\n", sWindow->current, sWindow->upper);
     return (sWindow->current < sWindow->upper);
 }
 
 /* frees the window */
 void teardownWindow() {
     free(sWindow);
+    teardownBuffer();
 }

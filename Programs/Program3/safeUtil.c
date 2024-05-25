@@ -21,7 +21,7 @@
 
 int safeSocket() {
 	int socketNum;
-	if ((socketNum = socket(AF_INET6,SOCK_DGRAM,0)) < 0) {
+	if ((socketNum = socket(AF_INET6, SOCK_DGRAM, 0)) < 0) {
 			perror("socket() call error");
 			exit(-1);
 	}
