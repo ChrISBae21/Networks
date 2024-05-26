@@ -22,6 +22,7 @@
 typedef struct bookKeep {
 	uint32_t serverSeqNum;
 	uint32_t eofSeqNo;
+	uint8_t error;
 } BookKeep;
 
 BookKeep serverBook = {0};
@@ -47,6 +48,8 @@ STATE filename(int *childSocket, pduPacket *pduBuffer, uint16_t *pduLen, struct 
 void handleZombies(int sig);
 void processSREJ(pduPacket *pduBuffer, uint16_t *pduLen, int childSocket, struct sockaddr_in6 *client);
 uint32_t processRR(pduPacket *pduBuffer);
+void cleanup(int childSocket, FILE **fd);
+
 
 int main (int argc, char *argv[]) { 
 	int socketNum = 0;				
@@ -171,7 +174,10 @@ STATE use(pduPacket *pduBuffer, uint16_t *pduLen, FILE **fd, int childSocket, st
 		}
 		/* window closed */
 		while(!getWindowStatus() && !EOF_READY) {
-			if(retryCount > 9) return DONE;
+			if(retryCount > 9) {
+				cleanup(childSocket, fd);
+				return DONE;
+			}
 			if(pollCall(ONE_SEC) != TIMEOUT) {
 				*pduLen = safeRecvfrom(childSocket, pduBuffer, MAX_PDU, 0, (struct sockaddr *) client, &clientAddrLen);
 				retryCount = 0;
@@ -198,6 +204,14 @@ STATE use(pduPacket *pduBuffer, uint16_t *pduLen, FILE **fd, int childSocket, st
 		}
 	}
 	return TEARDOWN;
+}
+
+void cleanup(int childSocket, FILE **fd) {
+	removeFromPollSet(childSocket);
+	teardownWindow();
+	close(childSocket);
+	fclose(*fd);
+	freePollSet();
 }
 
 /* returns the seq no RR'ed */
@@ -255,11 +269,7 @@ STATE teardown(pduPacket *pduBuffer, uint16_t *pduLen, int childSocket, struct s
 			safeSendto(childSocket, pduBuffer, *pduLen, 0, (struct sockaddr *) client, sizeof(*client));
 		}
 	}
-	removeFromPollSet(childSocket);
-	teardownWindow();
-	close(childSocket);
-	fclose(*fd);
-	freePollSet();
+	cleanup(childSocket, fd);
 	return DONE;
 }
 

@@ -37,6 +37,7 @@ typedef struct bookKeep {
 	uint32_t expected;
 	uint32_t rcopySeqNum;
 	uint8_t eof_flag;
+	uint8_t error;
 } BookKeep;
 
 typedef enum {
@@ -50,7 +51,7 @@ typedef enum {
 	DONE
 } STATE;
 
-BookKeep Book = {1, 1, 0, 0};
+BookKeep Book = {1, 1, 0, 0, 0};
 
 
 
@@ -79,6 +80,7 @@ int main (int argc, char *argv[]) {
 	// sendErr_init(atof(argv[5]), DROP_ON, FLIP_ON, DEBUG_ON, RSEED_OFF);
 	setupPollSet();
 	downloadFSM(argv, portNumber);
+	freePollSet();	
 	return 0;
 }
 
@@ -196,6 +198,7 @@ STATE inorder(pduPacket *pduBuffer, int *pduLen, FILE **fd, int *socketNum, stru
 		return TEARDOWN;
 	}
 	if(pollCall(TEN_SEC) == TIMEOUT) {
+		Book.error = 1;
 		return DONE;
 	}
 	*pduLen = safeRecvfrom(*socketNum, pduBuffer, MAX_PDU, 0, (struct sockaddr *) server, &serverAddrLen);
@@ -238,6 +241,7 @@ STATE buffer(pduPacket *pduBuffer, int *pduLen, FILE **fd, int socketNum, struct
 	uint32_t hSeqNo;
 	
 	if(pollCall(TEN_SEC) == TIMEOUT) {
+		Book.error = 1;
 		return DONE;
 	}	
 	*pduLen = safeRecvfrom(socketNum, pduBuffer, MAX_PDU, 0, (struct sockaddr *) server, &serverAddrLen);
@@ -344,10 +348,11 @@ void downloadFSM(char* argv[], int portNumber) {
 		}
 	}
 	
-	teardownBuffer();
 	cleanSocket(socketNum);
-	freePollSet();
-	fclose(fd);
+	if(Book.eof_flag || Book.error) {
+		teardownBuffer();
+		fclose(fd);
+	}
 }
 
 

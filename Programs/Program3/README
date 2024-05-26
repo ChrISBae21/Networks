@@ -3,4 +3,4 @@ Lab 12pm
 
 Usage:
     ./server [error rate] [port number]
-    ./rcopy [error rate] [server] [server port number]
+    ./rcopy [from file] [to file] [window size] [buffer size] [error rate] [server] [server port number]
