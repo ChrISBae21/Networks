@@ -141,12 +141,12 @@ STATE filenameAck(char* argv[], pduPacket *pduBuffer, int *pduLen, struct sockad
 		return DONE;
 	}
 	/* try to open the file to write to */
-	if((*fd = fopen(argv[2], "r")) == NULL) {
-		cleanSocket(*socketNum);
-		printf("Error opening file to write to\n");
-		return DONE;
-	}
-	fclose(*fd);
+	// if((*fd = fopen(argv[2], "r")) == NULL) {
+	// 	cleanSocket(*socketNum);
+	// 	printf("Error opening file to write to\n");
+	// 	return DONE;
+	// }
+	// fclose(*fd);
 	*fd = fopen(argv[2], "w");
 	return FILENAME_OK;
 }
