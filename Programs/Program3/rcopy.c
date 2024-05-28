@@ -53,8 +53,6 @@ typedef enum {
 
 BookKeep Book = {1, 1, 0, 0, 0};
 
-
-
 void talkToServer(int socketNum, struct sockaddr_in6 * server);
 int readFromStdin(char * buffer);
 int checkArgs(int argc, char * argv[]);
@@ -67,17 +65,12 @@ STATE inorder(pduPacket *pduBuffer, int *pduLen, FILE **fd, int *socketNum, stru
 STATE teardown(pduPacket *pduBuffer, int *pduLen, FILE **fd, int *socketNum, struct sockaddr_in6 *server);
 STATE buffer(pduPacket *pduBuffer, int *pduLen, FILE **fd, int socketNum, struct sockaddr_in6 *server);
 STATE flush(pduPacket *pduBuffer, int *pduLen, FILE **fd, int socketNum, struct sockaddr_in6 *server);
-
 int RR_SREJ(pduPacket *pduBuffer, int flag, uint32_t nrr_srej);
-
-// <from-filename> <to-filename> <window-size> <buffer-size> <error-rate> <IP> <port #>
 
 int main (int argc, char *argv[]) {
 	int portNumber = 0;
-
 	portNumber = checkArgs(argc, argv);
 	sendErr_init(atof(argv[5]), DROP_ON, FLIP_ON, DEBUG_OFF, RSEED_OFF);
-	// sendErr_init(atof(argv[5]), DROP_ON, FLIP_ON, DEBUG_ON, RSEED_OFF);
 	setupPollSet();
 	downloadFSM(argv, portNumber);
 	freePollSet();	
@@ -87,10 +80,6 @@ int main (int argc, char *argv[]) {
 
 STATE filename(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, int portNumber, uint16_t bufferSize, uint32_t windowSize, int *socketNum, uint8_t *fnameRetry) {
 	int pduLen, payloadLen;
-	
-	/* debug */
-	// printf("\nSTATE: FILENAME\n");
-
 	if(*fnameRetry > 9) return DONE;
 
 	/* open the socket */
@@ -120,10 +109,6 @@ STATE filename(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, 
 }
 
 STATE filenameAck(char* argv[], pduPacket *pduBuffer, int *pduLen, struct sockaddr_in6 *server, int *socketNum, uint8_t *fnameRetry, FILE **fd) {
-	// int pduLen;
-	/* debug */
-	// printf("\nSTATE: FILENAME ACK\n");
-
 	int serverAddrLen = sizeof(struct sockaddr_in6);
 
 	*pduLen = safeRecvfrom(*socketNum, pduBuffer, MAX_PDU, 0, (struct sockaddr *) server, &serverAddrLen);
@@ -140,21 +125,11 @@ STATE filenameAck(char* argv[], pduPacket *pduBuffer, int *pduLen, struct sockad
 		printf("File on the Server did not exist\n");
 		return DONE;
 	}
-	/* try to open the file to write to */
-	// if((*fd = fopen(argv[2], "r")) == NULL) {
-	// 	cleanSocket(*socketNum);
-	// 	printf("Error opening file to write to\n");
-	// 	return DONE;
-	// }
-	// fclose(*fd);
 	*fd = fopen(argv[2], "w");
 	return FILENAME_OK;
 }
 
 STATE filenameOk(pduPacket *pduBuffer, uint32_t windowSize, uint16_t packetSize, int *pduLen, int* socketNum, struct sockaddr_in6 *server, FILE **fd) {
-	/* debug */
-	// printf("\nSTATE: FILENAME OK\n");
-
 	initBuffer(windowSize, packetSize);
 
 	Book.rcopySeqNum++;
@@ -228,6 +203,8 @@ STATE inorder(pduPacket *pduBuffer, int *pduLen, FILE **fd, int *socketNum, stru
 		returnValue = BUFFER;
 	}
 	else if(hSeqNo < Book.expected) {
+		*pduLen = RR_SREJ(pduBuffer, FLAG_SREJ, Book.expected);
+		safeSendto(*socketNum, pduBuffer, *pduLen, 0, (struct sockaddr *) server, sizeof(*server));
 		*pduLen = RR_SREJ(pduBuffer, FLAG_RR, Book.expected);
 		safeSendto(*socketNum, pduBuffer, *pduLen, 0, (struct sockaddr *) server, sizeof(*server));
 		returnValue = INORDER;
@@ -267,6 +244,8 @@ STATE buffer(pduPacket *pduBuffer, int *pduLen, FILE **fd, int socketNum, struct
 	}
 
 	else if(hSeqNo < Book.expected) {
+		*pduLen = RR_SREJ(pduBuffer, FLAG_SREJ, Book.expected);
+		safeSendto(socketNum, pduBuffer, *pduLen, 0, (struct sockaddr *) server, sizeof(*server));
 		*pduLen = RR_SREJ(pduBuffer, FLAG_RR, Book.expected);
 		safeSendto(socketNum, pduBuffer, *pduLen, 0, (struct sockaddr *) server, sizeof(*server));
 		returnValue = BUFFER;
@@ -300,9 +279,6 @@ STATE flush(pduPacket *pduBuffer, int *pduLen, FILE **fd, int socketNum, struct 
 }
 
 STATE teardown(pduPacket *pduBuffer, int *pduLen, FILE **fd, int *socketNum, struct sockaddr_in6 *server) {
-	/* debug */
-	// printf("\nSTATE: TEARDOWN\n");
-
 	*pduLen = createPDU(pduBuffer, Book.rcopySeqNum, FLAG_EOF_ACK, pduBuffer->payload, 0);
 	safeSendto(*socketNum, pduBuffer, PDU_HEADER_LEN, 0, (struct sockaddr *) server, sizeof(*server));
 	return DONE;
@@ -316,7 +292,6 @@ void downloadFSM(char* argv[], int portNumber) {
 	FILE *fd;
 
 	uint8_t fnameRetry	= 0;
-	// uint32_t rcopySeqNum = 0;
 	int pduLen;
 	pduPacket pduBuffer;
 	STATE state = FILENAME;
@@ -361,14 +336,21 @@ int checkArgs(int argc, char * argv[]) {
 	
     /* check command line arguments  */
 	if (argc != 8) {
-		printf("usage: %s host-name port-number \n", argv[0]);
+		printf("usage: %s [from file] [to file] [window size] [buffer size] [error rate] [server] [server port number] \n", argv[0]);
+		exit(1);
+	}
+
+	if(atoi(argv[4]) > 1400) {
+		printf("Buffer Size must be less than or equal to 1400 bytes\n");
+		exit(1);
+	}
+	if(atof(argv[5]) > 1) {
+		printf("Error Rate must be a a value between 0 and 1\n");
 		exit(1);
 	}
 	portNumber = atoi(argv[7]);	
 	return portNumber;
 }
-
-
 
 void cleanSocket(int socket) {
 	close(socket);

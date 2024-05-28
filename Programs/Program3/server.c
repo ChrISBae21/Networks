@@ -86,7 +86,6 @@ void mainserver(int mainServerSocket, float err) {
 			if(pid == 0) {
 				close(mainServerSocket);
 				sendErr_init(err, DROP_ON, FLIP_ON, DEBUG_OFF, RSEED_OFF);
-				// sendErr_init(err, DROP_ON, FLIP_ON, DEBUG_ON, RSEED_OFF);
 				childFSM(&pduBuffer, &pduLen, &client);
 				exit(0);
 			}
@@ -237,7 +236,6 @@ STATE teardown(pduPacket *pduBuffer, uint16_t *pduLen, int childSocket, struct s
 	uint8_t eof_ack_flag = 0;
 	int clientAddrLen = sizeof(*client);	
 
-	// printf("\nTEARDOWN\n");
 	while(!eof_ack_flag && (retryCount < 9)) {
 		if(pollCall(ONE_SEC) != TIMEOUT) {
 			*pduLen = safeRecvfrom(childSocket, pduBuffer, MAX_PDU, 0, (struct sockaddr *) client, &clientAddrLen);
@@ -251,7 +249,6 @@ STATE teardown(pduPacket *pduBuffer, uint16_t *pduLen, int childSocket, struct s
 				processSREJ(pduBuffer, pduLen, childSocket, client);
 				break;
 				case FLAG_EOF_ACK:
-				// printf("GOT EOF ACK FLAG");
 				eof_ack_flag = 1;
 				break;
 				default:
@@ -272,7 +269,6 @@ STATE teardown(pduPacket *pduBuffer, uint16_t *pduLen, int childSocket, struct s
 	cleanup(childSocket, fd);
 	return DONE;
 }
-
 
 void childFSM(pduPacket *pduBuffer, uint16_t *pduLen, struct sockaddr_in6 *client) {
 	STATE state = START;
