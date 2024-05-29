@@ -140,6 +140,8 @@ STATE filenameOk(pduPacket *pduBuffer, uint32_t windowSize, uint16_t packetSize,
 			if(pduBuffer->payload[0]) return INORDER;
 		break;
 
+		case FLAG_EOF:
+		Book.eof_flag = 1;
 		/* packet is data */
 		case FLAG_DATA:
 		/* not the first data packet */
