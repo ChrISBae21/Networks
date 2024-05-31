@@ -51,7 +51,7 @@ typedef enum {
 	DONE
 } STATE;
 
-BookKeep Book = {1, 1, 0, 0, 0};
+BookKeep Book = {1, 1, 1, 0, 0};
 
 void talkToServer(int socketNum, struct sockaddr_in6 * server);
 int readFromStdin(char * buffer);
@@ -70,7 +70,7 @@ int RR_SREJ(pduPacket *pduBuffer, int flag, uint32_t nrr_srej);
 int main (int argc, char *argv[]) {
 	int portNumber = 0;
 	portNumber = checkArgs(argc, argv);
-	sendErr_init(atof(argv[5]), DROP_ON, FLIP_ON, DEBUG_OFF, RSEED_OFF);
+	sendErr_init(atof(argv[5]), DROP_ON, FLIP_ON, DEBUG_OFF, RSEED_ON);
 	setupPollSet();
 	downloadFSM(argv, portNumber);
 	freePollSet();	
@@ -80,7 +80,6 @@ int main (int argc, char *argv[]) {
 
 STATE filename(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, int portNumber, uint16_t bufferSize, uint32_t windowSize, int *socketNum, uint8_t *fnameRetry) {
 	int pduLen, payloadLen;
-	if(*fnameRetry > 9) return DONE;
 
 	/* open the socket */
 	*socketNum = setupUdpClientToServer(server, argv[6], portNumber);
@@ -101,6 +100,10 @@ STATE filename(char* argv[], pduPacket *pduBuffer, struct sockaddr_in6 *server, 
 	if(pollCall(ONE_SEC) == TIMEOUT) {
 		cleanSocket(*socketNum);
 		(*fnameRetry)++;
+		if(*fnameRetry > 9) {
+			printf("Could not reach the server\n");
+			return DONE;
+		}
 		return FILENAME;
 	}
 	/* Received something */
@@ -175,6 +178,7 @@ STATE inorder(pduPacket *pduBuffer, int *pduLen, FILE **fd, int *socketNum, stru
 		return TEARDOWN;
 	}
 	if(pollCall(TEN_SEC) == TIMEOUT) {
+		printf("Could not reach the server\n");
 		Book.error = 1;
 		return DONE;
 	}
@@ -205,8 +209,6 @@ STATE inorder(pduPacket *pduBuffer, int *pduLen, FILE **fd, int *socketNum, stru
 		returnValue = BUFFER;
 	}
 	else if(hSeqNo < Book.expected) {
-		*pduLen = RR_SREJ(pduBuffer, FLAG_SREJ, Book.expected);
-		safeSendto(*socketNum, pduBuffer, *pduLen, 0, (struct sockaddr *) server, sizeof(*server));
 		*pduLen = RR_SREJ(pduBuffer, FLAG_RR, Book.expected);
 		safeSendto(*socketNum, pduBuffer, *pduLen, 0, (struct sockaddr *) server, sizeof(*server));
 		returnValue = INORDER;
@@ -220,6 +222,7 @@ STATE buffer(pduPacket *pduBuffer, int *pduLen, FILE **fd, int socketNum, struct
 	uint32_t hSeqNo;
 	
 	if(pollCall(TEN_SEC) == TIMEOUT) {
+		printf("Could not reach the server\n");
 		Book.error = 1;
 		return DONE;
 	}	

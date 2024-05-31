@@ -112,7 +112,6 @@ STATE filename(int *childSocket, pduPacket *pduBuffer, uint16_t *pduLen, struct 
 	
 	/* check if the file exists */
 	if((*fd = fopen(fileName, "rb")) == NULL) {
-
 		*pduLen = createPDU(pduBuffer, serverBook.serverSeqNum, FLAG_FILENAME_ACK, &fnameAckPayload, 1);
 		safeSendto(*childSocket, pduBuffer, *pduLen, 0, (struct sockaddr *) client, sizeof(*client));
 		close(*childSocket);
@@ -174,6 +173,7 @@ STATE use(pduPacket *pduBuffer, uint16_t *pduLen, FILE **fd, int childSocket, st
 		/* window closed */
 		while(!getWindowStatus() && !EOF_READY) {
 			if(retryCount > 9) {
+				printf("\nCould not reach rcopy client\n");
 				cleanup(childSocket, fd);
 				return DONE;
 			}
@@ -226,7 +226,9 @@ void processSREJ(pduPacket *pduBuffer, uint16_t *pduLen, int childSocket, struct
 	uint32_t nSREJ;
 	memcpy(&nSREJ, pduBuffer->payload, 4);
 	*pduLen = getPDUWindow(pduBuffer, ntohl(nSREJ));
-	setFlag(pduBuffer, *pduLen, FLAG_SREJ_DATA);
+	if(pduBuffer->flag != FLAG_EOF) {
+		setFlag(pduBuffer, *pduLen, FLAG_SREJ_DATA);
+	}
 	safeSendto(childSocket, pduBuffer, *pduLen, 0, (struct sockaddr *) client, sizeof(*client));
 }
 
@@ -266,6 +268,7 @@ STATE teardown(pduPacket *pduBuffer, uint16_t *pduLen, int childSocket, struct s
 			safeSendto(childSocket, pduBuffer, *pduLen, 0, (struct sockaddr *) client, sizeof(*client));
 		}
 	}
+	if(retryCount == 9) printf("\nCould not reach the rcopy client\n");
 	cleanup(childSocket, fd);
 	return DONE;
 }
@@ -303,7 +306,12 @@ int checkArgs(int argc, char *argv[]) {
 		exit(-1);
 	}
 	if (argc == 3) {
+		if(atof(argv[1]) > 1) {
+			fprintf(stderr, "Error Rate must be 0 < err < 1\n");
+			exit(-1);
+		}
 		portNumber = atoi(argv[2]);
+
 	}
 	return portNumber;
 }
